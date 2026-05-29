@@ -82,10 +82,6 @@ export default function LoginPage() {
               className="mt-1.5 w-full rounded-xl border border-gray-200 bg-white px-4 py-2.5 text-sm outline-none focus:border-[#E91E8C] focus:ring-2 focus:ring-[#E91E8C]/20"
             />
           </label>
-          <Link href="/forgot-password" className="mt-2 block text-right text-xs text-[#E91E8C] hover:underline">
-            Mot de passe oublié ?
-          </Link>
-
           {error && (
             <p className="mt-4 rounded-xl bg-red-50 p-3 text-sm text-red-500">{error}</p>
           )}

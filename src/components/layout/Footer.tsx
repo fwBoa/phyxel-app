@@ -1,10 +1,11 @@
 import Link from 'next/link'
 
-const FOOTER_LINKS = [
-  { href: '/mentions-legales', label: 'Mentions légales' },
-  { href: '/cgu',              label: 'CGU' },
-  { href: '/contact',          label: 'Contact' },
-  { href: '/blog',             label: 'Blog' },
+// href: null = page non disponible, le lien sera désactivé
+const FOOTER_LINKS: { href: string | null; label: string }[] = [
+  { href: null,    label: 'Mentions légales' },
+  { href: null,    label: 'CGU' },
+  { href: null,    label: 'Contact' },
+  { href: null,    label: 'Blog' },
 ]
 
 export default function Footer() {
@@ -20,15 +21,25 @@ export default function Footer() {
 
           {/* Liens */}
           <nav className="flex flex-wrap justify-center gap-6">
-            {FOOTER_LINKS.map(({ href, label }) => (
-              <Link
-                key={href}
-                href={href}
-                className="text-sm text-[#9B9B9B] transition-colors hover:text-white"
-              >
-                {label}
-              </Link>
-            ))}
+            {FOOTER_LINKS.map(({ href, label }) =>
+              href ? (
+                <Link
+                  key={label}
+                  href={href}
+                  className="text-sm text-[#9B9B9B] transition-colors hover:text-white"
+                >
+                  {label}
+                </Link>
+              ) : (
+                <span
+                  key={label}
+                  className="cursor-not-allowed text-sm text-[#9B9B9B]/40 select-none"
+                  title="Bientôt disponible"
+                >
+                  {label}
+                </span>
+              )
+            )}
           </nav>
 
           {/* Copyright */}
