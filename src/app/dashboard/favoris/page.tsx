@@ -19,24 +19,24 @@ export default async function FavorisPage() {
   return (
     <>
       <div className="mb-8 flex items-center gap-3">
-        <span className="flex h-10 w-10 items-center justify-center rounded-full bg-[#FDE8F4]">
-          <Heart size={20} className="fill-[#E91E8C] stroke-[#E91E8C]" />
+        <span className="flex h-10 w-10 items-center justify-center rounded-full bg-brand-muted">
+          <Heart size={20} className="fill-[#7C3AED] stroke-[#7C3AED]" />
         </span>
         <div>
-          <h1 className="text-2xl font-bold text-[#0A0A0A]">Mes favoris</h1>
-          <p className="text-sm text-[#6B6B6B]">
+          <h1 className="text-2xl font-bold text-foreground">Mes favoris</h1>
+          <p className="text-sm text-text-secondary">
             {favorites.length} espace{favorites.length !== 1 ? 's' : ''} sauvegardé{favorites.length !== 1 ? 's' : ''}
           </p>
         </div>
       </div>
 
       {favorites.length === 0 ? (
-        <div className="flex flex-col items-center gap-4 rounded-2xl border border-[#E5E5E5] bg-white py-20 text-center">
-          <Search size={32} className="text-[#9B9B9B]" aria-hidden />
-          <p className="text-sm text-[#9B9B9B]">Vous n&apos;avez pas encore sauvegardé d&apos;espace.</p>
+        <div className="flex flex-col items-center gap-4 rounded-2xl border border-border-custom bg-white py-20 text-center">
+          <Search size={32} className="text-text-muted" aria-hidden />
+          <p className="text-sm text-text-muted">Vous n&apos;avez pas encore sauvegardé d&apos;espace.</p>
           <Link
             href="/explorer"
-            className="inline-flex items-center gap-2 rounded-full border border-[#E5E5E5] px-5 py-2 text-sm font-medium text-[#0A0A0A] transition-colors hover:border-[#0A0A0A]"
+            className="inline-flex items-center gap-2 rounded-full border border-border-custom px-5 py-2 text-sm font-medium text-foreground transition-colors hover:border-[#0A0A0A]"
           >
             Explorer les espaces →
           </Link>

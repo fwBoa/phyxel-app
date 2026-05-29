@@ -48,13 +48,13 @@ export default function ExplorerClient({ initialSpaces, activeType, activeCity, 
   const hasFilters = activeType || activeCity || activeMaxPrice
 
   return (
-    <div className="min-h-screen bg-[#F9F9F9]">
+    <div className="min-h-screen bg-bg-secondary">
 
       {/* Bandeau header */}
-      <div className="bg-white border-b border-[#E5E5E5]">
+      <div className="bg-white border-b border-border-custom">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-8">
-          <h1 className="text-3xl font-bold text-[#0A0A0A]">Explorer les espaces</h1>
-          <p className="mt-1 text-sm text-[#6B6B6B]">
+          <h1 className="text-3xl font-bold text-foreground">Explorer les espaces</h1>
+          <p className="mt-1 text-sm text-text-secondary">
             Trouvez l&apos;espace idéal pour votre pop-up, showroom ou événement.
           </p>
 
@@ -66,8 +66,8 @@ export default function ExplorerClient({ initialSpaces, activeType, activeCity, 
               onClick={() => navigate({ type: null })}
               className={`rounded-full border px-4 py-1.5 text-sm font-medium transition-colors ${
                 !activeType
-                  ? 'border-[#0A0A0A] bg-[#0A0A0A] text-white'
-                  : 'border-[#E5E5E5] bg-white text-[#6B6B6B] hover:border-[#0A0A0A] hover:text-[#0A0A0A]'
+                  ? 'border-[#0A0A0A] bg-foreground text-white'
+                  : 'border-border-custom bg-white text-text-secondary hover:border-[#0A0A0A] hover:text-foreground'
               }`}
             >
               Tous
@@ -79,8 +79,8 @@ export default function ExplorerClient({ initialSpaces, activeType, activeCity, 
                 onClick={() => navigate({ type: activeType === value ? null : value })}
                 className={`rounded-full border px-4 py-1.5 text-sm font-medium transition-colors ${
                   activeType === value
-                    ? 'border-[#E91E8C] bg-[#E91E8C] text-white'
-                    : 'border-[#E5E5E5] bg-white text-[#6B6B6B] hover:border-[#E91E8C] hover:text-[#E91E8C]'
+                    ? 'border-primary bg-primary text-white'
+                    : 'border-border-custom bg-white text-text-secondary hover:border-primary hover:text-primary'
                 }`}
               >
                 {label}
@@ -91,11 +91,11 @@ export default function ExplorerClient({ initialSpaces, activeType, activeCity, 
 
             {/* Ville */}
             <div className="relative flex items-center">
-              <MapPin size={14} className="absolute left-3 text-[#9B9B9B] pointer-events-none" />
+              <MapPin size={14} className="absolute left-3 text-text-muted pointer-events-none" />
               <select
                 value={activeCity ?? ''}
                 onChange={(e) => navigate({ city: e.target.value || null })}
-                className="rounded-full border border-[#E5E5E5] bg-white pl-8 pr-4 py-1.5 text-sm text-[#6B6B6B] focus:outline-none focus:border-[#0A0A0A] focus:text-[#0A0A0A] transition-colors appearance-none cursor-pointer"
+                className="rounded-full border border-border-custom bg-white pl-8 pr-4 py-1.5 text-sm text-text-secondary focus:outline-none focus:border-[#0A0A0A] focus:text-foreground transition-colors appearance-none cursor-pointer"
               >
                 <option value="">Toutes les villes</option>
                 {CITIES.map((city) => (
@@ -106,11 +106,11 @@ export default function ExplorerClient({ initialSpaces, activeType, activeCity, 
 
             {/* Budget */}
             <div className="relative flex items-center">
-              <Euro size={14} className="absolute left-3 text-[#9B9B9B] pointer-events-none" />
+              <Euro size={14} className="absolute left-3 text-text-muted pointer-events-none" />
               <select
                 value={activeMaxPrice ? String(activeMaxPrice) : ''}
                 onChange={(e) => navigate({ maxPrice: e.target.value || null })}
-                className="rounded-full border border-[#E5E5E5] bg-white pl-8 pr-4 py-1.5 text-sm text-[#6B6B6B] focus:outline-none focus:border-[#0A0A0A] focus:text-[#0A0A0A] transition-colors appearance-none cursor-pointer"
+                className="rounded-full border border-border-custom bg-white pl-8 pr-4 py-1.5 text-sm text-text-secondary focus:outline-none focus:border-[#0A0A0A] focus:text-foreground transition-colors appearance-none cursor-pointer"
               >
                 {BUDGET_OPTIONS.map(({ label, value }) => (
                   <option key={label} value={value}>{label}</option>
@@ -122,7 +122,7 @@ export default function ExplorerClient({ initialSpaces, activeType, activeCity, 
             {hasFilters && (
               <button
                 onClick={() => navigate({ type: null, city: null, maxPrice: null })}
-                className="flex items-center gap-1 rounded-full border border-[#E5E5E5] bg-white px-3 py-1.5 text-sm text-[#6B6B6B] hover:border-[#EF4444] hover:text-[#EF4444] transition-colors"
+                className="flex items-center gap-1 rounded-full border border-border-custom bg-white px-3 py-1.5 text-sm text-text-secondary hover:border-[#EF4444] hover:text-match-low transition-colors"
               >
                 <X size={13} />
                 Réinitialiser
@@ -137,17 +137,17 @@ export default function ExplorerClient({ initialSpaces, activeType, activeCity, 
 
         {/* Filtres actifs + compteur */}
         <div className="mb-6 flex items-center justify-between">
-          <p className="text-sm text-[#6B6B6B]">
-            <span className="font-semibold text-[#0A0A0A]">{initialSpaces.length}</span>
+          <p className="text-sm text-text-secondary">
+            <span className="font-semibold text-foreground">{initialSpaces.length}</span>
             {' '}espace{initialSpaces.length !== 1 ? 's' : ''} trouvé{initialSpaces.length !== 1 ? 's' : ''}
-            {activeCity && <span> · <span className="text-[#E91E8C]">{activeCity}</span></span>}
+            {activeCity && <span> · <span className="text-primary">{activeCity}</span></span>}
             {activeType && (
-              <span> · <span className="text-[#E91E8C]">
+              <span> · <span className="text-primary">
                 {SPACE_TYPES.find((t) => t.value === activeType)?.label}
               </span></span>
             )}
             {activeMaxPrice && (
-              <span> · <span className="text-[#E91E8C]">≤ {activeMaxPrice.toLocaleString('fr-FR')} €/j</span></span>
+              <span> · <span className="text-primary">≤ {activeMaxPrice.toLocaleString('fr-FR')} €/j</span></span>
             )}
           </p>
         </div>
@@ -174,17 +174,17 @@ export default function ExplorerClient({ initialSpaces, activeType, activeCity, 
           <div className="flex flex-col items-center justify-center py-24 text-center">
             <div
               className="flex h-20 w-20 items-center justify-center rounded-full"
-              style={{ background: '#FDE8F4' }}
+              style={{ background: '#EDE9FE' }}
             >
-              <SlidersHorizontal size={32} className="text-[#E91E8C]" />
+              <SlidersHorizontal size={32} className="text-primary" />
             </div>
-            <p className="mt-5 text-lg font-semibold text-[#0A0A0A]">Aucun espace trouvé</p>
-            <p className="mt-2 text-sm text-[#6B6B6B]">
+            <p className="mt-5 text-lg font-semibold text-foreground">Aucun espace trouvé</p>
+            <p className="mt-2 text-sm text-text-secondary">
               Essayez de modifier vos filtres pour élargir la recherche.
             </p>
             <button
               onClick={() => navigate({ type: null, city: null, maxPrice: null })}
-              className="mt-6 rounded-full bg-[#E91E8C] px-6 py-2.5 text-sm font-semibold text-white hover:bg-[#B0156A] transition-colors"
+              className="mt-6 rounded-full bg-primary px-6 py-2.5 text-sm font-semibold text-white hover:bg-brand-dark transition-colors"
             >
               Voir tous les espaces
             </button>

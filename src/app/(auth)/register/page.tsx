@@ -49,7 +49,7 @@ export default function RegisterPage() {
       {/* Left panel — hidden on mobile */}
       <aside
         className="hidden flex-col justify-between p-10 md:flex"
-        style={{ background: 'linear-gradient(135deg, #E91E8C, #C026D3)' }}
+        style={{ background: 'linear-gradient(135deg, #7C3AED, #A78BFA)' }}
       >
         <PhyxelLogo dark />
         <div>
@@ -85,7 +85,7 @@ export default function RegisterPage() {
                 type="text" required value={firstName}
                 onChange={(e) => setFirstName(e.target.value)}
                 placeholder="Marie"
-                className="mt-1.5 w-full rounded-xl border border-gray-200 bg-white px-4 py-2.5 text-sm outline-none focus:border-[#E91E8C] focus:ring-2 focus:ring-[#E91E8C]/20"
+                className="mt-1.5 w-full rounded-xl border border-gray-200 bg-white px-4 py-2.5 text-sm outline-none focus:border-primary focus:ring-2 focus:ring-primary/20"
               />
             </label>
             <label className="block text-sm">
@@ -94,7 +94,7 @@ export default function RegisterPage() {
                 type="text" required value={lastName}
                 onChange={(e) => setLastName(e.target.value)}
                 placeholder="Dupont"
-                className="mt-1.5 w-full rounded-xl border border-gray-200 bg-white px-4 py-2.5 text-sm outline-none focus:border-[#E91E8C] focus:ring-2 focus:ring-[#E91E8C]/20"
+                className="mt-1.5 w-full rounded-xl border border-gray-200 bg-white px-4 py-2.5 text-sm outline-none focus:border-primary focus:ring-2 focus:ring-primary/20"
               />
             </label>
           </div>
@@ -105,7 +105,7 @@ export default function RegisterPage() {
               type="email" required value={email}
               onChange={(e) => setEmail(e.target.value)}
               placeholder="vous@entreprise.fr"
-              className="mt-1.5 w-full rounded-xl border border-gray-200 bg-white px-4 py-2.5 text-sm outline-none focus:border-[#E91E8C] focus:ring-2 focus:ring-[#E91E8C]/20"
+              className="mt-1.5 w-full rounded-xl border border-gray-200 bg-white px-4 py-2.5 text-sm outline-none focus:border-primary focus:ring-2 focus:ring-primary/20"
             />
           </label>
 
@@ -115,7 +115,7 @@ export default function RegisterPage() {
               type="text" required value={brandName}
               onChange={(e) => setBrandName(e.target.value)}
               placeholder="Ma Marque"
-              className="mt-1.5 w-full rounded-xl border border-gray-200 bg-white px-4 py-2.5 text-sm outline-none focus:border-[#E91E8C] focus:ring-2 focus:ring-[#E91E8C]/20"
+              className="mt-1.5 w-full rounded-xl border border-gray-200 bg-white px-4 py-2.5 text-sm outline-none focus:border-primary focus:ring-2 focus:ring-primary/20"
             />
           </label>
 
@@ -125,7 +125,7 @@ export default function RegisterPage() {
               type="url" value={website}
               onChange={(e) => setWebsite(e.target.value)}
               placeholder="https://mamarque.fr"
-              className="mt-1.5 w-full rounded-xl border border-gray-200 bg-white px-4 py-2.5 text-sm outline-none focus:border-[#E91E8C] focus:ring-2 focus:ring-[#E91E8C]/20"
+              className="mt-1.5 w-full rounded-xl border border-gray-200 bg-white px-4 py-2.5 text-sm outline-none focus:border-primary focus:ring-2 focus:ring-primary/20"
             />
           </label>
 
@@ -135,7 +135,7 @@ export default function RegisterPage() {
               type="password" required minLength={8} value={password}
               onChange={(e) => setPassword(e.target.value)}
               placeholder="8 caractères minimum"
-              className="mt-1.5 w-full rounded-xl border border-gray-200 bg-white px-4 py-2.5 text-sm outline-none focus:border-[#E91E8C] focus:ring-2 focus:ring-[#E91E8C]/20"
+              className="mt-1.5 w-full rounded-xl border border-gray-200 bg-white px-4 py-2.5 text-sm outline-none focus:border-primary focus:ring-2 focus:ring-primary/20"
             />
           </label>
 
@@ -157,7 +157,7 @@ export default function RegisterPage() {
 
           <p className="mt-4 text-center text-sm text-gray-500">
             Déjà inscrit ?{' '}
-            <Link href="/login" className="font-medium text-[#E91E8C] hover:underline">
+            <Link href="/login" className="font-medium text-primary hover:underline">
               Se connecter
             </Link>
           </p>
@@ -172,7 +172,7 @@ function PhyxelLogo({ dark = false }: { dark?: boolean }) {
     <Link href="/" className="flex items-center gap-2 font-semibold tracking-tight">
       <span
         className="grid h-7 w-7 place-items-center rounded-lg text-sm font-bold text-white"
-        style={{ background: 'linear-gradient(135deg, #E91E8C, #C026D3)' }}
+        style={{ background: 'linear-gradient(135deg, #7C3AED, #A78BFA)' }}
       >
         P
       </span>

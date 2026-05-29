@@ -18,12 +18,12 @@ export default function FeaturedSpacesSection({ spaces }: FeaturedSpacesSectionP
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="flex items-end justify-between">
           <div>
-            <h2 className="text-3xl font-bold text-[#0A0A0A]">Espaces à la une</h2>
-            <p className="mt-2 text-[#6B6B6B]">Les espaces les plus plébiscités de la semaine.</p>
+            <h2 className="text-3xl font-bold text-foreground">Espaces à la une</h2>
+            <p className="mt-2 text-text-secondary">Les espaces les plus plébiscités de la semaine.</p>
           </div>
           <Link
             href="/explorer"
-            className="flex items-center gap-1 text-sm font-semibold text-[#E91E8C] hover:text-[#B0156A] transition-colors"
+            className="flex items-center gap-1 text-sm font-semibold text-primary hover:text-[#5B21B6] transition-colors"
           >
             Voir tout <ArrowRight size={16} />
           </Link>
@@ -49,11 +49,11 @@ export default function FeaturedSpacesSection({ spaces }: FeaturedSpacesSectionP
             </div>
           ) : (
             <div className="flex flex-col items-center gap-4 py-16 text-center">
-              <Search size={32} className="text-[#9B9B9B]" aria-hidden />
-              <p className="text-sm text-[#9B9B9B]">Les premiers espaces arrivent bientôt.</p>
+              <Search size={32} className="text-text-muted" aria-hidden />
+              <p className="text-sm text-text-muted">Les premiers espaces arrivent bientôt.</p>
               <Link
                 href="/explorer"
-                className="inline-flex items-center gap-2 rounded-full border border-[#E5E5E5] px-5 py-2 text-sm font-medium text-[#0A0A0A] transition-colors hover:border-[#0A0A0A]"
+                className="inline-flex items-center gap-2 rounded-full border border-border-custom px-5 py-2 text-sm font-medium text-foreground transition-colors hover:border-[#0A0A0A]"
               >
                 Explorer les espaces <ArrowRight size={14} />
               </Link>

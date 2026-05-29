@@ -35,8 +35,8 @@ export default function WhyPhyxelSection() {
     <section id="pourquoi-phyxel" className="bg-white py-20">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="text-center">
-          <h2 className="text-3xl font-bold text-[#0A0A0A]">Pourquoi choisir Phyxel</h2>
-          <p className="mt-4 text-[#6B6B6B]">
+          <h2 className="text-3xl font-bold text-foreground">Pourquoi choisir Phyxel</h2>
+          <p className="mt-4 text-text-secondary">
             Une plateforme pensée pour les marques e-commerce qui veulent passer au physique.
           </p>
         </div>
@@ -45,16 +45,16 @@ export default function WhyPhyxelSection() {
           {PILLARS.map(({ Icon, title, desc }) => (
             <div
               key={title}
-              className="flex flex-col items-center rounded-2xl border border-[#E5E5E5] p-6 text-center transition-shadow hover:shadow-md"
+              className="flex flex-col items-center rounded-2xl border border-border-custom p-6 text-center transition-shadow hover:shadow-md"
             >
               <span
                 aria-hidden
-                className="flex h-12 w-12 items-center justify-center rounded-full bg-[#FDE8F4] text-[#E91E8C]"
+                className="flex h-12 w-12 items-center justify-center rounded-full bg-brand-muted text-primary"
               >
                 <Icon size={22} strokeWidth={1.75} />
               </span>
-              <h3 className="mt-4 text-base font-semibold text-[#0A0A0A]">{title}</h3>
-              <p className="mt-2 text-sm leading-relaxed text-[#6B6B6B]">{desc}</p>
+              <h3 className="mt-4 text-base font-semibold text-foreground">{title}</h3>
+              <p className="mt-2 text-sm leading-relaxed text-text-secondary">{desc}</p>
             </div>
           ))}
         </div>

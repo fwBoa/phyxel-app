@@ -31,9 +31,9 @@ export default async function DashboardLayout({
   return (
     <div className="flex min-h-screen">
       {/* Sidebar */}
-      <aside className="hidden w-60 shrink-0 border-r border-[#E5E5E5] bg-white md:flex md:flex-col">
+      <aside className="hidden w-60 shrink-0 border-r border-border-custom bg-white md:flex md:flex-col">
         <div className="p-6">
-          <Link href="/" className="text-lg font-bold text-[#0A0A0A]">Phyxel</Link>
+          <Link href="/" className="text-lg font-bold text-foreground">Phyxel</Link>
         </div>
 
         <nav className="flex flex-1 flex-col gap-1 px-3">
@@ -41,7 +41,7 @@ export default async function DashboardLayout({
             <Link
               key={href}
               href={href}
-              className="flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium text-[#6B6B6B] transition-colors hover:bg-[#F9F9F9] hover:text-[#0A0A0A]"
+              className="flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium text-text-secondary transition-colors hover:bg-bg-secondary hover:text-foreground"
             >
               <Icon size={18} />
               {label}
@@ -51,7 +51,7 @@ export default async function DashboardLayout({
           {profile?.is_admin && (
             <Link
               href="/admin/espaces"
-              className="flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium text-[#E91E8C] transition-colors hover:bg-[#FDE8F4]"
+              className="flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium text-primary transition-colors hover:bg-brand-muted"
             >
               <Shield size={18} />
               Administration
@@ -68,7 +68,7 @@ export default async function DashboardLayout({
           }}>
             <button
               type="submit"
-              className="flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium text-[#6B6B6B] transition-colors hover:bg-[#F9F9F9] hover:text-[#EF4444]"
+              className="flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium text-text-secondary transition-colors hover:bg-bg-secondary hover:text-match-low"
             >
               <LogOut size={18} />
               Déconnexion
@@ -78,7 +78,7 @@ export default async function DashboardLayout({
       </aside>
 
       {/* Contenu */}
-      <main className="flex-1 bg-[#F9F9F9]">
+      <main className="flex-1 bg-bg-secondary">
         <div className="mx-auto max-w-5xl px-4 py-8 sm:px-8">
           {children}
         </div>
