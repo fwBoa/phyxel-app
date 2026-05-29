@@ -18,11 +18,11 @@ const STEPS = [
 
 export default function HowItWorksSection() {
   return (
-    <section id="comment-ca-marche" className="bg-[#F9F9F9] py-20">
+    <section id="comment-ca-marche" className="bg-bg-secondary py-20">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="text-center">
-          <h2 className="text-3xl font-bold text-[#0A0A0A]">Comment ça marche</h2>
-          <p className="mt-4 text-[#6B6B6B]">
+          <h2 className="text-3xl font-bold text-foreground">Comment ça marche</h2>
+          <p className="mt-4 text-text-secondary">
             De la création de votre profil à la réservation en quelques étapes simples.
           </p>
         </div>
@@ -41,12 +41,12 @@ export default function HowItWorksSection() {
               )}
 
               {/* Numéro */}
-              <div className="relative flex h-14 w-14 items-center justify-center rounded-full bg-[#E91E8C] text-xl font-bold text-white shadow-lg">
+              <div className="relative flex h-14 w-14 items-center justify-center rounded-full bg-primary text-xl font-bold text-white shadow-lg">
                 {number}
               </div>
 
-              <h3 className="mt-6 text-lg font-semibold text-[#0A0A0A]">{title}</h3>
-              <p className="mt-3 text-sm leading-relaxed text-[#6B6B6B]">{desc}</p>
+              <h3 className="mt-6 text-lg font-semibold text-foreground">{title}</h3>
+              <p className="mt-3 text-sm leading-relaxed text-text-secondary">{desc}</p>
             </div>
           ))}
         </div>

@@ -41,7 +41,7 @@ export default function FavoriteButton({
           size={iconSize}
           className={`transition-all duration-150 ${
             isFavorited
-              ? 'fill-[#E91E8C] stroke-[#E91E8C]'
+              ? 'fill-[#7C3AED] stroke-[#7C3AED]'
               : 'stroke-[#6B6B6B] fill-transparent'
           }`}
         />
@@ -55,14 +55,14 @@ export default function FavoriteButton({
       aria-label={isFavorited ? 'Retirer des favoris' : 'Ajouter aux favoris'}
       className={`flex items-center gap-2 rounded-full border px-4 py-2 text-sm font-medium transition-all active:scale-95 ${
         isFavorited
-          ? 'border-[#E91E8C] bg-[#FDE8F4] text-[#E91E8C]'
-          : 'border-[#E5E5E5] bg-white text-[#6B6B6B] hover:border-[#E91E8C] hover:text-[#E91E8C]'
+          ? 'border-primary bg-brand-muted text-primary'
+          : 'border-border-custom bg-white text-text-secondary hover:border-primary hover:text-primary'
       }`}
     >
       <Heart
         size={iconSize}
         className={`transition-all duration-150 ${
-          isFavorited ? 'fill-[#E91E8C] stroke-[#E91E8C]' : 'fill-transparent'
+          isFavorited ? 'fill-[#7C3AED] stroke-[#7C3AED]' : 'fill-transparent'
         }`}
       />
       {isFavorited ? 'Sauvegardé' : 'Sauvegarder'}

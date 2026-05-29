@@ -11,7 +11,7 @@ export default function DeleteButton({ deleteAction }: DeleteButtonProps) {
     <form action={deleteAction}>
       <button
         type="submit"
-        className="rounded-lg p-2 text-[#6B6B6B] hover:bg-[#EF4444]/10 hover:text-[#EF4444] transition-colors"
+        className="rounded-lg p-2 text-text-secondary hover:bg-match-low/10 hover:text-match-low transition-colors"
         title="Supprimer"
         onClick={(e) => {
           if (!confirm('Supprimer cet espace ? Cette action est irréversible.')) {

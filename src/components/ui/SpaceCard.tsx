@@ -32,12 +32,12 @@ export default function SpaceCard({
     <Link
       href={`/espaces/${id}`}
       aria-label={`${title} — ${TYPE_LABELS[type] ?? type}, ${city}${district ? `, ${district}` : ''}`}
-      className={`group flex flex-col overflow-hidden rounded-2xl border border-[#E5E5E5] bg-white transition-shadow hover:shadow-lg ${
+      className={`group flex flex-col overflow-hidden rounded-2xl border border-border-custom bg-white transition-shadow hover:shadow-lg ${
         !isAvailable ? 'opacity-60 pointer-events-none' : ''
       }`}
     >
       {/* Photo */}
-      <div className="relative h-48 w-full overflow-hidden bg-[#F9F9F9]">
+      <div className="relative h-48 w-full overflow-hidden bg-bg-secondary">
         {coverUrl ? (
           <Image
             src={coverUrl}
@@ -46,12 +46,12 @@ export default function SpaceCard({
             className="object-cover transition-transform duration-300 group-hover:scale-105"
           />
         ) : (
-          <div className="flex h-full items-center justify-center text-[#9B9B9B]">
+          <div className="flex h-full items-center justify-center text-text-muted">
             <Maximize2 size={32} />
           </div>
         )}
         {/* Badge type */}
-        <span className="absolute left-3 top-3 rounded-full bg-white/90 px-3 py-1 text-xs font-semibold text-[#0A0A0A] backdrop-blur-sm">
+        <span className="absolute left-3 top-3 rounded-full bg-white/90 px-3 py-1 text-xs font-semibold text-foreground backdrop-blur-sm">
           {TYPE_LABELS[type] ?? type}
         </span>
         {/* Bouton favori */}
@@ -62,7 +62,7 @@ export default function SpaceCard({
         )}
         {/* Badge disponibilité */}
         {!isAvailable && (
-          <span className="absolute right-3 top-3 rounded-full bg-[#EF4444]/10 px-2 py-1 text-xs font-medium text-[#EF4444]">
+          <span className="absolute right-3 top-3 rounded-full bg-match-low/10 px-2 py-1 text-xs font-medium text-match-low">
             Indisponible
           </span>
         )}
@@ -71,24 +71,24 @@ export default function SpaceCard({
       {/* Contenu */}
       <div className="flex flex-1 flex-col gap-3 p-4">
         <div className="flex items-start justify-between gap-2">
-          <h3 className="text-base font-semibold text-[#0A0A0A] leading-snug line-clamp-2">
+          <h3 className="text-base font-semibold text-foreground leading-snug line-clamp-2">
             {title}
           </h3>
           {matchScore !== undefined && <MatchScore score={matchScore} size="sm" />}
         </div>
 
-        <p className="flex items-center gap-1 text-sm text-[#6B6B6B]">
+        <p className="flex items-center gap-1 text-sm text-text-secondary">
           <MapPin size={14} className="shrink-0" />
           {city}{district ? `, ${district}` : ''}
         </p>
 
         {(areaSqm || priceDay) && (
-          <div className="mt-auto flex items-center justify-between border-t border-[#E5E5E5] pt-3">
+          <div className="mt-auto flex items-center justify-between border-t border-border-custom pt-3">
             {areaSqm && (
-              <span className="text-sm text-[#6B6B6B]">{areaSqm} m²</span>
+              <span className="text-sm text-text-secondary">{areaSqm} m²</span>
             )}
             {priceDay && (
-              <span className="flex items-center gap-0.5 text-sm font-semibold text-[#0A0A0A]">
+              <span className="flex items-center gap-0.5 text-sm font-semibold text-foreground">
                 <Euro size={14} />
                 {priceDay.toLocaleString('fr-FR')} / jour
               </span>

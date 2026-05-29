@@ -12,19 +12,19 @@ export const COLORS = {
     inverse:   '#FFFFFF',
   },
 
-  // Accent rose/magenta — CTAs, badges, highlights
+  // Accent violet lavender — CTAs, badges, highlights
   brand: {
-    primary:   '#E91E8C',
-    light:     '#F5A0CF',
-    dark:      '#B0156A',
-    muted:     '#FDE8F4',
+    primary:   '#7C3AED',
+    light:     '#A78BFA',
+    dark:      '#5B21B6',
+    muted:     '#EDE9FE',
     // CTA gradient end — violet accent used in hero CTA block
     violet:    '#9B5DE5',
   },
 
   border: {
     default:   '#E5E5E5',
-    focus:     '#E91E8C',
+    focus:     '#7C3AED',
   },
 
   status: {

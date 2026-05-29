@@ -3,10 +3,10 @@ import { ArrowRight } from 'lucide-react'
 
 export default function CtaSection() {
   return (
-    <section className="bg-[#F9F9F9] py-16 px-4 sm:px-6 lg:px-8">
+    <section className="bg-bg-secondary py-16 px-4 sm:px-6 lg:px-8">
       <div className="mx-auto max-w-7xl">
         <div
-          className="rounded-3xl bg-[linear-gradient(135deg,#9B5DE5_0%,#E91E8C_100%)] px-8 py-16 text-center text-white"
+          className="rounded-3xl bg-[linear-gradient(135deg,#9B5DE5_0%,#7C3AED_100%)] px-8 py-16 text-center text-white"
         >
           <h2 className="text-3xl font-bold sm:text-4xl">
             Prêt à passer du digital au réel&nbsp;?
@@ -16,7 +16,7 @@ export default function CtaSection() {
           </p>
           <Link
             href="/register"
-            className="mt-8 inline-flex items-center gap-2 rounded-full bg-white px-8 py-3 text-sm font-semibold text-[#0A0A0A] transition-opacity hover:opacity-90"
+            className="mt-8 inline-flex items-center gap-2 rounded-full bg-white px-8 py-3 text-sm font-semibold text-foreground transition-opacity hover:opacity-90"
           >
             Commencer gratuitement
             <ArrowRight size={16} />
