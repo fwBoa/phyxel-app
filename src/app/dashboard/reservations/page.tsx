@@ -28,7 +28,7 @@ export default async function ReservationsPage() {
       ) : (
         <div className="flex flex-col gap-4">
           {bookings.map((booking) => {
-            const space = (booking as any).spaces
+            const space = (booking as { spaces?: { id: string; title: string; city: string; district: string | null } }).spaces
             const days  = Math.ceil(
               (new Date(booking.end_date).getTime() - new Date(booking.start_date).getTime()) / 86400000
             )
