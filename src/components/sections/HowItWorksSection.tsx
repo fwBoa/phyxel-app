@@ -27,21 +27,23 @@ export default function HowItWorksSection() {
           </p>
         </div>
 
+        {/* Wrapper relatif pour les connecteurs */}
         <div className="mt-16 grid grid-cols-1 gap-8 md:grid-cols-3">
-          {STEPS.map(({ number, title, desc }) => (
+          {STEPS.map(({ number, title, desc }, i) => (
             <div key={number} className="relative flex flex-col items-center text-center">
-              {/* Numéro */}
-              <div className="flex h-14 w-14 items-center justify-center rounded-full bg-[#E91E8C] text-xl font-bold text-white shadow-lg">
-                {number}
-              </div>
-
-              {/* Ligne de connexion (desktop) */}
-              {number !== '3' && (
+              {/* Ligne de connexion entre les cercles (desktop uniquement) */}
+              {i < STEPS.length - 1 && (
                 <div
                   aria-hidden
-                  className="absolute left-[calc(50%+2rem)] top-7 hidden h-px w-[calc(100%-4rem)] bg-[#E5E5E5] md:block"
+                  className="absolute top-7 hidden md:block"
+                  style={{ left: 'calc(50% + 1.75rem)', right: 'calc(-50% + 1.75rem)', height: '1px', background: '#E5E5E5' }}
                 />
               )}
+
+              {/* Numéro */}
+              <div className="relative flex h-14 w-14 items-center justify-center rounded-full bg-[#E91E8C] text-xl font-bold text-white shadow-lg">
+                {number}
+              </div>
 
               <h3 className="mt-6 text-lg font-semibold text-[#0A0A0A]">{title}</h3>
               <p className="mt-3 text-sm leading-relaxed text-[#6B6B6B]">{desc}</p>

@@ -1,8 +1,12 @@
-import { notFound }     from 'next/navigation'
-import Image             from 'next/image'
-import { MapPin, Maximize2, Euro } from 'lucide-react'
-import { getSpaceById }  from '@/lib/queries/spaces'
-import BookingForm       from '@/components/features/BookingForm'
+import { notFound }        from 'next/navigation'
+import Image                from 'next/image'
+import { MapPin, Maximize2, Euro, CalendarDays } from 'lucide-react'
+import { getSpaceById }     from '@/lib/queries/spaces'
+import { isSpaceFavorited } from '@/lib/queries/favorites'
+import { getCurrentUser }   from '@/lib/queries/users'
+import MatchScore           from '@/components/ui/MatchScore'
+import BookingForm          from '@/components/features/BookingForm'
+import FavoriteButton       from '@/components/ui/FavoriteButton'
 
 type PageProps = { params: Promise<{ id: string }> }
 
@@ -19,6 +23,9 @@ export default async function SpaceDetailPage({ params }: PageProps) {
   const photos  = space.space_photos ?? []
   const cover   = photos.find((p) => p.is_cover) ?? photos[0]
   const gallery = photos.filter((p) => p !== cover)
+
+  const user            = await getCurrentUser()
+  const initialFavorited = user ? await isSpaceFavorited(user.id, space.id) : false
 
   return (
     <div className="mx-auto max-w-6xl px-4 py-12 sm:px-6 lg:px-8">
@@ -62,7 +69,10 @@ export default async function SpaceDetailPage({ params }: PageProps) {
               )}
             </div>
 
-            <h1 className="mt-4 text-3xl font-bold text-[#0A0A0A]">{space.title}</h1>
+            <div className="mt-4 flex flex-wrap items-start justify-between gap-3">
+              <h1 className="text-3xl font-bold text-[#0A0A0A]">{space.title}</h1>
+              <FavoriteButton spaceId={space.id} initialFavorited={initialFavorited} />
+            </div>
 
             <div className="mt-3 flex flex-wrap gap-4 text-sm text-[#6B6B6B]">
               <span className="flex items-center gap-1">
