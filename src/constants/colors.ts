@@ -18,11 +18,13 @@ export const COLORS = {
     light:     '#F5A0CF',
     dark:      '#B0156A',
     muted:     '#FDE8F4',
+    // CTA gradient end — violet accent used in hero CTA block
+    violet:    '#9B5DE5',
   },
 
   border: {
     default:   '#E5E5E5',
-    focus:     '#0A0A0A',
+    focus:     '#E91E8C',
   },
 
   status: {

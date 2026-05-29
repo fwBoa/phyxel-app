@@ -37,7 +37,7 @@ export default function RegisterPage() {
 
     setLoading(false)
     if (error) { setError(error.message); return }
-    router.push('/dashboard')
+    router.push('/')
     router.refresh()
   }
 

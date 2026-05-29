@@ -1,21 +1,30 @@
-const PILLARS = [
+import { Sparkles, Zap, Wallet, BarChart3 } from 'lucide-react'
+import type { LucideIcon } from 'lucide-react'
+
+type Pillar = {
+  Icon:  LucideIcon
+  title: string
+  desc:  string
+}
+
+const PILLARS: Pillar[] = [
   {
-    icon:  '✦',
+    Icon:  Sparkles,
     title: 'Recommandations personnalisées',
     desc:  'Notre algorithme analyse votre marque et vos objectifs pour vous proposer uniquement les espaces vraiment adaptés.',
   },
   {
-    icon:  '⚡',
+    Icon:  Zap,
     title: 'Gain de temps radical',
     desc:  'Fini la prospection manuelle. Trouvez et contactez le bon espace en quelques minutes, pas en plusieurs semaines.',
   },
   {
-    icon:  '●',
+    Icon:  Wallet,
     title: 'Flexibilité budgétaire',
     desc:  'Des options pour tous les budgets — du corner ponctuel au showroom longue durée. Vous maîtrisez vos coûts.',
   },
   {
-    icon:  '◎',
+    Icon:  BarChart3,
     title: 'Performance mesurable',
     desc:  'Suivez l\'impact de chaque pop-up grâce à votre tableau de bord : trafic, conversions, retour sur investissement.',
   },
@@ -33,16 +42,16 @@ export default function WhyPhyxelSection() {
         </div>
 
         <div className="mt-16 grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4">
-          {PILLARS.map(({ icon, title, desc }) => (
+          {PILLARS.map(({ Icon, title, desc }) => (
             <div
               key={title}
               className="flex flex-col items-center rounded-2xl border border-[#E5E5E5] p-6 text-center transition-shadow hover:shadow-md"
             >
               <span
-                className="flex h-12 w-12 items-center justify-center rounded-full text-xl"
-                style={{ background: '#FDE8F4', color: '#E91E8C' }}
+                aria-hidden
+                className="flex h-12 w-12 items-center justify-center rounded-full bg-[#FDE8F4] text-[#E91E8C]"
               >
-                {icon}
+                <Icon size={22} strokeWidth={1.75} />
               </span>
               <h3 className="mt-4 text-base font-semibold text-[#0A0A0A]">{title}</h3>
               <p className="mt-2 text-sm leading-relaxed text-[#6B6B6B]">{desc}</p>

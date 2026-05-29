@@ -12,15 +12,14 @@ export default function HeroSection() {
       {/* Fond décoratif */}
       <div
         aria-hidden
-        className="pointer-events-none absolute -top-40 right-0 h-[600px] w-[600px] rounded-full opacity-10"
-        style={{ background: 'radial-gradient(circle, #E91E8C 0%, transparent 70%)' }}
+        className="pointer-events-none absolute -top-40 right-0 h-[600px] w-[600px] rounded-full opacity-10 bg-[radial-gradient(circle,#E91E8C_0%,transparent_70%)]"
       />
 
       <div className="relative mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 text-center">
         {/* Titre */}
         <h1 className="text-5xl font-bold leading-tight tracking-tight text-[#0A0A0A] sm:text-6xl">
           Trouvez le lieu physique idéal{' '}
-          <span style={{ color: '#E91E8C' }}>pour faire vivre</span>{' '}
+          <span className="text-[#E91E8C]">pour faire vivre</span>{' '}
           votre marque e-commerce
         </h1>
 

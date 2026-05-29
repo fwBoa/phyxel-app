@@ -6,8 +6,7 @@ export default function CtaSection() {
     <section className="bg-[#F9F9F9] py-16 px-4 sm:px-6 lg:px-8">
       <div className="mx-auto max-w-7xl">
         <div
-          className="rounded-3xl px-8 py-16 text-center text-white"
-          style={{ background: 'linear-gradient(135deg, #9B5DE5 0%, #E91E8C 100%)' }}
+          className="rounded-3xl bg-[linear-gradient(135deg,#9B5DE5_0%,#E91E8C_100%)] px-8 py-16 text-center text-white"
         >
           <h2 className="text-3xl font-bold sm:text-4xl">
             Prêt à passer du digital au réel&nbsp;?
