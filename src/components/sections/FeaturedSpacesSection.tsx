@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import { ArrowRight } from 'lucide-react'
+import { ArrowRight, Search } from 'lucide-react'
 import SpaceCard from '@/components/ui/SpaceCard'
 import type { SpaceWithPhotos } from '@/types/spaces'
 
@@ -48,9 +48,16 @@ export default function FeaturedSpacesSection({ spaces }: FeaturedSpacesSectionP
               ))}
             </div>
           ) : (
-            <p className="text-center text-sm text-[#9B9B9B] py-12">
-              Les premiers espaces arrivent bientôt.
-            </p>
+            <div className="flex flex-col items-center gap-4 py-16 text-center">
+              <Search size={32} className="text-[#9B9B9B]" aria-hidden />
+              <p className="text-sm text-[#9B9B9B]">Les premiers espaces arrivent bientôt.</p>
+              <Link
+                href="/explorer"
+                className="inline-flex items-center gap-2 rounded-full border border-[#E5E5E5] px-5 py-2 text-sm font-medium text-[#0A0A0A] transition-colors hover:border-[#0A0A0A]"
+              >
+                Explorer les espaces <ArrowRight size={14} />
+              </Link>
+            </div>
           )}
         </div>
       </div>

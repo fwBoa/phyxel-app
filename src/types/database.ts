@@ -117,6 +117,27 @@ export type Database = {
         }
         Relationships: []
       }
+      favorites: {
+        Row: {
+          id:         string
+          user_id:    string
+          space_id:   string
+          created_at: string
+        }
+        Insert: {
+          id?:         string
+          user_id:     string
+          space_id:    string
+          created_at?: string
+        }
+        Update: {
+          id?:         string
+          user_id?:    string
+          space_id?:   string
+          created_at?: string
+        }
+        Relationships: []
+      }
       bookings: {
         Row: {
           id:          string
@@ -170,6 +191,9 @@ export type SpaceUpdateRow    = Database['public']['Tables']['spaces']['Update']
 export type SpacePhotoRow        = Database['public']['Tables']['space_photos']['Row']
 export type SpacePhotoInsertRow  = Database['public']['Tables']['space_photos']['Insert']
 export type SpacePhotoUpdateRow  = Database['public']['Tables']['space_photos']['Update']
+
+export type FavoriteRow       = Database['public']['Tables']['favorites']['Row']
+export type FavoriteInsertRow = Database['public']['Tables']['favorites']['Insert']
 
 export type BookingRow        = Database['public']['Tables']['bookings']['Row']
 export type BookingInsertRow  = Database['public']['Tables']['bookings']['Insert']
