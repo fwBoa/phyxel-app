@@ -1,26 +1,59 @@
-@import "tailwindcss";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
+@layer base {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
+    --background: 0 0% 100%;
+    --foreground: 0 0% 4%;
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+    --card: 0 0% 100%;
+    --card-foreground: 0 0% 4%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 0 0% 4%;
+
+    --primary: 328 83% 51%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 0 0% 98%;
+    --secondary-foreground: 0 0% 4%;
+
+    --muted: 0 0% 98%;
+    --muted-foreground: 0 0% 42%;
+
+    --accent: 0 0% 98%;
+    --accent-foreground: 0 0% 4%;
+
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 0 0% 90%;
+    --input: 0 0% 90%;
+    --ring: 0 0% 4%;
+
+    --radius: 0.625rem;
+
+    --gradient-hero: linear-gradient(135deg, #E91E8C 0%, #B0156A 100%);
+    --gradient-soft: linear-gradient(135deg, #FDE8F4 0%, #FFFFFF 100%);
+
+    --shadow-card:
+      0 0 0 1px rgba(0, 0, 0, 0.04),
+      0 1px 2px -1px rgba(0, 0, 0, 0.08),
+      0 4px 4px -2px rgba(0, 0, 0, 0.08);
+
+    --shadow-elegant:
+      0 0 0 1px rgba(0, 0, 0, 0.04),
+      0 2px 4px -1px rgba(0, 0, 0, 0.08),
+      0 8px 16px -4px rgba(0, 0, 0, 0.08);
+  }
+
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    font-feature-settings: "rlig" 1, "calt" 1;
+  }
 }
