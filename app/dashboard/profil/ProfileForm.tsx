@@ -1,6 +1,8 @@
 'use client'
 
 import { useState } from 'react'
+import AvatarUpload from './AvatarUpload'
+import { uploadAvatar } from './uploadAvatar'
 
 interface Profile {
   full_name: string | null
@@ -8,6 +10,7 @@ interface Profile {
   website: string | null
   bio: string | null
   role: 'brand' | 'host'
+  avatar_url: string | null
 }
 
 interface ProfileFormProps {
@@ -33,8 +36,11 @@ export default function ProfileForm({ profile, updateProfile }: ProfileFormProps
   }
 
   return (
-    <form action={handleSubmit} className="space-y-4 rounded-2xl border border-border bg-card p-6 shadow-card"
-    >
+    <div className="space-y-6">
+      <AvatarUpload currentUrl={profile.avatar_url} uploadAction={uploadAvatar} />
+
+      <form action={handleSubmit} className="space-y-4 rounded-2xl border border-border bg-card p-6 shadow-card"
+      >
       <div>
         <label htmlFor="full_name" className="block text-sm font-medium text-foreground mb-1"
         >
@@ -128,5 +134,6 @@ export default function ProfileForm({ profile, updateProfile }: ProfileFormProps
         Enregistrer les modifications
       </button>
     </form>
+    </div>
   )
 }
