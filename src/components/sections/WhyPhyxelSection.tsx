@@ -23,7 +23,7 @@ const PILLARS = [
 
 export default function WhyPhyxelSection() {
   return (
-    <section className="bg-white py-20">
+    <section id="pourquoi-phyxel" className="bg-white py-20">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="text-center">
           <h2 className="text-3xl font-bold text-[#0A0A0A]">Pourquoi choisir Phyxel</h2>

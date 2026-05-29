@@ -14,7 +14,7 @@ function getCoverUrl(space: SpaceWithPhotos): string | null {
 
 export default function FeaturedSpacesSection({ spaces }: FeaturedSpacesSectionProps) {
   return (
-    <section className="bg-white py-20">
+    <section id="explorer" className="bg-white py-20">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="flex items-end justify-between">
           <div>

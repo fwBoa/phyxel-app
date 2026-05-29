@@ -5,9 +5,9 @@ import { useState } from 'react'
 import { Menu, X } from 'lucide-react'
 
 const NAV_LINKS = [
-  { href: '/explorer',           label: 'Explorer' },
-  { href: '/comment-ca-marche',  label: 'Comment ça marche' },
-  { href: '/tarifs',             label: 'Tarifs' },
+  { href: '/explorer',             label: 'Explorer' },
+  { href: '/#comment-ca-marche',  label: 'Comment ça marche' },
+  { href: '/#pourquoi-phyxel',    label: 'Tarifs' },
 ]
 
 export default function Navbar() {
