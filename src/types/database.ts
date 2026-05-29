@@ -21,6 +21,7 @@ export type Database = {
           brand_name: string | null
           website:    string | null
           bio:        string | null
+          is_admin:   boolean | null
           created_at: string
         }
         Insert: {
@@ -31,6 +32,7 @@ export type Database = {
           brand_name?: string | null
           website?:   string | null
           bio?:       string | null
+          is_admin?:  boolean | null
           created_at?: string
         }
         Update: {
@@ -41,6 +43,7 @@ export type Database = {
           brand_name?: string | null
           website?:    string | null
           bio?:        string | null
+          is_admin?:   boolean | null
           created_at?: string
         }
         Relationships: []
