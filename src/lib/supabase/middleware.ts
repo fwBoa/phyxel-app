@@ -27,22 +27,44 @@ export async function updateSession(request: NextRequest) {
   )
 
   const { data: { user } } = await supabase.auth.getUser()
+  const pathname = request.nextUrl.pathname
 
   // Protège les routes dashboard
-  if (!user && request.nextUrl.pathname.startsWith('/dashboard')) {
+  if (!user && pathname.startsWith('/dashboard')) {
     const url = request.nextUrl.clone()
     url.pathname = '/login'
     return NextResponse.redirect(url)
   }
 
-  // Protège les routes admin
-  if (user && request.nextUrl.pathname.startsWith('/admin')) {
-    const { data: profile } = await supabase
+  // Récupère le profil si l'utilisateur est connecté
+  let profile: { is_admin?: boolean | null; has_completed_onboarding?: boolean | null } | null = null
+  if (user) {
+    const { data: p } = await supabase
       .from('profiles')
-      .select('is_admin')
+      .select('is_admin, has_completed_onboarding')
       .eq('id', user.id)
       .single()
+    profile = p ?? null
+  }
 
+  // Redirige vers l'onboarding si pas encore complété (sauf sur onboarding/login)
+  if (user && profile?.has_completed_onboarding === false) {
+    if (!pathname.startsWith('/onboarding') && !pathname.startsWith('/login')) {
+      const url = request.nextUrl.clone()
+      url.pathname = '/onboarding'
+      return NextResponse.redirect(url)
+    }
+  }
+
+  // Redirige depuis l'onboarding si déjà complété
+  if (user && profile?.has_completed_onboarding === true && pathname.startsWith('/onboarding')) {
+    const url = request.nextUrl.clone()
+    url.pathname = '/explorer'
+    return NextResponse.redirect(url)
+  }
+
+  // Protège les routes admin
+  if (user && pathname.startsWith('/admin')) {
     if (!profile?.is_admin) {
       const url = request.nextUrl.clone()
       url.pathname = '/dashboard'

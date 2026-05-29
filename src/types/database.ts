@@ -22,6 +22,7 @@ export type Database = {
           website:    string | null
           bio:        string | null
           is_admin:   boolean | null
+          has_completed_onboarding: boolean | null
           created_at: string
         }
         Insert: {
@@ -31,8 +32,9 @@ export type Database = {
           role:       'brand' | 'host'
           brand_name?: string | null
           website?:   string | null
-          bio?:       string | null
+          bio?:        string | null
           is_admin?:  boolean | null
+          has_completed_onboarding?: boolean | null
           created_at?: string
         }
         Update: {
@@ -44,6 +46,7 @@ export type Database = {
           website?:    string | null
           bio?:        string | null
           is_admin?:   boolean | null
+          has_completed_onboarding?: boolean | null
           created_at?: string
         }
         Relationships: []
@@ -171,6 +174,72 @@ export type Database = {
         }
         Relationships: []
       }
+      brand_preferences: {
+        Row: {
+          id:                  string
+          profile_id:          string
+          sector:              string | null
+          product_types:       string[] | null
+          main_city:           string | null
+          company_size:        string | null
+          approx_budget:       string | null
+          physical_objectives: Json | null
+          target_city:         string | null
+          desired_duration:    string | null
+          space_types:         Json | null
+          desired_area:        string | null
+          needed_services:     Json | null
+          max_budget:          string | null
+          preferred_districts: Json | null
+          desired_ambiance:    Json | null
+          ideal_dates:         string | null
+          created_at:          string
+          updated_at:          string
+        }
+        Insert: {
+          id?:                  string
+          profile_id:           string
+          sector?:              string | null
+          product_types?:       string[] | null
+          main_city?:           string | null
+          company_size?:        string | null
+          approx_budget?:       string | null
+          physical_objectives?: Json | null
+          target_city?:         string | null
+          desired_duration?:    string | null
+          space_types?:         Json | null
+          desired_area?:        string | null
+          needed_services?:     Json | null
+          max_budget?:          string | null
+          preferred_districts?: Json | null
+          desired_ambiance?:    Json | null
+          ideal_dates?:         string | null
+          created_at?:          string
+          updated_at?:          string
+        }
+        Update: {
+          id?:                  string
+          profile_id?:          string
+          sector?:              string | null
+          product_types?:       string[] | null
+          main_city?:           string | null
+          company_size?:        string | null
+          approx_budget?:       string | null
+          physical_objectives?: Json | null
+          target_city?:          string | null
+          desired_duration?:     string | null
+          space_types?:          Json | null
+          desired_area?:         string | null
+          needed_services?:      Json | null
+          max_budget?:           string | null
+          preferred_districts?:  Json | null
+          desired_ambiance?:     Json | null
+          ideal_dates?:          string | null
+          created_at?:           string
+          updated_at?:           string
+        }
+        Relationships: []
+      }
     }
     Views:          Record<string, never>
     Functions:      Record<string, never>
@@ -198,3 +267,7 @@ export type FavoriteInsertRow = Database['public']['Tables']['favorites']['Inser
 export type BookingRow        = Database['public']['Tables']['bookings']['Row']
 export type BookingInsertRow  = Database['public']['Tables']['bookings']['Insert']
 export type BookingUpdateRow  = Database['public']['Tables']['bookings']['Update']
+
+export type BrandPreferenceRow       = Database['public']['Tables']['brand_preferences']['Row']
+export type BrandPreferenceInsertRow = Database['public']['Tables']['brand_preferences']['Insert']
+export type BrandPreferenceUpdateRow = Database['public']['Tables']['brand_preferences']['Update']
