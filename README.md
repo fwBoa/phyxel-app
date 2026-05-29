@@ -6,7 +6,7 @@
 [![Supabase](https://img.shields.io/badge/Supabase-PostgreSQL_+_Auth-3ECF8E?logo=supabase)](https://supabase.com)
 [![shadcn/ui](https://img.shields.io/badge/shadcn%2Fui-Components-000000)](https://ui.shadcn.com)
 
-> *Du clic au trottoir.*
+> *donner du sens à vos ventes*
 
 ![Phyxel Landing Page](public/screenshots/landing-hero.webp)
 
