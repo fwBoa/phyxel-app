@@ -3,31 +3,41 @@
 import { createClient } from '@/lib/supabase/server'
 import { redirect } from 'next/navigation'
 
-export async function signup(formData: FormData) {
-  const supabase = await createClient()
+function mapAuthError(msg: string): string {
+  if (msg.includes('already registered')) return 'Cet email est déjà utilisé.'
+  if (msg.includes('Invalid email')) return 'Adresse email invalide.'
+  if (msg.includes('password')) return 'Mot de passe trop faible. Minimum 6 caractères.'
+  return 'Une erreur est survenue. Veuillez réessayer.'
+}
 
-  const email = formData.get('email') as string
-  const password = formData.get('password') as string
-  const full_name = formData.get('full_name') as string
-  const role = formData.get('role') as 'brand' | 'host'
+export async function signup(formData: FormData) {
+  const email = formData.get('email')?.toString()
+  const password = formData.get('password')?.toString()
+  const full_name = formData.get('full_name')?.toString()
+  const role = formData.get('role')?.toString() as 'brand' | 'host'
+
+  if (!email || !password || !full_name || !role) {
+    return redirect('/signup?error=' + encodeURIComponent('Tous les champs sont requis.'))
+  }
+
+  if (password.length < 6) {
+    return redirect('/signup?error=' + encodeURIComponent('Le mot de passe doit faire au moins 6 caractères.'))
+  }
+
+  const supabase = await createClient()
 
   const { data, error } = await supabase.auth.signUp({
     email,
     password,
     options: {
-      data: {
-        full_name,
-        role,
-      },
+      data: { full_name, role },
     },
   })
 
   if (error) {
-    return redirect('/signup?error=' + encodeURIComponent(error.message))
+    return redirect('/signup?error=' + encodeURIComponent(mapAuthError(error.message)))
   }
 
-  // The trigger handle_new_user will create the profile row automatically.
-  // But we need to update it with the full_name and role since trigger only gets raw_user_meta_data.
   if (data.user) {
     await supabase.from('profiles').update({ full_name, role }).eq('id', data.user.id)
   }

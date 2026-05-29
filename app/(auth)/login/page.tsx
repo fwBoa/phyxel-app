@@ -1,7 +1,15 @@
 import { login } from './actions'
 import Link from 'next/link'
 
-export default function LoginPage() {
+export default async function LoginPage({
+  searchParams,
+}: {
+  searchParams: Promise<Record<string, string | undefined>>
+}) {
+  const params = await searchParams
+  const error = params.error
+  const success = params.success
+
   return (
     <div className="min-h-screen bg-background flex flex-col items-center justify-center px-6">
       <div className="w-full max-w-sm space-y-6">
@@ -15,6 +23,17 @@ export default function LoginPage() {
             Connectez-vous pour accéder à votre espace.
           </p>
         </div>
+
+        {error && (
+          <div className="rounded-lg bg-destructive/10 p-3 text-sm text-destructive">
+            {error}
+          </div>
+        )}
+        {success && (
+          <div className="rounded-lg bg-success/10 p-3 text-sm text-success">
+            {success}
+          </div>
+        )}
 
         <form className="space-y-4">
           <div>
