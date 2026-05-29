@@ -3,11 +3,10 @@
 import { useState } from 'react'
 import Link from 'next/link'
 import type { BookingWithSpace } from '@/lib/queries/bookings'
-import { cancelBooking, confirmBooking } from './actions'
+import { cancelBooking } from './actions'
 
 interface BookingListProps {
   bookings: BookingWithSpace[]
-  userRole: 'brand' | 'host'
 }
 
 function statusLabel(status: string) {
@@ -36,7 +35,7 @@ function statusClasses(status: string) {
   }
 }
 
-export default function BookingList({ bookings, userRole }: BookingListProps) {
+export default function BookingList({ bookings }: BookingListProps) {
   const [message, setMessage] = useState('')
   const [error, setError] = useState('')
   const [filter, setFilter] = useState<'All' | 'pending' | 'confirmed' | 'cancelled'>('All')
@@ -58,16 +57,6 @@ export default function BookingList({ bookings, userRole }: BookingListProps) {
     }
   }
 
-  async function handleConfirm(id: string) {
-    setMessage('')
-    setError('')
-    const result = await confirmBooking(id)
-    if (result.error) setError(result.error)
-    if (result.success) {
-      setMessage(result.success)
-      window.location.reload()
-    }
-  }
 
   if (bookings.length === 0) {
     return (
@@ -76,14 +65,12 @@ export default function BookingList({ bookings, userRole }: BookingListProps) {
         <p className="text-muted-foreground"
         >Aucune réservation pour le moment.
         </p>
-        {userRole === 'brand' && (
-          <Link
-            href="/search"
-            className="mt-4 inline-block text-sm font-medium text-primary hover:underline"
-          >
-            Explorer les espaces →
-          </Link>
-        )}
+        <Link
+          href="/search"
+          className="mt-4 inline-block text-sm font-medium text-primary hover:underline"
+        >
+          Explorer les espaces →
+        </Link>
       </div>
     )
   }
@@ -179,23 +166,12 @@ export default function BookingList({ bookings, userRole }: BookingListProps) {
                 {statusLabel(booking.status)}
               </span>
 
-              {/* Brand can cancel pending bookings */}
-              {userRole === 'brand' && booking.status === 'pending' && (
+              {booking.status === 'pending' && (
                 <button
                   onClick={() => handleCancel(booking.id)}
                   className="text-xs text-destructive hover:underline"
                 >
                   Annuler
-                </button>
-              )}
-
-              {/* Host can confirm pending bookings */}
-              {userRole === 'host' && booking.status === 'pending' && (
-                <button
-                  onClick={() => handleConfirm(booking.id)}
-                  className="rounded-full bg-success px-3 py-1 text-xs font-medium text-white hover:opacity-90 transition-opacity"
-                >
-                  Confirmer
                 </button>
               )}
             </div>

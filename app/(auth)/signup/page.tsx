@@ -71,18 +71,6 @@ export default async function SignupPage({
             />
             <p className="mt-1 text-xs text-muted-foreground">Minimum 6 caractères</p>
           </div>
-          <div>
-            <label htmlFor="role" className="block text-sm font-medium text-foreground mb-1">Vous êtes</label>
-            <select
-              id="role"
-              name="role"
-              required
-              className="w-full rounded-lg border border-border bg-background px-3 py-2 text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-ring"
-            >
-              <option value="brand">Une marque (je cherche un lieu)</option>
-              <option value="host">Un hôte (je propose un lieu)</option>
-            </select>
-          </div>
           <button
             formAction={signup}
             className="w-full rounded-full bg-foreground px-4 py-2.5 text-sm font-medium text-background hover:opacity-90 transition-opacity"

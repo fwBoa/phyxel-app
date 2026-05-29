@@ -9,7 +9,6 @@ interface Profile {
   brand_name: string | null
   website: string | null
   bio: string | null
-  role: 'brand' | 'host'
   avatar_url: string | null
 }
 
@@ -56,22 +55,20 @@ export default function ProfileForm({ profile, updateProfile }: ProfileFormProps
         />
       </div>
 
-      {profile.role === 'brand' && (
-        <div>
-          <label htmlFor="brand_name" className="block text-sm font-medium text-foreground mb-1"
-          >
-            Nom de la marque
-          </label>
-          <input
-            id="brand_name"
-            name="brand_name"
-            type="text"
-            defaultValue={profile.brand_name || ''}
-            className="w-full rounded-lg border border-border bg-background px-3 py-2 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring"
-            placeholder="Ma Marque"
-          />
-        </div>
-      )}
+      <div>
+        <label htmlFor="brand_name" className="block text-sm font-medium text-foreground mb-1"
+        >
+          Nom de la marque
+        </label>
+        <input
+          id="brand_name"
+          name="brand_name"
+          type="text"
+          defaultValue={profile.brand_name || ''}
+          className="w-full rounded-lg border border-border bg-background px-3 py-2 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring"
+          placeholder="Ma Marque"
+        />
+      </div>
 
       <div>
         <label htmlFor="website" className="block text-sm font-medium text-foreground mb-1"
@@ -103,17 +100,6 @@ export default function ProfileForm({ profile, updateProfile }: ProfileFormProps
         />
       </div>
 
-      <div className="rounded-lg bg-secondary p-3 text-sm"
-      >
-        <p className="text-muted-foreground"
-        >
-          Rôle :{' '}
-          <span className="font-medium text-foreground"
-          >
-            {profile.role === 'brand' ? 'Marque' : 'Hôte'}
-          </span>
-        </p>
-      </div>
 
       {error && (
         <p className="text-sm text-destructive"

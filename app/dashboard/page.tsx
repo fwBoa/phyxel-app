@@ -10,12 +10,6 @@ export default async function DashboardPage() {
     .eq('id', user!.id)
     .single()
 
-  const { data: spaces } = await supabase
-    .from('spaces')
-    .select('id, title')
-    .eq('host_id', user!.id)
-    .limit(3)
-
   const { data: bookings } = await supabase
     .from('bookings')
     .select('id, status, start_date, end_date, spaces(title)')
@@ -24,8 +18,6 @@ export default async function DashboardPage() {
     .limit(3)
 
   const stats = [
-    { label: 'Rôle', value: profile?.role === 'brand' ? 'Marque' : 'Hôte' },
-    { label: 'Espaces', value: spaces?.length || 0 },
     { label: 'Réservations', value: bookings?.length || 0 },
   ]
 
@@ -76,12 +68,6 @@ export default async function DashboardPage() {
         </div>
       )}
 
-      {profile?.role === 'host' && spaces && spaces.length === 0 && (
-        <div className="rounded-2xl border border-border bg-card p-6 shadow-card text-center">
-          <p className="text-muted-foreground">Vous n'avez pas encore d'espaces.</p>
-          <p className="mt-2 text-sm text-muted-foreground">Créez votre premier espace pour commencer à recevoir des réservations.</p>
-        </div>
-      )}
     </div>
   )
 }

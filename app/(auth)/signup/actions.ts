@@ -14,9 +14,8 @@ export async function signup(formData: FormData) {
   const email = formData.get('email')?.toString()
   const password = formData.get('password')?.toString()
   const full_name = formData.get('full_name')?.toString()
-  const role = formData.get('role')?.toString() as 'brand' | 'host'
 
-  if (!email || !password || !full_name || !role) {
+  if (!email || !password || !full_name) {
     return redirect('/signup?error=' + encodeURIComponent('Tous les champs sont requis.'))
   }
 
@@ -30,7 +29,7 @@ export async function signup(formData: FormData) {
     email,
     password,
     options: {
-      data: { full_name, role },
+      data: { full_name, role: 'brand' },
     },
   })
 
@@ -39,7 +38,7 @@ export async function signup(formData: FormData) {
   }
 
   if (data.user) {
-    await supabase.from('profiles').update({ full_name, role }).eq('id', data.user.id)
+    await supabase.from('profiles').update({ full_name, role: 'brand' }).eq('id', data.user.id)
   }
 
   return redirect('/login?success=' + encodeURIComponent('Compte créé ! Vous pouvez vous connecter.'))
