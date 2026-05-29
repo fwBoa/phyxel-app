@@ -43,28 +43,34 @@ export default function SearchBar({ initialFilters, onSearch, variant = 'hero' }
       }`}
     >
       {/* Ville */}
-      <select
-        value={city}
-        onChange={(e) => setCity(e.target.value)}
-        className="flex-1 rounded-xl bg-[#F9F9F9] px-4 py-3 text-sm text-[#0A0A0A] outline-none focus:ring-2 focus:ring-[#E91E8C]/30"
-      >
-        <option value="">Toutes les villes</option>
-        {CITIES.map((c) => (
-          <option key={c} value={c}>{c}</option>
-        ))}
-      </select>
+      <label className="flex-1">
+        <span className="sr-only">Ville</span>
+        <select
+          value={city}
+          onChange={(e) => setCity(e.target.value)}
+          className="w-full rounded-xl bg-[#F9F9F9] px-4 py-3 text-sm text-[#0A0A0A] outline-none focus:ring-2 focus:ring-[#E91E8C]"
+        >
+          <option value="">Toutes les villes</option>
+          {CITIES.map((c) => (
+            <option key={c} value={c}>{c}</option>
+          ))}
+        </select>
+      </label>
 
       {/* Type d'espace */}
-      <select
-        value={type}
-        onChange={(e) => setType(e.target.value)}
-        className="flex-1 rounded-xl bg-[#F9F9F9] px-4 py-3 text-sm text-[#0A0A0A] outline-none focus:ring-2 focus:ring-[#E91E8C]/30"
-      >
-        <option value="">Type d&apos;espace</option>
-        {SPACE_TYPES.map(({ value, label }) => (
-          <option key={value} value={value}>{label}</option>
-        ))}
-      </select>
+      <label className="flex-1">
+        <span className="sr-only">Type d&apos;espace</span>
+        <select
+          value={type}
+          onChange={(e) => setType(e.target.value)}
+          className="w-full rounded-xl bg-[#F9F9F9] px-4 py-3 text-sm text-[#0A0A0A] outline-none focus:ring-2 focus:ring-[#E91E8C]"
+        >
+          <option value="">Type d&apos;espace</option>
+          {SPACE_TYPES.map(({ value, label }) => (
+            <option key={value} value={value}>{label}</option>
+          ))}
+        </select>
+      </label>
 
       {/* Bouton */}
       <button

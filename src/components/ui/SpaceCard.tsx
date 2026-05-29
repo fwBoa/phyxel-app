@@ -2,6 +2,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { MapPin, Maximize2, Euro } from 'lucide-react'
 import MatchScore from './MatchScore'
+import FavoriteButton from './FavoriteButton'
 
 type SpaceCardProps = {
   id:          string
@@ -30,7 +31,10 @@ export default function SpaceCard({
   return (
     <Link
       href={`/espaces/${id}`}
-      className="group flex flex-col overflow-hidden rounded-2xl border border-[#E5E5E5] bg-white transition-shadow hover:shadow-lg"
+      aria-label={`${title} — ${TYPE_LABELS[type] ?? type}, ${city}${district ? `, ${district}` : ''}`}
+      className={`group flex flex-col overflow-hidden rounded-2xl border border-[#E5E5E5] bg-white transition-shadow hover:shadow-lg ${
+        !isAvailable ? 'opacity-60 pointer-events-none' : ''
+      }`}
     >
       {/* Photo */}
       <div className="relative h-48 w-full overflow-hidden bg-[#F9F9F9]">
@@ -50,6 +54,12 @@ export default function SpaceCard({
         <span className="absolute left-3 top-3 rounded-full bg-white/90 px-3 py-1 text-xs font-semibold text-[#0A0A0A] backdrop-blur-sm">
           {TYPE_LABELS[type] ?? type}
         </span>
+        {/* Bouton favori */}
+        {isAvailable && (
+          <div className="absolute right-3 top-3">
+            <FavoriteButton spaceId={id} size="sm" variant="overlay" />
+          </div>
+        )}
         {/* Badge disponibilité */}
         {!isAvailable && (
           <span className="absolute right-3 top-3 rounded-full bg-[#EF4444]/10 px-2 py-1 text-xs font-medium text-[#EF4444]">
@@ -72,17 +82,19 @@ export default function SpaceCard({
           {city}{district ? `, ${district}` : ''}
         </p>
 
-        <div className="mt-auto flex items-center justify-between border-t border-[#E5E5E5] pt-3">
-          {areaSqm && (
-            <span className="text-sm text-[#6B6B6B]">{areaSqm} m²</span>
-          )}
-          {priceDay && (
-            <span className="flex items-center gap-0.5 text-sm font-semibold text-[#0A0A0A]">
-              <Euro size={14} />
-              {priceDay.toLocaleString('fr-FR')} / jour
-            </span>
-          )}
-        </div>
+        {(areaSqm || priceDay) && (
+          <div className="mt-auto flex items-center justify-between border-t border-[#E5E5E5] pt-3">
+            {areaSqm && (
+              <span className="text-sm text-[#6B6B6B]">{areaSqm} m²</span>
+            )}
+            {priceDay && (
+              <span className="flex items-center gap-0.5 text-sm font-semibold text-[#0A0A0A]">
+                <Euro size={14} />
+                {priceDay.toLocaleString('fr-FR')} / jour
+              </span>
+            )}
+          </div>
+        )}
       </div>
     </Link>
   )

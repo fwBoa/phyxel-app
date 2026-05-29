@@ -1,12 +1,13 @@
 import Link from 'next/link'
 import { redirect } from 'next/navigation'
-import { LayoutDashboard, User, CalendarDays, LogOut, Shield } from 'lucide-react'
+import { LayoutDashboard, User, CalendarDays, Heart, LogOut, Shield } from 'lucide-react'
 import { createClient } from '@/lib/supabase/server'
 
 const NAV = [
   { href: '/dashboard',              icon: LayoutDashboard, label: 'Vue d\'ensemble' },
   { href: '/dashboard/profil',       icon: User,            label: 'Mon profil' },
   { href: '/dashboard/reservations', icon: CalendarDays,    label: 'Réservations' },
+  { href: '/dashboard/favoris',      icon: Heart,           label: 'Favoris' },
 ]
 
 export default async function DashboardLayout({
