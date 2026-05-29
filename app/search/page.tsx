@@ -3,6 +3,7 @@ import Footer from "@/components/layout/Footer";
 import SpaceCard from "@/components/ui/SpaceCard";
 import { getAllSpaces, getSpaceCities } from "@/lib/queries/spaces";
 import SearchFilters from "./SearchFilters";
+import Pagination from "./Pagination";
 
 export const revalidate = 60;
 
@@ -12,17 +13,25 @@ export default async function SearchPage({
   searchParams: Promise<Record<string, string | undefined>>;
 }) {
   const params = await searchParams;
+  const page = params.page ? parseInt(params.page) : 1;
+  const limit = 6;
+
   const filters = {
     city: params.city,
     type: params.type,
     minPrice: params.minPrice ? parseInt(params.minPrice) : undefined,
     maxPrice: params.maxPrice ? parseInt(params.maxPrice) : undefined,
+    page,
+    limit,
   };
 
-  const [spaces, cities] = await Promise.all([
+  const [result, cities] = await Promise.all([
     getAllSpaces(filters),
     getSpaceCities(),
   ]);
+
+  const { spaces, total } = result;
+  const totalPages = Math.ceil(total / limit);
 
   const types = [
     { value: "showroom", label: "Showroom" },
@@ -41,8 +50,8 @@ export default async function SearchPage({
             Explorer les espaces
           </h1>
           <p className="mt-2 text-muted-foreground">
-            {spaces.length} espace{spaces.length > 1 ? "s" : ""} disponible
-            {spaces.length > 1 ? "s" : ""} pour votre prochaine expérience
+            {total} espace{total > 1 ? "s" : ""} disponible
+            {total > 1 ? "s" : ""} pour votre prochaine expérience
             physique.
           </p>
         </div>
@@ -50,11 +59,19 @@ export default async function SearchPage({
         <SearchFilters cities={cities} types={types} currentFilters={params} />
 
         {spaces.length > 0 ? (
-          <div className="grid gap-6 md:grid-cols-3">
-            {spaces.map((space) => (
-              <SpaceCard key={space.id} space={space} />
-            ))}
-          </div>
+          <>
+            <div className="grid gap-6 md:grid-cols-3">
+              {spaces.map((space) => (
+                <SpaceCard key={space.id} space={space} />
+              ))}
+            </div>
+            <Pagination
+              page={page}
+              totalPages={totalPages}
+              total={total}
+              filters={params}
+            />
+          </>
         ) : (
           <div className="rounded-2xl border border-border bg-card p-12 text-center shadow-card">
             <p className="text-muted-foreground">

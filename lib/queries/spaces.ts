@@ -53,15 +53,27 @@ export async function getFeaturedSpaces(limit = 3): Promise<SpaceWithPhotos[]> {
   }))
 }
 
+export type SpacesResult = {
+  spaces: SpaceWithPhotos[]
+  total: number
+  page: number
+  limit: number
+}
+
 export async function getAllSpaces(
   filters?: {
     city?: string
     type?: string
     minPrice?: number
     maxPrice?: number
+    page?: number
+    limit?: number
   }
-): Promise<SpaceWithPhotos[]> {
+): Promise<SpacesResult> {
   const supabase = await createClient()
+  const page = Math.max(1, filters?.page || 1)
+  const limit = Math.max(1, Math.min(50, filters?.limit || 12))
+  const offset = (page - 1) * limit
 
   let query = supabase
     .from('spaces')
@@ -76,7 +88,7 @@ export async function getAllSpaces(
       description,
       is_available,
       space_photos (url, is_cover)
-    `)
+    `, { count: 'exact' })
     .eq('is_available', true)
 
   if (filters?.city) {
@@ -92,11 +104,15 @@ export async function getAllSpaces(
     query = query.lte('price_day', filters.maxPrice)
   }
 
-  const { data, error } = await query.order('created_at', { ascending: false })
+  const { data, error, count } = await query
+    .order('created_at', { ascending: false })
+    .range(offset, offset + limit - 1)
 
-  if (error || !data) return []
+  if (error || !data) {
+    return { spaces: [], total: 0, page, limit }
+  }
 
-  return data.map((space: any) => ({
+  const spaces = data.map((space: any) => ({
     id: space.id,
     title: space.title,
     slug: slugify(space.title),
@@ -109,6 +125,8 @@ export async function getAllSpaces(
     is_available: space.is_available,
     photos: space.space_photos || [],
   }))
+
+  return { spaces, total: count || 0, page, limit }
 }
 
 export async function getSpaceById(id: string): Promise<SpaceWithPhotos | null> {
