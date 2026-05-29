@@ -1,8 +1,7 @@
 import { notFound }     from 'next/navigation'
 import Image             from 'next/image'
-import { MapPin, Maximize2, Euro, CalendarDays } from 'lucide-react'
+import { MapPin, Maximize2, Euro } from 'lucide-react'
 import { getSpaceById }  from '@/lib/queries/spaces'
-import MatchScore        from '@/components/ui/MatchScore'
 import BookingForm       from '@/components/features/BookingForm'
 
 type PageProps = { params: Promise<{ id: string }> }

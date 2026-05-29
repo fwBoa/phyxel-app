@@ -55,7 +55,7 @@ export default function ExplorerClient({ initialSpaces, activeType, activeCity, 
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-8">
           <h1 className="text-3xl font-bold text-[#0A0A0A]">Explorer les espaces</h1>
           <p className="mt-1 text-sm text-[#6B6B6B]">
-            Trouvez l'espace idéal pour votre pop-up, showroom ou événement.
+            Trouvez l&apos;espace idéal pour votre pop-up, showroom ou événement.
           </p>
 
           {/* Ligne de filtres */}

@@ -61,7 +61,7 @@ export default async function DashboardPage() {
               <div key={booking.id} className="flex items-center justify-between rounded-2xl border border-[#E5E5E5] bg-white px-5 py-4">
                 <div>
                   <p className="text-sm font-semibold text-[#0A0A0A]">
-                    {(booking as any).spaces?.title ?? 'Espace'}
+                    {(booking as { spaces?: { title: string } }).spaces?.title ?? 'Espace'}
                   </p>
                   <p className="mt-0.5 text-xs text-[#9B9B9B]">
                     {booking.start_date} → {booking.end_date}
