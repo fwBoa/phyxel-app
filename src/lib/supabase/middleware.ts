@@ -48,7 +48,7 @@ export async function updateSession(request: NextRequest) {
   }
 
   // Redirige vers l'onboarding si pas encore complété (sauf sur onboarding/login)
-  if (user && profile?.has_completed_onboarding === false) {
+  if (user && profile?.has_completed_onboarding !== true) {
     if (!pathname.startsWith('/onboarding') && !pathname.startsWith('/login')) {
       const url = request.nextUrl.clone()
       url.pathname = '/onboarding'
