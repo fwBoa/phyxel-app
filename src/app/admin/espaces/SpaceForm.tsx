@@ -24,6 +24,7 @@ type SpaceData = {
   description: string
   is_available: boolean
   photos: string
+  host_email: string
 }
 
 interface SpaceFormProps {
@@ -50,6 +51,7 @@ export default function SpaceForm({ initialData, mode, spaceId }: SpaceFormProps
       description: '',
       is_available: true,
       photos: '',
+      host_email: '',
     }
   )
 
@@ -73,6 +75,7 @@ export default function SpaceForm({ initialData, mode, spaceId }: SpaceFormProps
       price_day: form.price_day ? Number(form.price_day) : null,
       description: form.description || null,
       is_available: form.is_available,
+      hostEmail: form.host_email || null,
       photos: form.photos
         .split('\n')
         .map((url) => url.trim())
@@ -128,6 +131,20 @@ export default function SpaceForm({ initialData, mode, spaceId }: SpaceFormProps
             placeholder="Showroom design au Marais"
             className="rounded-xl border border-border-custom px-4 py-2.5 text-sm outline-none focus:border-primary focus:ring-2 focus:ring-primary/20"
           />
+        </div>
+
+        {/* Host email */}
+        <div className="flex flex-col gap-1">
+          <label className="text-xs font-medium text-text-secondary">Email du host * </label>
+          <input
+            type="email"
+            required
+            value={form.host_email}
+            onChange={(e) => handleChange('host_email', e.target.value)}
+            placeholder="sophie@phyxel.demo"
+            className="rounded-xl border border-border-custom px-4 py-2.5 text-sm outline-none focus:border-primary focus:ring-2 focus:ring-primary/20"
+          />
+          <p className="text-xs text-text-muted">Le host doit déjà exister dans la base.</p>
         </div>
 
         {/* Type + Ville */}

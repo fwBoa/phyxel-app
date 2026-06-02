@@ -30,7 +30,6 @@ export default function RegisterPage() {
           full_name: `${firstName} ${lastName}`.trim(),
           brand_name: brandName,
           website,
-          role: 'brand',
         },
       },
     })
@@ -44,7 +43,7 @@ export default function RegisterPage() {
   return (
     <div
       className="grid min-h-screen md:grid-cols-2"
-      style={{ background: 'linear-gradient(180deg, #fdf2f8, #fafafa)' }}
+      style={{ background: 'linear-gradient(180deg, #f5f3ff, #fafafa)' }}
     >
       {/* Left panel — hidden on mobile */}
       <aside
@@ -68,7 +67,7 @@ export default function RegisterPage() {
         <form
           onSubmit={handleSubmit}
           className="w-full max-w-md rounded-3xl border border-gray-200 bg-white p-8"
-          style={{ boxShadow: '0 1px 2px rgba(0,0,0,0.04), 0 8px 24px -8px rgba(233,30,140,0.12)' }}
+          style={{ boxShadow: '0 1px 2px rgba(0,0,0,0.04), 0 8px 24px -8px rgba(124,58,237,0.12)' }}
         >
           {/* Mobile logo */}
           <div className="mb-6 md:hidden">

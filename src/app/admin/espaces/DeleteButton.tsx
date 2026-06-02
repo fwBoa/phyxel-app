@@ -1,23 +1,24 @@
 'use client'
 
 import { Trash2 } from 'lucide-react'
+import { deleteSpaceAction } from './actions'
 
 interface DeleteButtonProps {
-  deleteAction: () => Promise<void>
+  spaceId: string
 }
 
-export default function DeleteButton({ deleteAction }: DeleteButtonProps) {
+export default function DeleteButton({ spaceId }: DeleteButtonProps) {
   return (
-    <form action={deleteAction}>
+    <form
+      action={async () => {
+        if (!confirm('Supprimer cet espace ? Cette action est irréversible.')) return
+        await deleteSpaceAction(spaceId)
+      }}
+    >
       <button
         type="submit"
         className="rounded-lg p-2 text-text-secondary hover:bg-match-low/10 hover:text-match-low transition-colors"
         title="Supprimer"
-        onClick={(e) => {
-          if (!confirm('Supprimer cet espace ? Cette action est irréversible.')) {
-            e.preventDefault()
-          }
-        }}
       >
         <Trash2 size={14} />
       </button>

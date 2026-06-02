@@ -1,12 +1,21 @@
 'use client'
 
-import Link        from 'next/link'
-import { useState } from 'react'
-import { useRouter } from 'next/navigation'
+import Link         from 'next/link'
+import { Suspense, useState } from 'react'
+import { useRouter, useSearchParams } from 'next/navigation'
 import { createClient } from '@/lib/supabase/client'
 
-export default function LoginPage() {
-  const router = useRouter()
+// N'accepte que des chemins internes commençant par "/" — bloque les open-redirects.
+function sanitizeRedirect(value: string | null): string {
+  if (!value) return '/'
+  if (!value.startsWith('/') || value.startsWith('//')) return '/'
+  return value
+}
+
+function LoginForm() {
+  const router         = useRouter()
+  const searchParams   = useSearchParams()
+  const redirectTo     = sanitizeRedirect(searchParams.get('redirect'))
   const [email,    setEmail]    = useState('')
   const [password, setPassword] = useState('')
   const [error,    setError]    = useState<string | null>(null)
@@ -22,7 +31,7 @@ export default function LoginPage() {
 
     setLoading(false)
     if (error) { setError(error.message); return }
-    router.push('/')
+    router.push(redirectTo)
     router.refresh()
   }
 
@@ -61,7 +70,11 @@ export default function LoginPage() {
           </div>
 
           <h1 className="text-2xl font-semibold tracking-tight text-gray-900">Bon retour 👋</h1>
-          <p className="mt-1 text-sm text-gray-500">Connectez-vous à votre espace marque.</p>
+          <p className="mt-1 text-sm text-gray-500">
+            {redirectTo !== '/'
+              ? 'Connectez-vous pour consulter cet espace.'
+              : 'Connectez-vous à votre espace marque.'}
+          </p>
 
           <label className="mt-6 block text-sm">
             <span className="font-medium text-gray-900">Email professionnel</span>
@@ -117,5 +130,13 @@ function PhyxelLogo({ dark = false }: { dark?: boolean }) {
       </span>
       <span className={dark ? 'text-white' : 'text-gray-900'}>Phyxel</span>
     </Link>
+  )
+}
+
+export default function LoginPage() {
+  return (
+    <Suspense fallback={null}>
+      <LoginForm />
+    </Suspense>
   )
 }

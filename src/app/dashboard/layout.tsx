@@ -1,6 +1,6 @@
 import Link from 'next/link'
 import { redirect } from 'next/navigation'
-import { LayoutDashboard, User, CalendarDays, Heart, LogOut, Shield } from 'lucide-react'
+import { LayoutDashboard, User, CalendarDays, Heart, LogOut } from 'lucide-react'
 import { createClient } from '@/lib/supabase/server'
 
 const NAV = [
@@ -22,12 +22,6 @@ export default async function DashboardLayout({
     return redirect('/login')
   }
 
-  const { data: profile } = await supabase
-    .from('profiles')
-    .select('is_admin')
-    .eq('id', user.id)
-    .single()
-
   return (
     <div className="flex min-h-screen">
       {/* Sidebar */}
@@ -47,16 +41,6 @@ export default async function DashboardLayout({
               {label}
             </Link>
           ))}
-
-          {profile?.is_admin && (
-            <Link
-              href="/admin/espaces"
-              className="flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium text-primary transition-colors hover:bg-brand-muted"
-            >
-              <Shield size={18} />
-              Administration
-            </Link>
-          )}
         </nav>
 
         <div className="p-3">
