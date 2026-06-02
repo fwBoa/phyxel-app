@@ -1,7 +1,7 @@
 import Link from 'next/link'
-import { redirect } from 'next/navigation'
 import { Plus, Pencil } from 'lucide-react'
-import { createClient } from '@/lib/supabase/server'
+import { requireAdmin } from '@/lib/admin/auth'
+import { createAdminClient } from '@/lib/supabase/admin'
 import type { SpaceRow } from '@/types/database'
 import DeleteButton from './DeleteButton'
 
@@ -9,6 +9,7 @@ export const revalidate = 0
 
 type SpaceWithPhotos = SpaceRow & {
   space_photos?: { id: string; url: string }[]
+  hosts?: { email: string; full_name: string | null } | null
 }
 
 const TYPE_LABELS: Record<string, string> = {
@@ -20,22 +21,12 @@ const TYPE_LABELS: Record<string, string> = {
 }
 
 export default async function AdminSpacesPage() {
-  const supabase = await createClient()
-  const { data: { user } } = await supabase.auth.getUser()
+  await requireAdmin()
 
-  if (!user) redirect('/login')
-
-  const { data: profile } = await supabase
-    .from('profiles')
-    .select('is_admin')
-    .eq('id', user.id)
-    .single()
-
-  if (!profile?.is_admin) redirect('/dashboard')
-
+  const supabase = createAdminClient()
   const { data: rawSpaces, error } = await supabase
     .from('spaces')
-    .select('*, space_photos(*)')
+    .select('*, space_photos(*), hosts(email, full_name)')
     .order('created_at', { ascending: false })
 
   const spaces = (rawSpaces ?? []) as SpaceWithPhotos[]
@@ -75,6 +66,7 @@ export default async function AdminSpacesPage() {
               <th className="px-5 py-3 text-left font-medium">Ville</th>
               <th className="px-5 py-3 text-left font-medium">Prix/jour</th>
               <th className="px-5 py-3 text-left font-medium">Statut</th>
+              <th className="px-5 py-3 text-left font-medium">Host</th>
               <th className="px-5 py-3 text-right font-medium">Actions</th>
             </tr>
           </thead>
@@ -98,6 +90,9 @@ export default async function AdminSpacesPage() {
                     </span>
                   )}
                 </td>
+                <td className="px-5 py-3 text-text-secondary">
+                  {space.hosts?.full_name ?? space.hosts?.email ?? '—'}
+                </td>
                 <td className="px-5 py-3 text-right">
                   <div className="flex items-center justify-end gap-2">
                     <Link
@@ -107,24 +102,7 @@ export default async function AdminSpacesPage() {
                     >
                       <Pencil size={14} />
                     </Link>
-                    <DeleteButton
-                      deleteAction={async () => {
-                        'use server'
-                        const sb = await createClient()
-                        const { data: { user: u } } = await sb.auth.getUser()
-                        if (!u) return
-
-                        const { data: p } = await sb
-                          .from('profiles')
-                          .select('is_admin')
-                          .eq('id', u.id)
-                          .single()
-
-                        if (!p?.is_admin) return
-
-                        await sb.from('spaces').delete().eq('id', space.id)
-                      }}
-                    />
+                    <DeleteButton spaceId={space.id} />
                   </div>
                 </td>
               </tr>

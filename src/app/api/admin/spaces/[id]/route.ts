@@ -1,29 +1,16 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { createClient } from '@/lib/supabase/server'
-
-async function checkAdmin(supabase: Awaited<ReturnType<typeof createClient>>) {
-  const { data: { user } } = await supabase.auth.getUser()
-  if (!user) return { ok: false, status: 401 }
-
-  const { data: profile } = await supabase
-    .from('profiles')
-    .select('is_admin')
-    .eq('id', user.id)
-    .single()
-
-  if (!profile?.is_admin) return { ok: false, status: 403 }
-  return { ok: true, user }
-}
+import { createAdminClient } from '@/lib/supabase/admin'
+import { getCurrentAdmin } from '@/lib/admin/auth'
 
 export async function GET(_request: NextRequest, { params }: { params: Promise<{ id: string }> }) {
-  const { id } = await params
-  const supabase = await createClient()
-  const auth = await checkAdmin(supabase)
-  if (!auth.ok) return NextResponse.json({ error: 'Forbidden' }, { status: auth.status })
+  const admin = await getCurrentAdmin()
+  if (!admin) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
 
+  const { id } = await params
+  const supabase = createAdminClient()
   const { data, error } = await supabase
     .from('spaces')
-    .select('*, space_photos(*)')
+    .select('*, space_photos(*), hosts(email, full_name)')
     .eq('id', id)
     .single()
 
@@ -32,10 +19,11 @@ export async function GET(_request: NextRequest, { params }: { params: Promise<{
 }
 
 export async function PUT(request: NextRequest, { params }: { params: Promise<{ id: string }> }) {
+  const admin = await getCurrentAdmin()
+  if (!admin) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+
   const { id } = await params
-  const supabase = await createClient()
-  const auth = await checkAdmin(supabase)
-  if (!auth.ok) return NextResponse.json({ error: 'Forbidden' }, { status: auth.status })
+  const supabase = createAdminClient()
 
   const body = await request.json()
   const {
@@ -49,10 +37,36 @@ export async function PUT(request: NextRequest, { params }: { params: Promise<{ 
     description,
     is_available,
     photos,
+    hostEmail,
   } = body
 
   if (!title || !type || !city) {
     return NextResponse.json({ error: 'Titre, type et ville sont requis.' }, { status: 400 })
+  }
+
+  // Si hostEmail fourni, on update aussi host_id (sinon on garde l'existant)
+  let hostId: string | undefined
+  if (hostEmail && typeof hostEmail === 'string') {
+    const { data: host, error: hostError } = await supabase
+      .from('hosts')
+      .select('id, is_active')
+      .eq('email', hostEmail.toLowerCase().trim())
+      .maybeSingle()
+
+    if (hostError) return NextResponse.json({ error: hostError.message }, { status: 500 })
+    if (!host) {
+      return NextResponse.json(
+        { error: `Aucun host enregistré avec l'email "${hostEmail}".` },
+        { status: 400 },
+      )
+    }
+    if (!host.is_active) {
+      return NextResponse.json(
+        { error: `Le host "${hostEmail}" est désactivé.` },
+        { status: 400 },
+      )
+    }
+    hostId = host.id
   }
 
   // Mettre à jour l'espace
@@ -68,6 +82,7 @@ export async function PUT(request: NextRequest, { params }: { params: Promise<{ 
       price_day: price_day ?? null,
       description: description || null,
       is_available: is_available ?? true,
+      ...(hostId ? { host_id: hostId } : {}),
     })
     .eq('id', id)
     .select()
@@ -93,11 +108,11 @@ export async function PUT(request: NextRequest, { params }: { params: Promise<{ 
 }
 
 export async function DELETE(_request: NextRequest, { params }: { params: Promise<{ id: string }> }) {
-  const { id } = await params
-  const supabase = await createClient()
-  const auth = await checkAdmin(supabase)
-  if (!auth.ok) return NextResponse.json({ error: 'Forbidden' }, { status: auth.status })
+  const admin = await getCurrentAdmin()
+  if (!admin) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
 
+  const { id } = await params
+  const supabase = createAdminClient()
   const { error } = await supabase.from('spaces').delete().eq('id', id)
 
   if (error) return NextResponse.json({ error: error.message }, { status: 400 })
