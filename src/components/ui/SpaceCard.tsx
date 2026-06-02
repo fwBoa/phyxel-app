@@ -1,8 +1,9 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import { MapPin, Maximize2, Euro } from 'lucide-react'
-import MatchScore from './MatchScore'
+import MatchScoreBadge from './MatchScore'
 import FavoriteButton from './FavoriteButton'
+import type { MatchScore } from '@/lib/matching/score'
 
 type SpaceCardProps = {
   id:          string
@@ -12,7 +13,7 @@ type SpaceCardProps = {
   district?:   string | null
   priceDay?:   number | null
   areaSqm?:    number | null
-  matchScore?: number
+  matchScore?: MatchScore
   isAvailable: boolean
   coverUrl?:   string | null
 }
@@ -74,8 +75,22 @@ export default function SpaceCard({
           <h3 className="text-base font-semibold text-foreground leading-snug line-clamp-2">
             {title}
           </h3>
-          {matchScore !== undefined && <MatchScore score={matchScore} size="sm" />}
+          {matchScore && <MatchScoreBadge score={matchScore.score} size="sm" />}
         </div>
+
+        {/* Tags de matching */}
+        {matchScore?.reasons && matchScore.reasons.length > 0 && (
+          <div className="flex flex-wrap gap-1">
+            {matchScore.reasons.map((reason) => (
+              <span
+                key={reason}
+                className="inline-flex rounded-full bg-primary/5 px-2 py-0.5 text-[10px] font-medium text-primary"
+              >
+                {reason}
+              </span>
+            ))}
+          </div>
+        )}
 
         <p className="flex items-center gap-1 text-sm text-text-secondary">
           <MapPin size={14} className="shrink-0" />
