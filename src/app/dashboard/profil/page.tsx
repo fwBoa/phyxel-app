@@ -1,9 +1,12 @@
 'use client'
 
 import { useEffect, useState } from 'react'
+import Link from 'next/link'
 import { useAuth }    from '@/hooks/useAuth'
 import { useProfile } from '@/hooks/useProfile'
 import type { ProfileUpdate } from '@/types/users'
+import { getPreferences } from './actions'
+import type { BrandPreferenceRow } from '@/types/database'
 
 export default function ProfilPage() {
   const { user }      = useAuth()
@@ -16,6 +19,9 @@ export default function ProfilPage() {
   const [saving,     setSaving]     = useState(false)
   const [message,    setMessage]    = useState<{ type: 'success' | 'error'; text: string } | null>(null)
 
+  const [prefs, setPrefs] = useState<BrandPreferenceRow | null>(null)
+  const [prefsLoading, setPrefsLoading] = useState(true)
+
   useEffect(() => {
     if (profile) {
       setFullName(profile.full_name  ?? '')
@@ -24,6 +30,13 @@ export default function ProfilPage() {
       setBio(profile.bio        ?? '')
     }
   }, [profile])
+
+  useEffect(() => {
+    getPreferences().then((data) => {
+      setPrefs(data)
+      setPrefsLoading(false)
+    })
+  }, [])
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
@@ -103,6 +116,73 @@ export default function ProfilPage() {
           </button>
         </form>
       </div>
+
+      {/* ─── Section Préférences ─── */}
+      <div className="mt-8 rounded-2xl border border-border-custom bg-white p-6">
+        <div className="flex items-center justify-between mb-4">
+          <h2 className="text-xl font-bold text-foreground">Mes préférences</h2>
+          <Link
+            href="/dashboard/profil/preferences"
+            className="text-sm font-medium text-primary hover:text-[#5B21B6] transition-colors"
+          >
+            Modifier →
+          </Link>
+        </div>
+
+        {prefsLoading ? (
+          <div className="animate-pulse h-32 rounded-xl bg-[#E5E5E5]" />
+        ) : prefs ? (
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+            <PrefRow label="Secteur" value={prefs.sector} />
+            <PrefRow label="Produits" value={Array.isArray(prefs.product_types) ? prefs.product_types.join(', ') : prefs.product_types} />
+            <PrefRow label="Ville principale" value={prefs.main_city} />
+            <PrefRow label="Taille entreprise" value={prefs.company_size} />
+            <PrefRow label="Budget approximatif" value={prefs.approx_budget} />
+            <PrefRow label="Objectifs" value={parseJson(prefs.physical_objectives)} />
+            <PrefRow label="Ville recherchée" value={prefs.target_city} />
+            <PrefRow label="Durée souhaitée" value={prefs.desired_duration} />
+            <PrefRow label="Types de lieu" value={parseJson(prefs.space_types)} />
+            <PrefRow label="Surface" value={prefs.desired_area} />
+            <PrefRow label="Services" value={parseJson(prefs.needed_services)} />
+            <PrefRow label="Budget maximum" value={prefs.max_budget} />
+            <PrefRow label="Quartiers préférés" value={parseJson(prefs.preferred_districts)} />
+            <PrefRow label="Ambiance" value={parseJson(prefs.desired_ambiance)} />
+            <PrefRow label="Dates idéales" value={prefs.ideal_dates} />
+          </div>
+        ) : (
+          <div className="text-center py-8">
+            <p className="text-text-secondary text-sm">Vous n&apos;avez pas encore renseigné vos préférences.</p>
+            <Link
+              href="/onboarding"
+              className="mt-2 inline-block text-sm font-medium text-primary hover:text-[#5B21B6]"
+            >
+              Compléter l&apos;onboarding →
+            </Link>
+          </div>
+        )}
+      </div>
     </>
   )
+}
+
+function PrefRow({ label, value }: { label: string; value: string | string[] | null }) {
+  const display = value && (Array.isArray(value) ? value.filter(Boolean).join(', ') : String(value))
+  return (
+    <div>
+      <p className="text-xs font-medium text-text-secondary">{label}</p>
+      <p className="text-sm text-foreground mt-0.5">{display || <span className="text-text-muted">—</span>}</p>
+    </div>
+  )
+}
+
+function parseJson(value: unknown): string | null {
+  if (!value) return null
+  if (Array.isArray(value)) return value.filter(Boolean).join(', ')
+  try {
+    const parsed = JSON.parse(String(value))
+    if (Array.isArray(parsed)) return parsed.filter(Boolean).join(', ')
+    return String(parsed)
+  } catch {
+    return String(value)
+  }
 }

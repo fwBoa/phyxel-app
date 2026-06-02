@@ -476,14 +476,21 @@ function StepSummary({ data }: { data: OnboardingData }) {
 }
 
 /* ─── Wizard principal ─── */
-export default function OnboardingWizard() {
+type WizardProps = {
+  mode?: 'create' | 'edit'
+  initialData?: OnboardingData
+  onSave?: (data: OnboardingData) => Promise<void>
+}
+
+export default function OnboardingWizard({ mode = 'create', initialData, onSave }: WizardProps) {
   const [step, setStep] = useState(1)
-  const [data, setData] = useState<OnboardingData>(EMPTY_ONBOARDING_DATA)
+  const [data, setData] = useState<OnboardingData>(initialData ?? EMPTY_ONBOARDING_DATA)
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [error, setError] = useState<string | null>(null)
 
-  // Charge le draft depuis localStorage
+  // Charge le draft depuis localStorage (uniquement en mode create)
   useEffect(() => {
+    if (mode === 'edit' || initialData) return
     try {
       const raw = localStorage.getItem(STORAGE_KEY)
       if (raw) {
@@ -493,16 +500,17 @@ export default function OnboardingWizard() {
     } catch {
       // ignore corrupted storage
     }
-  }, [])
+  }, [mode, initialData])
 
-  // Sauvegarde le draft à chaque changement
+  // Sauvegarde le draft à chaque changement (uniquement en mode create)
   useEffect(() => {
+    if (mode === 'edit') return
     try {
       localStorage.setItem(STORAGE_KEY, JSON.stringify(data))
     } catch {
       // ignore storage errors
     }
-  }, [data])
+  }, [data, mode])
 
   const update = useCallback((patch: Partial<OnboardingData>) => {
     setData((prev) => ({ ...prev, ...patch }))
@@ -537,8 +545,12 @@ export default function OnboardingWizard() {
     setIsSubmitting(true)
     setError(null)
     try {
-      await saveOnboarding(data)
-      localStorage.removeItem(STORAGE_KEY)
+      if (onSave) {
+        await onSave(data)
+      } else {
+        await saveOnboarding(data)
+      }
+      if (mode === 'create') localStorage.removeItem(STORAGE_KEY)
     } catch (err: unknown) {
       const msg = err instanceof Error ? err.message : 'Une erreur est survenue.'
       setError(msg)
