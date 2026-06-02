@@ -1,9 +1,7 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import { MapPin, Maximize2, Euro } from 'lucide-react'
-import MatchScoreBadge from './MatchScore'
 import FavoriteButton from './FavoriteButton'
-import type { MatchScore } from '@/lib/matching/score'
 
 type SpaceCardProps = {
   id:          string
@@ -13,7 +11,6 @@ type SpaceCardProps = {
   district?:   string | null
   priceDay?:   number | null
   areaSqm?:    number | null
-  matchScore?: MatchScore
   isAvailable: boolean
   coverUrl?:   string | null
 }
@@ -27,7 +24,7 @@ const TYPE_LABELS: Record<string, string> = {
 }
 
 export default function SpaceCard({
-  id, title, type, city, district, priceDay, areaSqm, matchScore, isAvailable, coverUrl,
+  id, title, type, city, district, priceDay, areaSqm, isAvailable, coverUrl,
 }: SpaceCardProps) {
   return (
     <Link
@@ -71,26 +68,9 @@ export default function SpaceCard({
 
       {/* Contenu */}
       <div className="flex flex-1 flex-col gap-3 p-4">
-        <div className="flex items-start justify-between gap-2">
-          <h3 className="text-base font-semibold text-foreground leading-snug line-clamp-2">
-            {title}
-          </h3>
-          {matchScore && <MatchScoreBadge score={matchScore.score} size="sm" />}
-        </div>
-
-        {/* Tags de matching */}
-        {matchScore?.reasons && matchScore.reasons.length > 0 && (
-          <div className="flex flex-wrap gap-1">
-            {matchScore.reasons.map((reason) => (
-              <span
-                key={reason}
-                className="inline-flex rounded-full bg-primary/5 px-2 py-0.5 text-[10px] font-medium text-primary"
-              >
-                {reason}
-              </span>
-            ))}
-          </div>
-        )}
+        <h3 className="text-base font-semibold text-foreground leading-snug line-clamp-2">
+          {title}
+        </h3>
 
         <p className="flex items-center gap-1 text-sm text-text-secondary">
           <MapPin size={14} className="shrink-0" />

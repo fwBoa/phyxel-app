@@ -2,11 +2,10 @@
 
 import { useRouter, usePathname } from 'next/navigation'
 import { useCallback } from 'react'
-import { SlidersHorizontal, X, MapPin, Euro, Sparkles } from 'lucide-react'
+import { SlidersHorizontal, X, MapPin, Euro } from 'lucide-react'
 import SpaceCard from '@/components/ui/SpaceCard'
 import { SPACE_TYPES, CITIES } from '@/constants/spaces'
 import type { SpaceWithPhotos } from '@/types/spaces'
-import type { MatchScore } from '@/lib/matching/score'
 
 const BUDGET_OPTIONS = [
   { label: 'Tous les budgets', value: '' },
@@ -22,14 +21,13 @@ function getCoverUrl(space: SpaceWithPhotos): string | null {
 }
 
 type Props = {
-  initialSpaces:  (SpaceWithPhotos & { match?: MatchScore })[]
+  initialSpaces:  SpaceWithPhotos[]
   activeType:     string | null
   activeCity:     string | null
   activeMaxPrice: number | null
-  hasPreferences: boolean
 }
 
-export default function ExplorerClient({ initialSpaces, activeType, activeCity, activeMaxPrice, hasPreferences }: Props) {
+export default function ExplorerClient({ initialSpaces, activeType, activeCity, activeMaxPrice }: Props) {
   const router   = useRouter()
   const pathname = usePathname()
 
@@ -48,10 +46,6 @@ export default function ExplorerClient({ initialSpaces, activeType, activeCity, 
   }, [activeType, activeCity, activeMaxPrice, router, pathname])
 
   const hasFilters = activeType || activeCity || activeMaxPrice
-
-  // Sépare les espaces recommandés (score > 0) du reste
-  const recommended = initialSpaces.filter((s) => s.match && s.match.score > 0)
-  const others      = initialSpaces.filter((s) => !s.match || s.match.score === 0)
 
   return (
     <div className="min-h-screen bg-bg-secondary">
@@ -156,71 +150,27 @@ export default function ExplorerClient({ initialSpaces, activeType, activeCity, 
               <span> · <span className="text-primary">≤ {activeMaxPrice.toLocaleString('fr-FR')} €/j</span></span>
             )}
           </p>
-
-          {hasPreferences && recommended.length > 0 && (
-            <div className="flex items-center gap-1.5 text-sm text-primary">
-              <Sparkles size={14} />
-              <span className="font-medium">Personnalisé selon vos préférences</span>
-            </div>
-          )}
         </div>
 
-        {/* Section recommandés */}
-        {hasPreferences && recommended.length > 0 && (
-          <div className="mb-10">
-            <h2 className="mb-4 text-lg font-semibold text-foreground flex items-center gap-2">
-              <Sparkles size={18} className="text-primary" />
-              Recommandés pour vous
-            </h2>
-            <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-              {recommended.map((space) => (
-                <SpaceCard
-                  key={space.id}
-                  id={space.id}
-                  title={space.title}
-                  type={space.type}
-                  city={space.city}
-                  district={space.district}
-                  priceDay={space.price_day}
-                  areaSqm={space.area_sqm}
-                  isAvailable={space.is_available}
-                  coverUrl={getCoverUrl(space)}
-                  matchScore={space.match}
-                />
-              ))}
-            </div>
+        {/* Grille — les espaces sont déjà triés par pertinence côté serveur */}
+        {initialSpaces.length > 0 ? (
+          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            {initialSpaces.map((space) => (
+              <SpaceCard
+                key={space.id}
+                id={space.id}
+                title={space.title}
+                type={space.type}
+                city={space.city}
+                district={space.district}
+                priceDay={space.price_day}
+                areaSqm={space.area_sqm}
+                isAvailable={space.is_available}
+                coverUrl={getCoverUrl(space)}
+              />
+            ))}
           </div>
-        )}
-
-        {/* Tous les autres espaces */}
-        {others.length > 0 && (
-          <div>
-            {hasPreferences && recommended.length > 0 && (
-              <h2 className="mb-4 text-lg font-semibold text-foreground text-text-secondary">
-                Autres espaces
-              </h2>
-            )}
-            <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-              {others.map((space) => (
-                <SpaceCard
-                  key={space.id}
-                  id={space.id}
-                  title={space.title}
-                  type={space.type}
-                  city={space.city}
-                  district={space.district}
-                  priceDay={space.price_day}
-                  areaSqm={space.area_sqm}
-                  isAvailable={space.is_available}
-                  coverUrl={getCoverUrl(space)}
-                />
-              ))}
-            </div>
-          </div>
-        )}
-
-        {/* Aucun résultat */}
-        {initialSpaces.length === 0 && (
+        ) : (
           <div className="flex flex-col items-center justify-center py-24 text-center">
             <div
               className="flex h-20 w-20 items-center justify-center rounded-full"

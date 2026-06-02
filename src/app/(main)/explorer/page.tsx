@@ -4,7 +4,6 @@ import { getBrandPreferences } from '@/lib/queries/preferences'
 import { calculateMatchScore } from '@/lib/matching/score'
 import type { SpaceFilters, SpaceWithPhotos } from '@/types/spaces'
 import type { City, SpaceType } from '@/constants/spaces'
-import type { MatchScore } from '@/lib/matching/score'
 import ExplorerClient from './ExplorerClient'
 
 type PageProps = {
@@ -22,35 +21,34 @@ export default async function ExplorerPage({ searchParams }: PageProps) {
   // Récupère les espaces
   const spaces = await getSpaces(filters).catch(() => [])
 
-  // Récupère les préférences utilisateur (si connecté)
-  let scoredSpaces: (SpaceWithPhotos & { match?: MatchScore })[] = spaces
-  let userPrefs = null
+  // Si utilisateur connecté avec préférences, on calcule les scores
+  // et on trie silencieusement sans rien afficher au user.
+  let sortedSpaces = spaces
 
   try {
     const supabase = await createClient()
     const { data: { user } } = await supabase.auth.getUser()
     if (user) {
-      userPrefs = await getBrandPreferences(user.id)
-      if (userPrefs) {
-        scoredSpaces = spaces.map((space) => ({
+      const prefs = await getBrandPreferences(user.id)
+      if (prefs) {
+        const scored = spaces.map((space) => ({
           ...space,
-          match: calculateMatchScore(space, userPrefs!),
+          _matchScore: calculateMatchScore(space, prefs),
         }))
-        // Trie par score décroissant
-        scoredSpaces.sort((a, b) => (b.match?.score ?? 0) - (a.match?.score ?? 0))
+        scored.sort((a, b) => (b._matchScore?.score ?? 0) - (a._matchScore?.score ?? 0))
+        sortedSpaces = scored.map(({ _matchScore, ...space }) => space)
       }
     }
   } catch {
-    // Ignore — si pas connecté ou erreur, on montre les espaces normalement
+    // Ignore — fallback sur la liste normale
   }
 
   return (
     <ExplorerClient
-      initialSpaces={scoredSpaces}
+      initialSpaces={sortedSpaces}
       activeType={params.type ?? null}
       activeCity={params.city ?? null}
       activeMaxPrice={params.maxPrice ? Number(params.maxPrice) : null}
-      hasPreferences={!!userPrefs}
     />
   )
 }
