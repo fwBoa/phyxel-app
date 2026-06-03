@@ -13,6 +13,7 @@ type SpaceCardProps = {
   areaSqm?:    number | null
   isAvailable: boolean
   coverUrl?:   string | null
+  matchScore?: number | null
 }
 
 const TYPE_LABELS: Record<string, string> = {
@@ -24,7 +25,7 @@ const TYPE_LABELS: Record<string, string> = {
 }
 
 export default function SpaceCard({
-  id, title, type, city, district, priceDay, areaSqm, isAvailable, coverUrl,
+  id, title, type, city, district, priceDay, areaSqm, isAvailable, coverUrl, matchScore,
 }: SpaceCardProps) {
   return (
     <Link
@@ -52,6 +53,15 @@ export default function SpaceCard({
         <span className="absolute left-3 top-3 rounded-full bg-white/90 px-3 py-1 text-xs font-semibold text-foreground backdrop-blur-sm">
           {TYPE_LABELS[type] ?? type}
         </span>
+        {/* Badge match score */}
+        {matchScore != null && matchScore > 0 && (
+          <span
+            className="absolute left-3 top-10 rounded-full px-2 py-0.5 text-xs font-bold text-white backdrop-blur-sm"
+            style={{ backgroundColor: matchScore >= 85 ? '#22c55e' : matchScore >= 70 ? '#f59e0b' : '#ef4444' }}
+          >
+            {matchScore}% match
+          </span>
+        )}
         {/* Bouton favori */}
         {isAvailable && (
           <div className="absolute right-3 top-3">

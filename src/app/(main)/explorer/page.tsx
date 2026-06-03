@@ -101,6 +101,8 @@ export default async function ExplorerPage({ searchParams }: PageProps) {
   // Si utilisateur connecté avec préférences, on calcule les scores
   // et on trie silencieusement sans rien afficher au user.
   let sortedSpaces = spaces
+  const matchScores: Record<string, number> = {}
+  let hasPreferences = false
 
   try {
     const supabase = await createClient()
@@ -108,10 +110,15 @@ export default async function ExplorerPage({ searchParams }: PageProps) {
     if (user) {
       const prefs = await getBrandPreferences(user.id)
       if (prefs) {
-        const scored = spaces.map((space) => ({
-          ...space,
-          _matchScore: calculateMatchScore(space, prefs),
-        }))
+        hasPreferences = true
+        const scored = spaces.map((space) => {
+          const match = calculateMatchScore(space, prefs)
+          matchScores[space.id] = match.score
+          return {
+            ...space,
+            _matchScore: match,
+          }
+        })
         scored.sort((a, b) => (b._matchScore?.score ?? 0) - (a._matchScore?.score ?? 0))
         sortedSpaces = scored.map(({ _matchScore, ...space }) => space)
       }
@@ -126,6 +133,8 @@ export default async function ExplorerPage({ searchParams }: PageProps) {
       activeType={activeType}
       activeCity={activeCity}
       activeMaxPrice={activeMaxPrice}
+      matchScores={matchScores}
+      hasPreferences={hasPreferences}
     />
   )
 }
