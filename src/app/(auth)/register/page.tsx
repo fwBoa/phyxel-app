@@ -22,7 +22,7 @@ export default function RegisterPage() {
     setLoading(true)
 
     const supabase = createClient()
-    const { error } = await supabase.auth.signUp({
+    const { data, error } = await supabase.auth.signUp({
       email,
       password,
       options: {
@@ -34,8 +34,21 @@ export default function RegisterPage() {
       },
     })
 
+    if (error) {
+      setLoading(false)
+      setError(error.message)
+      return
+    }
+
     setLoading(false)
-    if (error) { setError(error.message); return }
+
+    // Si la confirmation par email est activée, Supabase ne crée pas de session tout de suite.
+    // On informe l'utilisateur au lieu de rediriger vers '/'.
+    if (!data.session) {
+      setError('Un email de confirmation vous a été envoyé. Veuillez cliquer sur le lien pour activer votre compte.')
+      return
+    }
+
     router.push('/')
     router.refresh()
   }
