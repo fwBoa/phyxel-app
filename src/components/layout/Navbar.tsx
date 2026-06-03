@@ -31,6 +31,12 @@ export default function Navbar({ user }: NavbarProps) {
   async function handleSignOut() {
     const supabase = createClient()
     await supabase.auth.signOut()
+    // Supprime le brouillon onboarding pour éviter qu'un nouvel utilisateur hérite des données
+    try {
+      localStorage.removeItem('phyxel_onboarding_draft')
+    } catch {
+      // ignore
+    }
     router.push('/')
     router.refresh()
   }

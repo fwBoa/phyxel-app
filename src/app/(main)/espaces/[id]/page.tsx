@@ -3,9 +3,12 @@ import Image                from 'next/image'
 import { MapPin, Maximize2, Euro } from 'lucide-react'
 import { getSpaceById }     from '@/lib/queries/spaces'
 import { isSpaceFavorited } from '@/lib/queries/favorites'
-import { getCurrentUser }   from '@/lib/queries/users'
+import { getCurrentUser, getProfile }   from '@/lib/queries/users'
+import { getBrandPreferences } from '@/lib/queries/preferences'
+import { calculateMatchScore } from '@/lib/matching/score'
 import BookingForm          from '@/components/features/BookingForm'
 import FavoriteButton       from '@/components/ui/FavoriteButton'
+import MatchWidget          from '@/components/features/MatchWidget'
 
 type PageProps = { params: Promise<{ id: string }> }
 
@@ -24,7 +27,17 @@ export default async function SpaceDetailPage({ params }: PageProps) {
   const gallery = photos.filter((p) => p !== cover)
 
   const user            = await getCurrentUser()
+  const profile         = user ? await getProfile(user.id) : null
   const initialFavorited = user ? await isSpaceFavorited(user.id, space.id) : false
+
+  // Calcul du match
+  let matchData = null
+  if (user && profile?.brand_name) {
+    const prefs = await getBrandPreferences(user.id)
+    if (prefs) {
+      matchData = calculateMatchScore(space, prefs)
+    }
+  }
 
   return (
     <div className="mx-auto max-w-6xl px-4 py-12 sm:px-6 lg:px-8">
@@ -102,6 +115,16 @@ export default async function SpaceDetailPage({ params }: PageProps) {
 
         {/* Sidebar réservation */}
         <div className="flex flex-col gap-6">
+
+          {matchData && matchData.score > 0 && (
+            <MatchWidget 
+              score={matchData.score}
+              brandName={profile?.brand_name}
+              pointsForts={matchData.pointsForts}
+              pointsVigilance={matchData.pointsVigilance}
+            />
+          )}
+
           <div className="rounded-2xl border border-border-custom p-6 shadow-sm">
             {space.price_day && (
               <p className="text-2xl font-bold text-foreground">
