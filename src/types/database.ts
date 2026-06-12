@@ -17,34 +17,97 @@ export type Database = {
           id:         string
           full_name:  string | null
           avatar_url: string | null
-          role:       'brand' | 'host'
           brand_name: string | null
           website:    string | null
           bio:        string | null
-          is_admin:   boolean | null
+          has_completed_onboarding: boolean | null
           created_at: string
         }
         Insert: {
           id:         string
           full_name?: string | null
           avatar_url?: string | null
-          role:       'brand' | 'host'
           brand_name?: string | null
           website?:   string | null
-          bio?:       string | null
-          is_admin?:  boolean | null
+          bio?:        string | null
+          has_completed_onboarding?: boolean | null
           created_at?: string
         }
         Update: {
           id?:         string
           full_name?:  string | null
           avatar_url?: string | null
-          role?:       'brand' | 'host'
           brand_name?: string | null
           website?:    string | null
           bio?:        string | null
-          is_admin?:   boolean | null
+          has_completed_onboarding?: boolean | null
           created_at?: string
+        }
+        Relationships: []
+      }
+      admins: {
+        Row: {
+          id:            string
+          email:         string
+          password_hash: string
+          full_name:     string | null
+          is_active:     boolean
+          last_login_at: string | null
+          created_at:    string
+          updated_at:    string
+        }
+        Insert: {
+          id?:            string
+          email:          string
+          password_hash:  string
+          full_name?:     string | null
+          is_active?:     boolean
+          last_login_at?: string | null
+          created_at?:    string
+          updated_at?:    string
+        }
+        Update: {
+          id?:            string
+          email?:         string
+          password_hash?: string
+          full_name?:     string | null
+          is_active?:     boolean
+          last_login_at?: string | null
+          created_at?:    string
+          updated_at?:    string
+        }
+        Relationships: []
+      }
+      hosts: {
+        Row: {
+          id:           string
+          email:        string
+          full_name:    string | null
+          company_name: string | null
+          phone:        string | null
+          is_active:    boolean
+          created_at:   string
+          updated_at:   string
+        }
+        Insert: {
+          id?:           string
+          email:         string
+          full_name?:    string | null
+          company_name?: string | null
+          phone?:        string | null
+          is_active?:    boolean
+          created_at?:   string
+          updated_at?:   string
+        }
+        Update: {
+          id?:           string
+          email?:        string
+          full_name?:    string | null
+          company_name?: string | null
+          phone?:        string | null
+          is_active?:    boolean
+          created_at?:   string
+          updated_at?:   string
         }
         Relationships: []
       }
@@ -171,6 +234,72 @@ export type Database = {
         }
         Relationships: []
       }
+      brand_preferences: {
+        Row: {
+          id:                  string
+          profile_id:          string
+          sector:              string | null
+          product_types:       string[] | null
+          main_city:           string | null
+          company_size:        string | null
+          approx_budget:       string | null
+          physical_objectives: Json | null
+          target_city:         string | null
+          desired_duration:    string | null
+          space_types:         Json | null
+          desired_area:        string | null
+          needed_services:     Json | null
+          max_budget:          string | null
+          preferred_districts: Json | null
+          desired_ambiance:    Json | null
+          ideal_dates:         string | null
+          created_at:          string
+          updated_at:          string
+        }
+        Insert: {
+          id?:                  string
+          profile_id:           string
+          sector?:              string | null
+          product_types?:       string[] | null
+          main_city?:           string | null
+          company_size?:        string | null
+          approx_budget?:       string | null
+          physical_objectives?: Json | null
+          target_city?:         string | null
+          desired_duration?:    string | null
+          space_types?:         Json | null
+          desired_area?:        string | null
+          needed_services?:     Json | null
+          max_budget?:          string | null
+          preferred_districts?: Json | null
+          desired_ambiance?:    Json | null
+          ideal_dates?:         string | null
+          created_at?:          string
+          updated_at?:          string
+        }
+        Update: {
+          id?:                  string
+          profile_id?:          string
+          sector?:              string | null
+          product_types?:       string[] | null
+          main_city?:           string | null
+          company_size?:        string | null
+          approx_budget?:       string | null
+          physical_objectives?: Json | null
+          target_city?:          string | null
+          desired_duration?:     string | null
+          space_types?:          Json | null
+          desired_area?:         string | null
+          needed_services?:      Json | null
+          max_budget?:           string | null
+          preferred_districts?:  Json | null
+          desired_ambiance?:     Json | null
+          ideal_dates?:          string | null
+          created_at?:           string
+          updated_at?:           string
+        }
+        Relationships: []
+      }
     }
     Views:          Record<string, never>
     Functions:      Record<string, never>
@@ -198,3 +327,15 @@ export type FavoriteInsertRow = Database['public']['Tables']['favorites']['Inser
 export type BookingRow        = Database['public']['Tables']['bookings']['Row']
 export type BookingInsertRow  = Database['public']['Tables']['bookings']['Insert']
 export type BookingUpdateRow  = Database['public']['Tables']['bookings']['Update']
+
+export type BrandPreferenceRow       = Database['public']['Tables']['brand_preferences']['Row']
+export type BrandPreferenceInsertRow = Database['public']['Tables']['brand_preferences']['Insert']
+export type BrandPreferenceUpdateRow = Database['public']['Tables']['brand_preferences']['Update']
+
+export type AdminRow       = Database['public']['Tables']['admins']['Row']
+export type AdminInsertRow = Database['public']['Tables']['admins']['Insert']
+export type AdminUpdateRow = Database['public']['Tables']['admins']['Update']
+
+export type HostRow       = Database['public']['Tables']['hosts']['Row']
+export type HostInsertRow = Database['public']['Tables']['hosts']['Insert']
+export type HostUpdateRow = Database['public']['Tables']['hosts']['Update']

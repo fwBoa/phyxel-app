@@ -23,7 +23,7 @@ export default function RegisterPage() {
     setLoading(true)
 
     const supabase = createClient()
-    const { error } = await supabase.auth.signUp({
+    const { data, error } = await supabase.auth.signUp({
       email,
       password,
       options: {
@@ -31,13 +31,25 @@ export default function RegisterPage() {
           full_name:  `${firstName} ${lastName}`.trim(),
           brand_name: brandName,
           website,
-          role: 'brand',
         },
       },
     })
 
+    if (error) {
+      setLoading(false)
+      setError(error.message)
+      return
+    }
+
     setLoading(false)
-    if (error) { setError(error.message); return }
+
+    // Si la confirmation par email est activée, Supabase ne crée pas de session tout de suite.
+    // On informe l'utilisateur au lieu de rediriger vers '/'.
+    if (!data.session) {
+      setError('Un email de confirmation vous a été envoyé. Veuillez cliquer sur le lien pour activer votre compte.')
+      return
+    }
+
     router.push('/')
     router.refresh()
   }
@@ -117,7 +129,7 @@ export default function RegisterPage() {
         <form
           onSubmit={handleSubmit}
           className="w-full max-w-md rounded-3xl border border-gray-200 bg-white p-8"
-          style={{ boxShadow: '0 1px 2px rgba(0,0,0,0.04), 0 8px 24px -8px rgba(233,30,140,0.12)' }}
+          style={{ boxShadow: '0 1px 2px rgba(0,0,0,0.04), 0 8px 24px -8px rgba(124,58,237,0.12)' }}
         >
           {/* Mobile logo */}
           <div className="mb-6 md:hidden">
@@ -154,7 +166,7 @@ export default function RegisterPage() {
               type="email" required value={email}
               onChange={(e) => setEmail(e.target.value)}
               placeholder="vous@entreprise.fr"
-              className="mt-1.5 w-full rounded-xl border border-gray-200 bg-white px-4 py-2.5 text-sm outline-none focus:border-[#E91E8C] focus:ring-2 focus:ring-[#E91E8C]/20"
+              className="mt-1.5 w-full rounded-xl border border-gray-200 bg-white px-4 py-2.5 text-sm outline-none focus:border-primary focus:ring-2 focus:ring-primary/20"
             />
           </label>
 
@@ -184,7 +196,7 @@ export default function RegisterPage() {
               type="password" required minLength={8} value={password}
               onChange={(e) => setPassword(e.target.value)}
               placeholder="8 caractères minimum"
-              className="mt-1.5 w-full rounded-xl border border-gray-200 bg-white px-4 py-2.5 text-sm outline-none focus:border-[#E91E8C] focus:ring-2 focus:ring-[#E91E8C]/20"
+              className="mt-1.5 w-full rounded-xl border border-gray-200 bg-white px-4 py-2.5 text-sm outline-none focus:border-primary focus:ring-2 focus:ring-primary/20"
             />
           </label>
 
@@ -208,7 +220,7 @@ export default function RegisterPage() {
 
           <p className="mt-4 text-center text-sm text-gray-500">
             Déjà inscrit ?{' '}
-            <Link href="/login" className="font-medium text-[#E91E8C] hover:underline">
+            <Link href="/login" className="font-medium text-primary hover:underline">
               Se connecter
             </Link>
           </p>
@@ -223,7 +235,7 @@ function PhyxelLogo({ dark = false }: { dark?: boolean }) {
     <Link href="/" className="flex items-center gap-2 font-semibold tracking-tight">
       <span
         className="grid h-7 w-7 place-items-center rounded-lg text-sm font-bold text-white"
-        style={{ background: 'linear-gradient(135deg, #E91E8C, #C026D3)' }}
+        style={{ background: 'linear-gradient(135deg, #7C3AED, #A78BFA)' }}
       >
         P
       </span>
