@@ -120,7 +120,7 @@ export default async function ExplorerPage({ searchParams }: PageProps) {
           }
         })
         scored.sort((a, b) => (b._matchScore?.score ?? 0) - (a._matchScore?.score ?? 0))
-        sortedSpaces = scored.map(({ _matchScore, ...space }) => space)
+        sortedSpaces = scored.map(({ _matchScore: _, ...space }) => space)
       }
     }
   } catch {
