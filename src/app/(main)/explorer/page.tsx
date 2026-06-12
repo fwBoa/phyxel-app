@@ -2,7 +2,7 @@ import { createClient } from '@/lib/supabase/server'
 import { getSpaces } from '@/lib/queries/spaces'
 import { getBrandPreferences } from '@/lib/queries/preferences'
 import { calculateMatchScore } from '@/lib/matching/score'
-import type { SpaceFilters, SpaceWithPhotos } from '@/types/spaces'
+import type { SpaceFilters } from '@/types/spaces'
 import type { City, SpaceType } from '@/constants/spaces'
 import ExplorerClient from './ExplorerClient'
 
