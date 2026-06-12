@@ -19,13 +19,13 @@ export default function FeaturedSpacesSection({ spaces }: FeaturedSpacesSectionP
         <div className="flex items-end justify-between">
           <div>
             <h2 className="text-3xl font-bold text-foreground">Espaces à la une</h2>
-            <p className="mt-2 text-text-secondary">Les espaces les plus plébiscités de la semaine.</p>
+            <p className="mt-2 text-text-secondary">Sélection premium de lieux disponibles cette semaine.</p>
           </div>
           <Link
             href="/explorer"
             className="flex items-center gap-1 text-sm font-semibold text-primary hover:text-[#003D99] transition-colors"
           >
-            Voir tout <ArrowRight size={16} />
+            Voir tous les espaces <ArrowRight size={16} />
           </Link>
         </div>
 
