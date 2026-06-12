@@ -19,6 +19,7 @@ export const COLORS = {
     dark:       '#003D99',
     muted:      '#EFF6FF',
     light_blue: '#3B82F6',
+    periwinkle: '#818CF8',
   },
 
   border: {

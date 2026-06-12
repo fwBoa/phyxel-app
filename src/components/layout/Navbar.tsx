@@ -1,6 +1,7 @@
 'use client'
 
 import Link from 'next/link'
+import PhyxelLogo from '@/components/ui/PhyxelLogo'
 import { usePathname, useRouter } from 'next/navigation'
 import { useState } from 'react'
 import { Menu, X, User, LayoutDashboard, LogOut, ChevronDown } from 'lucide-react'
@@ -50,8 +51,8 @@ export default function Navbar({ user }: NavbarProps) {
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
 
         {/* Logo */}
-        <Link href="/" className="text-xl font-bold tracking-tight text-foreground">
-          Phyxel
+        <Link href="/" aria-label="Phyxel — accueil">
+          <PhyxelLogo height={24} />
         </Link>
 
         {/* Navigation desktop */}
