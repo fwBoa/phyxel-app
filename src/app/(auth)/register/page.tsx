@@ -43,25 +43,6 @@ export default function RegisterPage() {
   }
 
   return (
-<<<<<<< Updated upstream
-    <div
-      className="grid min-h-screen md:grid-cols-2"
-      style={{ background: 'linear-gradient(180deg, #fdf2f8, #fafafa)' }}
-    >
-      {/* Left panel — hidden on mobile */}
-      <aside
-        className="hidden flex-col justify-between p-10 md:flex"
-        style={{ background: 'linear-gradient(135deg, #E91E8C, #C026D3)' }}
-      >
-        <PhyxelLogo dark />
-        <div>
-          <h2 className="text-3xl font-semibold tracking-tight text-white">
-            Rejoindre Phyxel
-          </h2>
-          <p className="mt-3 text-white/80">
-            Votre premier espace physique à portée de clic.
-          </p>
-=======
     <div className="grid min-h-screen md:grid-cols-2">
 
       {/* ── Left panel — photo + overlay ── */}
@@ -125,7 +106,6 @@ export default function RegisterPage() {
               Un réseau qualifié de partenaires et de lieux
             </div>
           </div>
->>>>>>> Stashed changes
         </div>
       </aside>
 
@@ -153,13 +133,8 @@ export default function RegisterPage() {
               <input
                 type="text" required value={firstName}
                 onChange={(e) => setFirstName(e.target.value)}
-<<<<<<< Updated upstream
-                placeholder="Marie"
-                className="mt-1.5 w-full rounded-xl border border-gray-200 bg-white px-4 py-2.5 text-sm outline-none focus:border-[#E91E8C] focus:ring-2 focus:ring-[#E91E8C]/20"
-=======
                 placeholder="Sophie"
                 className="mt-1.5 w-full rounded-xl border border-gray-200 bg-white px-4 py-2.5 text-sm outline-none focus:border-primary focus:ring-2 focus:ring-primary/20"
->>>>>>> Stashed changes
               />
             </label>
             <label className="block text-sm">
@@ -167,13 +142,8 @@ export default function RegisterPage() {
               <input
                 type="text" required value={lastName}
                 onChange={(e) => setLastName(e.target.value)}
-<<<<<<< Updated upstream
-                placeholder="Dupont"
-                className="mt-1.5 w-full rounded-xl border border-gray-200 bg-white px-4 py-2.5 text-sm outline-none focus:border-[#E91E8C] focus:ring-2 focus:ring-[#E91E8C]/20"
-=======
                 placeholder="Martin"
                 className="mt-1.5 w-full rounded-xl border border-gray-200 bg-white px-4 py-2.5 text-sm outline-none focus:border-primary focus:ring-2 focus:ring-primary/20"
->>>>>>> Stashed changes
               />
             </label>
           </div>
@@ -193,13 +163,8 @@ export default function RegisterPage() {
             <input
               type="text" required value={brandName}
               onChange={(e) => setBrandName(e.target.value)}
-<<<<<<< Updated upstream
-              placeholder="Ma Marque"
-              className="mt-1.5 w-full rounded-xl border border-gray-200 bg-white px-4 py-2.5 text-sm outline-none focus:border-[#E91E8C] focus:ring-2 focus:ring-[#E91E8C]/20"
-=======
               placeholder="Lumio Studio"
               className="mt-1.5 w-full rounded-xl border border-gray-200 bg-white px-4 py-2.5 text-sm outline-none focus:border-primary focus:ring-2 focus:ring-primary/20"
->>>>>>> Stashed changes
             />
           </label>
 
@@ -208,13 +173,8 @@ export default function RegisterPage() {
             <input
               type="url" value={website}
               onChange={(e) => setWebsite(e.target.value)}
-<<<<<<< Updated upstream
-              placeholder="https://mamarque.fr"
-              className="mt-1.5 w-full rounded-xl border border-gray-200 bg-white px-4 py-2.5 text-sm outline-none focus:border-[#E91E8C] focus:ring-2 focus:ring-[#E91E8C]/20"
-=======
               placeholder="https://lumiostudio.fr"
               className="mt-1.5 w-full rounded-xl border border-gray-200 bg-white px-4 py-2.5 text-sm outline-none focus:border-primary focus:ring-2 focus:ring-primary/20"
->>>>>>> Stashed changes
             />
           </label>
 
