@@ -146,7 +146,7 @@ export default function HowItWorksSection() {
             {/* Texte */}
             <div className="flex-1">
               <h2 className="text-4xl font-bold leading-tight text-foreground">
-                Choisissez l'accompagnement{' '}
+                Choisissez l&apos;accompagnement{' '}
                 <span className="shimmer-blue">qui vous convient le mieux&nbsp;!</span>
               </h2>
 
@@ -157,7 +157,7 @@ export default function HowItWorksSection() {
 
               <p className="mt-4 leading-relaxed text-text-secondary">
                 Nous trouvons les lieux adaptés à votre marque et, si besoin, nous coordonnons
-                également l'ensemble de votre projet avec notre réseau de partenaires spécialisés.
+                également l&apos;ensemble de votre projet avec notre réseau de partenaires spécialisés.
               </p>
 
               <Link
