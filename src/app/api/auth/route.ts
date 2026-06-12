@@ -4,7 +4,7 @@ import { createClient } from '@/lib/supabase/server'
 export async function POST(request: NextRequest) {
   const supabase = await createClient()
   const body     = await request.json()
-  const { action, email, password, full_name, role } = body
+  const { action, email, password, full_name } = body
 
   if (action === 'signIn') {
     const { data, error } = await supabase.auth.signInWithPassword({ email, password })
@@ -16,7 +16,7 @@ export async function POST(request: NextRequest) {
     const { data, error } = await supabase.auth.signUp({
       email,
       password,
-      options: { data: { full_name, role: role ?? 'brand' } },
+      options: { data: { full_name } },
     })
     if (error) return NextResponse.json({ error: error.message }, { status: 400 })
     return NextResponse.json({ user: data.user }, { status: 201 })

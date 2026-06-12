@@ -2,12 +2,29 @@
 
 import Link        from 'next/link'
 import Image       from 'next/image'
-import { useState } from 'react'
-import { useRouter } from 'next/navigation'
+import { Suspense, useState } from 'react'
+import { useRouter, useSearchParams } from 'next/navigation'
 import { createClient } from '@/lib/supabase/client'
 
+// N'accepte que des chemins internes commençant par "/" — bloque les open-redirects.
+function sanitizeRedirect(value: string | null): string {
+  if (!value) return '/'
+  if (!value.startsWith('/') || value.startsWith('//')) return '/'
+  return value
+}
+
 export default function LoginPage() {
-  const router = useRouter()
+  return (
+    <Suspense fallback={null}>
+      <LoginForm />
+    </Suspense>
+  )
+}
+
+function LoginForm() {
+  const router         = useRouter()
+  const searchParams   = useSearchParams()
+  const redirectTo     = sanitizeRedirect(searchParams.get('redirect'))
   const [email,    setEmail]    = useState('')
   const [password, setPassword] = useState('')
   const [error,    setError]    = useState<string | null>(null)
@@ -23,7 +40,7 @@ export default function LoginPage() {
 
     setLoading(false)
     if (error) { setError(error.message); return }
-    router.push('/')
+    router.push(redirectTo)
     router.refresh()
   }
 

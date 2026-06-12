@@ -23,7 +23,7 @@ export default function RegisterPage() {
     setLoading(true)
 
     const supabase = createClient()
-    const { error } = await supabase.auth.signUp({
+    const { data, error } = await supabase.auth.signUp({
       email,
       password,
       options: {
@@ -31,13 +31,25 @@ export default function RegisterPage() {
           full_name:  `${firstName} ${lastName}`.trim(),
           brand_name: brandName,
           website,
-          role: 'brand',
         },
       },
     })
 
+    if (error) {
+      setLoading(false)
+      setError(error.message)
+      return
+    }
+
     setLoading(false)
-    if (error) { setError(error.message); return }
+
+    // Si la confirmation par email est activée, Supabase ne crée pas de session tout de suite.
+    // On informe l'utilisateur au lieu de rediriger vers '/'.
+    if (!data.session) {
+      setError('Un email de confirmation vous a été envoyé. Veuillez cliquer sur le lien pour activer votre compte.')
+      return
+    }
+
     router.push('/')
     router.refresh()
   }
@@ -161,7 +173,7 @@ export default function RegisterPage() {
               type="email" required value={email}
               onChange={(e) => setEmail(e.target.value)}
               placeholder="vous@entreprise.fr"
-              className="mt-1.5 w-full rounded-xl border border-gray-200 bg-white px-4 py-2.5 text-sm outline-none focus:border-[#E91E8C] focus:ring-2 focus:ring-[#E91E8C]/20"
+              className="mt-1.5 w-full rounded-xl border border-gray-200 bg-white px-4 py-2.5 text-sm outline-none focus:border-primary focus:ring-2 focus:ring-primary/20"
             />
           </label>
 
@@ -191,7 +203,7 @@ export default function RegisterPage() {
               type="password" required minLength={8} value={password}
               onChange={(e) => setPassword(e.target.value)}
               placeholder="8 caractères minimum"
-              className="mt-1.5 w-full rounded-xl border border-gray-200 bg-white px-4 py-2.5 text-sm outline-none focus:border-[#E91E8C] focus:ring-2 focus:ring-[#E91E8C]/20"
+              className="mt-1.5 w-full rounded-xl border border-gray-200 bg-white px-4 py-2.5 text-sm outline-none focus:border-primary focus:ring-2 focus:ring-primary/20"
             />
           </label>
 
