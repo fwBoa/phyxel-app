@@ -1,6 +1,7 @@
 'use client'
 
 import Link         from 'next/link'
+import Image        from 'next/image'
 import { useState }  from 'react'
 import { useRouter } from 'next/navigation'
 import { createClient } from '@/lib/supabase/client'
@@ -27,7 +28,7 @@ export default function RegisterPage() {
       password,
       options: {
         data: {
-          full_name: `${firstName} ${lastName}`.trim(),
+          full_name:  `${firstName} ${lastName}`.trim(),
           brand_name: brandName,
           website,
           role: 'brand',
@@ -42,6 +43,7 @@ export default function RegisterPage() {
   }
 
   return (
+<<<<<<< Updated upstream
     <div
       className="grid min-h-screen md:grid-cols-2"
       style={{ background: 'linear-gradient(180deg, #fdf2f8, #fafafa)' }}
@@ -59,12 +61,79 @@ export default function RegisterPage() {
           <p className="mt-3 text-white/80">
             Votre premier espace physique à portée de clic.
           </p>
+=======
+    <div className="grid min-h-screen md:grid-cols-2">
+
+      {/* ── Left panel — photo + overlay ── */}
+      <aside className="relative hidden md:flex flex-col justify-between overflow-hidden">
+
+        {/* Background photo */}
+        <Image
+          src="/register-hero.jpg"
+          alt=""
+          fill
+          className="object-cover"
+          priority
+        />
+
+        {/* Dark gradient overlay */}
+        <div
+          className="absolute inset-0"
+          style={{ background: 'linear-gradient(160deg, rgba(20, 10, 40, 0) 0%, rgba(20, 10, 40, 0) 100%)' }}
+        />
+
+        {/* Content */}
+        <div className="relative z-10 flex flex-col justify-between h-full p-10">
+
+          {/* Logo + Testimonial card — groupe haut */}
+          <div className="flex flex-col gap-28">
+            <Link href="/" className="mt-2 ml-1">
+              <Image src="/logo-white.png" alt="Phyxel" width={120} height={32} className="object-contain" />
+            </Link>
+
+            {/* Testimonial card */}
+            <div
+              className="max-w-xs rounded-2xl p-5 ml-[27%]"
+              style={{
+                background: 'rgba(255,255,255,0.12)',
+                backdropFilter: 'blur(12px)',
+                border: '1px solid rgba(255,255,255,0.18)',
+                animation: 'fadeSlideIn 1.4s cubic-bezier(0.25, 0.46, 0.45, 0.94) both',
+              }}
+            >
+              <Image src="/vector.svg" alt="" width={20} height={20} className="mb-3" aria-hidden />
+              <p className="text-xl font-semibold text-white leading-tight" style={{ fontFamily: 'var(--font-bricolage)' }}>Jules ASTON</p>
+              <p className="mt-1 text-sm text-white/80 italic">
+                « Le pop-up a changé notre façon de vendre »
+              </p>
+            </div>
+          </div>
+
+          {/* Stats */}
+          <div className="flex flex-wrap gap-3">
+            <div
+              className="flex items-center gap-2 rounded-full px-4 py-2 text-sm text-white"
+              style={{ background: 'rgba(255, 255, 255, 0)', backdropFilter: 'blur(8px)', border: '1px solid rgba(255,255,255,0.15)' }}
+            >
+              <span className="text-[#6F8BEF] font-semibold">+</span> 500 marques accompagnées
+            </div>
+            <div
+              className="flex items-center gap-2 rounded-full px-4 py-2 text-sm text-white"
+              style={{ background: 'rgba(255, 255, 255, 0)', backdropFilter: 'blur(8px)', border: '1px solid rgba(255,255,255,0.15)' }}
+            >
+              <svg className="h-4 w-4 shrink-0 text-[#6F8BEF]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+              Un réseau qualifié de partenaires et de lieux
+            </div>
+          </div>
+>>>>>>> Stashed changes
         </div>
-        <p className="text-xs text-white/70">© 2025 Phyxel</p>
       </aside>
 
-      {/* Right panel — form */}
-      <main className="flex items-center justify-center p-6">
+      {/* ── Right panel — form ── */}
+      <main
+        className="flex items-center justify-center p-6"
+        style={{ background: 'linear-gradient(180deg, #ffffffff, #fafafa)' }}
+      >
         <form
           onSubmit={handleSubmit}
           className="w-full max-w-md rounded-3xl border border-gray-200 bg-white p-8"
@@ -75,8 +144,8 @@ export default function RegisterPage() {
             <PhyxelLogo />
           </div>
 
-          <h1 className="text-2xl font-semibold tracking-tight text-gray-900">Créer mon compte</h1>
-          <p className="mt-1 text-sm text-gray-500">Votre première expérience physique commence ici.</p>
+          <h1 className="text-2xl font-semibold tracking-tight text-gray-900" style={{ fontFamily: 'var(--font-bricolage)' }}>Créer mon compte</h1>
+          <p className="mt-1 text-sm text-gray-500 font-sans">Votre première expérience physique commence ici.</p>
 
           <div className="mt-6 grid grid-cols-2 gap-3">
             <label className="block text-sm">
@@ -84,8 +153,13 @@ export default function RegisterPage() {
               <input
                 type="text" required value={firstName}
                 onChange={(e) => setFirstName(e.target.value)}
+<<<<<<< Updated upstream
                 placeholder="Marie"
                 className="mt-1.5 w-full rounded-xl border border-gray-200 bg-white px-4 py-2.5 text-sm outline-none focus:border-[#E91E8C] focus:ring-2 focus:ring-[#E91E8C]/20"
+=======
+                placeholder="Sophie"
+                className="mt-1.5 w-full rounded-xl border border-gray-200 bg-white px-4 py-2.5 text-sm outline-none focus:border-primary focus:ring-2 focus:ring-primary/20"
+>>>>>>> Stashed changes
               />
             </label>
             <label className="block text-sm">
@@ -93,8 +167,13 @@ export default function RegisterPage() {
               <input
                 type="text" required value={lastName}
                 onChange={(e) => setLastName(e.target.value)}
+<<<<<<< Updated upstream
                 placeholder="Dupont"
                 className="mt-1.5 w-full rounded-xl border border-gray-200 bg-white px-4 py-2.5 text-sm outline-none focus:border-[#E91E8C] focus:ring-2 focus:ring-[#E91E8C]/20"
+=======
+                placeholder="Martin"
+                className="mt-1.5 w-full rounded-xl border border-gray-200 bg-white px-4 py-2.5 text-sm outline-none focus:border-primary focus:ring-2 focus:ring-primary/20"
+>>>>>>> Stashed changes
               />
             </label>
           </div>
@@ -114,8 +193,13 @@ export default function RegisterPage() {
             <input
               type="text" required value={brandName}
               onChange={(e) => setBrandName(e.target.value)}
+<<<<<<< Updated upstream
               placeholder="Ma Marque"
               className="mt-1.5 w-full rounded-xl border border-gray-200 bg-white px-4 py-2.5 text-sm outline-none focus:border-[#E91E8C] focus:ring-2 focus:ring-[#E91E8C]/20"
+=======
+              placeholder="Lumio Studio"
+              className="mt-1.5 w-full rounded-xl border border-gray-200 bg-white px-4 py-2.5 text-sm outline-none focus:border-primary focus:ring-2 focus:ring-primary/20"
+>>>>>>> Stashed changes
             />
           </label>
 
@@ -124,8 +208,13 @@ export default function RegisterPage() {
             <input
               type="url" value={website}
               onChange={(e) => setWebsite(e.target.value)}
+<<<<<<< Updated upstream
               placeholder="https://mamarque.fr"
               className="mt-1.5 w-full rounded-xl border border-gray-200 bg-white px-4 py-2.5 text-sm outline-none focus:border-[#E91E8C] focus:ring-2 focus:ring-[#E91E8C]/20"
+=======
+              placeholder="https://lumiostudio.fr"
+              className="mt-1.5 w-full rounded-xl border border-gray-200 bg-white px-4 py-2.5 text-sm outline-none focus:border-primary focus:ring-2 focus:ring-primary/20"
+>>>>>>> Stashed changes
             />
           </label>
 
@@ -140,14 +229,16 @@ export default function RegisterPage() {
           </label>
 
           {error && (
-            <p className="mt-4 rounded-xl bg-red-50 p-3 text-sm text-red-500">{error}</p>
+            <p className={`mt-4 rounded-xl p-3 text-sm ${error.includes('confirmation') ? 'bg-green-50 text-green-700' : 'bg-red-50 text-red-500'}`}>
+              {error}
+            </p>
           )}
 
           <button
             type="submit" disabled={loading}
-            className="mt-6 w-full rounded-xl bg-gray-900 py-3 text-sm font-medium text-white transition-opacity hover:opacity-90 disabled:opacity-50"
+            className="mt-6 w-full rounded-full bg-gray-900 py-3 text-sm font-medium text-white transition-opacity hover:opacity-90 disabled:opacity-50"
           >
-            {loading ? 'Création...' : 'Créer mon compte →'}
+            {loading ? 'Création...' : 'Créer mon compte'}
           </button>
 
           <p className="mt-3 text-center text-xs text-gray-400">
