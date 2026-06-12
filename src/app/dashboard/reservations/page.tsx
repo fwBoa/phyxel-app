@@ -12,15 +12,15 @@ export default async function ReservationsPage() {
 
   return (
     <>
-      <h1 className="mb-6 text-2xl font-bold text-[#0A0A0A]">Mes réservations</h1>
+      <h1 className="mb-6 text-2xl font-bold text-foreground">Mes réservations</h1>
 
       {bookings.length === 0 ? (
-        <div className="rounded-2xl border border-[#E5E5E5] bg-white p-12 text-center">
-          <CalendarDays className="mx-auto mb-3 text-[#9B9B9B]" size={32} />
-          <p className="text-sm text-[#9B9B9B]">Aucune réservation pour l&apos;instant.</p>
+        <div className="rounded-2xl border border-border-custom bg-white p-12 text-center">
+          <CalendarDays className="mx-auto mb-3 text-text-muted" size={32} />
+          <p className="text-sm text-text-muted">Aucune réservation pour l&apos;instant.</p>
           <Link
             href="/explorer"
-            className="mt-3 inline-block text-sm font-semibold text-[#E91E8C] hover:text-[#B0156A]"
+            className="mt-3 inline-block text-sm font-semibold text-primary hover:text-[#5B21B6]"
           >
             Explorer les espaces →
           </Link>
@@ -35,11 +35,11 @@ export default async function ReservationsPage() {
             return (
               <div
                 key={booking.id}
-                className="flex flex-col gap-4 rounded-2xl border border-[#E5E5E5] bg-white p-5 sm:flex-row sm:items-center sm:justify-between"
+                className="flex flex-col gap-4 rounded-2xl border border-border-custom bg-white p-5 sm:flex-row sm:items-center sm:justify-between"
               >
                 <div className="flex flex-col gap-1">
                   <div className="flex items-center gap-2">
-                    <p className="font-semibold text-[#0A0A0A]">{space?.title ?? 'Espace'}</p>
+                    <p className="font-semibold text-foreground">{space?.title ?? 'Espace'}</p>
                     <span
                       className="rounded-full px-2.5 py-0.5 text-xs font-medium"
                       style={{
@@ -50,19 +50,19 @@ export default async function ReservationsPage() {
                       {BOOKING_STATUSES[booking.status]}
                     </span>
                   </div>
-                  <p className="flex items-center gap-1 text-sm text-[#6B6B6B]">
+                  <p className="flex items-center gap-1 text-sm text-text-secondary">
                     <CalendarDays size={14} />
                     {booking.start_date} → {booking.end_date}
-                    <span className="text-[#9B9B9B]">({days} jour{days > 1 ? 's' : ''})</span>
+                    <span className="text-text-muted">({days} jour{days > 1 ? 's' : ''})</span>
                   </p>
                   {space?.city && (
-                    <p className="text-xs text-[#9B9B9B]">{space.city}{space.district ? `, ${space.district}` : ''}</p>
+                    <p className="text-xs text-text-muted">{space.city}{space.district ? `, ${space.district}` : ''}</p>
                   )}
                 </div>
 
                 <div className="flex items-center gap-4">
                   {booking.total_price && (
-                    <p className="flex items-center gap-0.5 text-sm font-semibold text-[#0A0A0A]">
+                    <p className="flex items-center gap-0.5 text-sm font-semibold text-foreground">
                       <Euro size={14} />
                       {booking.total_price.toLocaleString('fr-FR')}
                     </p>
@@ -70,7 +70,7 @@ export default async function ReservationsPage() {
                   {space?.id && (
                     <Link
                       href={`/espaces/${space.id}`}
-                      className="text-xs font-medium text-[#E91E8C] hover:text-[#B0156A]"
+                      className="text-xs font-medium text-primary hover:text-[#5B21B6]"
                     >
                       Voir l&apos;espace →
                     </Link>

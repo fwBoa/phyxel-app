@@ -1,28 +1,15 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { createClient } from '@/lib/supabase/server'
-
-async function checkAdmin(supabase: Awaited<ReturnType<typeof createClient>>) {
-  const { data: { user } } = await supabase.auth.getUser()
-  if (!user) return { ok: false, status: 401 }
-
-  const { data: profile } = await supabase
-    .from('profiles')
-    .select('is_admin')
-    .eq('id', user.id)
-    .single()
-
-  if (!profile?.is_admin) return { ok: false, status: 403 }
-  return { ok: true, user }
-}
+import { createAdminClient } from '@/lib/supabase/admin'
+import { getCurrentAdmin } from '@/lib/admin/auth'
 
 export async function GET() {
-  const supabase = await createClient()
-  const auth = await checkAdmin(supabase)
-  if (!auth.ok) return NextResponse.json({ error: 'Forbidden' }, { status: auth.status })
+  const admin = await getCurrentAdmin()
+  if (!admin) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
 
+  const supabase = createAdminClient()
   const { data, error } = await supabase
     .from('spaces')
-    .select('*, space_photos(*)')
+    .select('*, space_photos(*), hosts(email, full_name)')
     .order('created_at', { ascending: false })
 
   if (error) return NextResponse.json({ error: error.message }, { status: 500 })
@@ -30,9 +17,8 @@ export async function GET() {
 }
 
 export async function POST(request: NextRequest) {
-  const supabase = await createClient()
-  const auth = await checkAdmin(supabase)
-  if (!auth.ok) return NextResponse.json({ error: 'Forbidden' }, { status: auth.status })
+  const admin = await getCurrentAdmin()
+  if (!admin) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
 
   const body = await request.json()
   const {
@@ -46,33 +32,61 @@ export async function POST(request: NextRequest) {
     description,
     is_available,
     photos,
+    hostEmail,
   } = body
 
   if (!title || !type || !city) {
     return NextResponse.json({ error: 'Titre, type et ville sont requis.' }, { status: 400 })
   }
 
-  // Créer l'espace
+  if (!hostEmail || typeof hostEmail !== 'string') {
+    return NextResponse.json({ error: 'Email du host requis.' }, { status: 400 })
+  }
+
+  const supabase = createAdminClient()
+
+  // 1. Lookup host par email
+  const { data: host, error: hostError } = await supabase
+    .from('hosts')
+    .select('id, is_active')
+    .eq('email', hostEmail.toLowerCase().trim())
+    .maybeSingle()
+
+  if (hostError) return NextResponse.json({ error: hostError.message }, { status: 500 })
+  if (!host) {
+    return NextResponse.json(
+      { error: `Aucun host enregistré avec l'email "${hostEmail}". Ajoutez ce host avant de créer un espace.` },
+      { status: 400 },
+    )
+  }
+  if (!host.is_active) {
+    return NextResponse.json(
+      { error: `Le host "${hostEmail}" est désactivé.` },
+      { status: 400 },
+    )
+  }
+
+  // 2. Créer l'espace
   const { data: space, error: spaceError } = await supabase
     .from('spaces')
     .insert({
       title,
       type,
       city,
-      district: district || null,
-      address: address || null,
-      area_sqm: area_sqm ?? null,
-      price_day: price_day ?? null,
+      district:    district    || null,
+      address:     address     || null,
+      area_sqm:    area_sqm    ?? null,
+      price_day:   price_day   ?? null,
       description: description || null,
       is_available: is_available ?? true,
-      host_id: auth.user!.id,
+      host_id:     host.id,
     })
     .select()
     .single()
 
   if (spaceError) return NextResponse.json({ error: spaceError.message }, { status: 400 })
 
-  // Insérer les photos
+  // 3. Insérer les photos
   if (photos && Array.isArray(photos) && photos.length > 0) {
     const photoInserts = photos.map((url: string, idx: number) => ({
       space_id: space.id,

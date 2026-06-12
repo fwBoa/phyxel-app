@@ -41,9 +41,10 @@ yarn-error.log*
 next-env.d.ts
 
 # migrations sql
-/supabase/migrations/
+
 
 # planning / agents
 AGENTS.md
 CLAUDE.md
 ADMIN_PLAN.md
+.env*.local
