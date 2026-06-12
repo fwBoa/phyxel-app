@@ -1,45 +1,79 @@
 import SearchBar from '@/components/features/SearchBar'
+import { COLORS } from '@/constants/colors'
 
 const STATS = [
-  { value: '+340', label: 'espaces disponibles' },
-  { value: '12',   label: 'villes en France' },
-  { value: '48h',  label: 'pour réserver' },
+  '+340 espaces disponibles',
+  '12 villes en France',
+  'Réservation en 48h',
 ]
 
 export default function HeroSection() {
   return (
     <section className="relative overflow-hidden bg-white py-20 sm:py-28">
+      <style>{`
+        @keyframes shimmerBlue {
+          from { background-position: 200% center; }
+          to   { background-position: -200% center; }
+        }
+        .shimmer-blue {
+          background: linear-gradient(
+            90deg,
+            #4338CA 0%,
+            #4361EE 25%,
+            #ffffff 50%,
+            #4361EE 75%,
+            #4338CA 100%
+          );
+          background-size: 200% 100%;
+          -webkit-background-clip: text;
+          background-clip: text;
+          -webkit-text-fill-color: transparent;
+          animation: shimmerBlue 5s linear infinite;
+        }
+      `}</style>
       {/* Fond décoratif */}
       <div
         aria-hidden
-        className="pointer-events-none absolute -top-40 right-0 h-[600px] w-[600px] rounded-full opacity-10 bg-[radial-gradient(circle,#E91E8C_0%,transparent_70%)]"
+        className="pointer-events-none absolute -top-40 right-0 h-[600px] w-[600px] rounded-full opacity-10 bg-[radial-gradient(circle,#0052CC_0%,transparent_70%)]"
       />
 
       <div className="relative mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 text-center">
         {/* Titre */}
-        <h1 className="text-5xl font-bold leading-tight tracking-tight text-[#0A0A0A] sm:text-6xl">
-          Trouvez le lieu physique idéal{' '}
-          <span className="text-[#E91E8C]">pour faire vivre</span>{' '}
-          votre marque e-commerce
+        <h1 className="text-5xl font-bold leading-tight tracking-tight text-foreground sm:text-6xl">
+          Trouvez le lieu physique idéal pour{' '}
+          <span className="shimmer-blue">
+            faire vivre votre marque
+          </span>{' '}
+          e-commerce
         </h1>
 
         {/* Sous-titre */}
-        <p className="mx-auto mt-6 max-w-2xl text-lg text-[#6B6B6B]">
+        <p className="mx-auto mt-6 max-w-2xl text-lg text-text-secondary">
           Phyxel vous recommande les espaces physiques les plus adaptés à votre marque —
           showrooms, pop-ups, corners — et vous permet de réserver en quelques clics.
         </p>
 
+        {/* Boutons de navigation */}
+        <div className="mt-10 flex justify-center gap-2">
+          <button className="rounded-full bg-foreground px-6 py-2.5 text-sm font-semibold text-white">
+            Trouver mon lieu
+          </button>
+          <button className="rounded-full border border-gray-200 bg-white px-6 py-2.5 text-sm font-semibold text-foreground hover:bg-gray-50 transition-colors">
+            Explorer les espaces
+          </button>
+        </div>
+
         {/* Barre de recherche */}
-        <div className="mt-10">
+        <div className="mt-4">
           <SearchBar variant="hero" />
         </div>
 
         {/* Stats */}
-        <div className="mt-12 flex flex-wrap justify-center gap-8 sm:gap-16">
-          {STATS.map(({ value, label }) => (
-            <div key={label} className="flex flex-col items-center">
-              <span className="text-3xl font-bold text-[#0A0A0A]">{value}</span>
-              <span className="mt-1 text-sm text-[#9B9B9B]">{label}</span>
+        <div className="mt-5 flex flex-wrap justify-center gap-6">
+          {STATS.map((stat) => (
+            <div key={stat} className="flex items-center gap-1.5 font-semibold uppercase tracking-wide" style={{ fontSize: '12px', color: COLORS.brand.periwinkle }}>
+              <span className="h-1.5 w-1.5 rounded-full flex-shrink-0" style={{ backgroundColor: COLORS.brand.periwinkle }} />
+              {stat}
             </div>
           ))}
         </div>

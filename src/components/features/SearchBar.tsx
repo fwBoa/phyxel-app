@@ -39,7 +39,7 @@ export default function SearchBar({ initialFilters, onSearch, variant = 'hero' }
     <form
       onSubmit={handleSubmit}
       className={`flex flex-col gap-3 rounded-2xl bg-white p-3 shadow-lg sm:flex-row sm:items-center ${
-        isHero ? 'sm:rounded-full' : 'border border-[#E5E5E5]'
+        isHero ? 'sm:rounded-full' : 'border border-border-custom'
       }`}
     >
       {/* Ville */}
@@ -48,7 +48,7 @@ export default function SearchBar({ initialFilters, onSearch, variant = 'hero' }
         <select
           value={city}
           onChange={(e) => setCity(e.target.value)}
-          className="w-full rounded-xl bg-[#F9F9F9] px-4 py-3 text-sm text-[#0A0A0A] outline-none focus:ring-2 focus:ring-[#E91E8C]"
+          className="w-full rounded-xl bg-bg-secondary px-4 py-3 text-sm text-foreground outline-none focus:ring-2 focus:ring-[#7C3AED]"
         >
           <option value="">Toutes les villes</option>
           {CITIES.map((c) => (
@@ -63,7 +63,7 @@ export default function SearchBar({ initialFilters, onSearch, variant = 'hero' }
         <select
           value={type}
           onChange={(e) => setType(e.target.value)}
-          className="w-full rounded-xl bg-[#F9F9F9] px-4 py-3 text-sm text-[#0A0A0A] outline-none focus:ring-2 focus:ring-[#E91E8C]"
+          className="w-full rounded-xl bg-bg-secondary px-4 py-3 text-sm text-foreground outline-none focus:ring-2 focus:ring-[#7C3AED]"
         >
           <option value="">Type d&apos;espace</option>
           {SPACE_TYPES.map(({ value, label }) => (
@@ -75,7 +75,7 @@ export default function SearchBar({ initialFilters, onSearch, variant = 'hero' }
       {/* Bouton */}
       <button
         type="submit"
-        className="flex items-center justify-center gap-2 rounded-xl bg-[#E91E8C] px-6 py-3 text-sm font-semibold text-white transition-colors hover:bg-[#B0156A] sm:rounded-full"
+        className="flex items-center justify-center gap-2 rounded-xl bg-primary px-6 py-3 text-sm font-semibold text-white transition-colors hover:bg-brand-dark sm:rounded-full"
       >
         <Search size={16} />
         Rechercher
