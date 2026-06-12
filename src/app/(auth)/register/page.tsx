@@ -81,7 +81,7 @@ export default function RegisterPage() {
           {/* Logo + Testimonial card — groupe haut */}
           <div className="flex flex-col gap-28">
             <Link href="/" className="mt-2 ml-1">
-              <Image src="/logo-white.png" alt="Phyxel" width={120} height={32} className="object-contain" />
+              <Image src="/logo-phyxel.svg" alt="Phyxel" width={120} height={32} className="object-contain" />
             </Link>
 
             {/* Testimonial card */}
@@ -121,21 +121,28 @@ export default function RegisterPage() {
         </div>
       </aside>
 
-      {/* ── Right panel — form ── */}
-      <main
-        className="flex items-center justify-center p-6"
-        style={{ background: 'linear-gradient(180deg, #ffffffff, #fafafa)' }}
-      >
+      {/* ── Right panel — form (desktop) + full mobile layout ── */}
+      <main className="relative flex min-h-screen flex-col items-center justify-between gap-6 px-5 py-8 md:min-h-0 md:gap-0 md:justify-center md:p-6 md:bg-gradient-to-b md:from-white md:to-[#fafafa] overflow-y-auto">
+
+        {/* Mobile background image + blur overlay */}
+        <div className="absolute inset-0 md:hidden" aria-hidden>
+          <Image src="/register-hero.jpg" alt="" fill className="object-cover" />
+          <div className="absolute inset-0" style={{ backdropFilter: 'blur(2px)', background: 'rgba(10,5,30,0.45)' }} />
+        </div>
+
+        {/* Mobile logo — blanc */}
+        <div className="relative z-10 w-full pt-4 md:hidden">
+          <Link href="/">
+            <Image src="/logo-white.png" alt="Phyxel" width={110} height={30} className="object-contain" />
+          </Link>
+        </div>
+
+        {/* Form card */}
         <form
           onSubmit={handleSubmit}
-          className="w-full max-w-md rounded-3xl border border-gray-200 bg-white p-8"
+          className="relative z-10 w-full max-w-md rounded-3xl border border-gray-200 bg-white p-8"
           style={{ boxShadow: '0 1px 2px rgba(0,0,0,0.04), 0 8px 24px -8px rgba(124,58,237,0.12)' }}
         >
-          {/* Mobile logo */}
-          <div className="mb-6 md:hidden">
-            <PhyxelLogo />
-          </div>
-
           <h1 className="text-2xl font-semibold tracking-tight text-gray-900" style={{ fontFamily: 'var(--font-bricolage)' }}>Créer mon compte</h1>
           <p className="mt-1 text-sm text-gray-500 font-sans">Votre première expérience physique commence ici.</p>
 
@@ -220,26 +227,29 @@ export default function RegisterPage() {
 
           <p className="mt-4 text-center text-sm text-gray-500">
             Déjà inscrit ?{' '}
-            <Link href="/login" className="font-medium text-primary hover:underline">
+            <Link href="/login" className="font-medium hover:underline" style={{ color: '#6F8BEF' }}>
               Se connecter
             </Link>
           </p>
         </form>
+
+        {/* Stats — mobile only, en bas */}
+        <div className="relative z-10 flex flex-wrap justify-center gap-3 pb-4 md:hidden">
+          <div
+            className="flex items-center gap-2 rounded-full px-4 py-2 text-sm text-white"
+            style={{ background: 'rgba(255, 255, 255, 0)', backdropFilter: 'blur(8px)', border: '1px solid rgba(255, 255, 255, 0)' }}
+          >
+            <span className="font-semibold" style={{ color: '#6F8BEF' }}>+</span> 500 marques accompagnées
+          </div>
+          <div
+            className="flex items-center gap-2 rounded-full px-4 py-2 text-sm text-white"
+            style={{ background: 'rgba(255, 255, 255, 0)', backdropFilter: 'blur(8px)', border: '1px solid rgba(255, 255, 255, 0)' }}
+          >
+            <svg className="h-4 w-4 shrink-0" style={{ color: '#6F8BEF' }} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+            Un réseau qualifié de partenaires et de lieux
+          </div>
+        </div>
       </main>
     </div>
-  )
-}
-
-function PhyxelLogo({ dark = false }: { dark?: boolean }) {
-  return (
-    <Link href="/" className="flex items-center gap-2 font-semibold tracking-tight">
-      <span
-        className="grid h-7 w-7 place-items-center rounded-lg text-sm font-bold text-white"
-        style={{ background: 'linear-gradient(135deg, #7C3AED, #A78BFA)' }}
-      >
-        P
-      </span>
-      <span className={dark ? 'text-white' : 'text-gray-900'}>Phyxel</span>
-    </Link>
   )
 }
