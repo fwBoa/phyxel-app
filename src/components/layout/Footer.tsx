@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import PhyxelLogo from '@/components/ui/PhyxelLogo'
 
 const FOOTER_LINKS = [
   { href: '/mentions-legales', label: 'Mentions légales' },
@@ -14,8 +15,8 @@ export default function Footer() {
         <div className="flex flex-col sm:flex-row items-center justify-between gap-6">
 
           {/* Logo */}
-          <Link href="/" className="text-xl font-bold tracking-tight text-white">
-            Phyxel
+          <Link href="/" aria-label="Phyxel — accueil">
+            <PhyxelLogo height={22} className="brightness-0 invert" />
           </Link>
 
           {/* Liens */}

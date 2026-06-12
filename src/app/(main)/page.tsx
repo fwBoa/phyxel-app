@@ -11,8 +11,8 @@ export default async function HomePage() {
   return (
     <>
       <HeroSection />
-      <HowItWorksSection />
       <FeaturedSpacesSection spaces={featuredSpaces} />
+      <HowItWorksSection />
       <WhyPhyxelSection />
       <CtaSection />
     </>
