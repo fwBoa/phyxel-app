@@ -36,7 +36,7 @@ export default function HowItWorksSection() {
                 <div
                   aria-hidden
                   className="absolute top-7 hidden md:block"
-                  style={{ left: 'calc(50% + 1.75rem)', right: 'calc(-50% + 1.75rem)', height: '1px', background: '#E5E5E5' }}
+                  style={{ left: 'calc(50% + 1.75rem)', right: 'calc(-50% + 1.75rem)', height: '1px', background: '#E2E8F0' }}
                 />
               )}
 
