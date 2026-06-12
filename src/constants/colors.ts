@@ -1,30 +1,29 @@
 export const COLORS = {
   background: {
     primary:   '#FFFFFF',
-    secondary: '#F9F9F9',
-    dark:      '#0A0A0A',
+    secondary: '#FAFAFA',
+    dark:      '#0A192F',
   },
 
   text: {
-    primary:   '#0A0A0A',
-    secondary: '#6B6B6B',
+    primary:   '#0A192F',
+    secondary: '#4A5568',
     muted:     '#9B9B9B',
     inverse:   '#FFFFFF',
   },
 
-  // Accent violet lavender — CTAs, badges, highlights
+  // Accent bleu électrique royal — CTAs, badges, highlights (design.md)
   brand: {
-    primary:   '#7C3AED',
-    light:     '#A78BFA',
-    dark:      '#5B21B6',
-    muted:     '#EDE9FE',
-    // CTA gradient end — violet accent used in hero CTA block
-    violet:    '#9B5DE5',
+    primary:    '#0052CC',
+    light:      '#BFDBFE',
+    dark:       '#003D99',
+    muted:      '#EFF6FF',
+    light_blue: '#3B82F6',
   },
 
   border: {
-    default:   '#E5E5E5',
-    focus:     '#7C3AED',
+    default:   '#E2E8F0',
+    focus:     '#0052CC',
   },
 
   status: {
