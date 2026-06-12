@@ -39,6 +39,43 @@ export default function SpaceForm({ initialData, mode, spaceId }: SpaceFormProps
   const [error, setError] = useState('')
   const [success, setSuccess] = useState('')
 
+  // Host (création à la volée depuis le champ email)
+  const [hostStatus, setHostStatus] = useState<'unknown' | 'creating' | 'created' | 'exists' | 'error'>('unknown')
+  const [hostMessage, setHostMessage] = useState('')
+
+  async function ensureHost() {
+    const email = form.host_email.trim().toLowerCase()
+    if (!email) {
+      setHostStatus('error')
+      setHostMessage("Saisis d'abord l'email du host.")
+      return
+    }
+    setHostStatus('creating')
+    setHostMessage('')
+    try {
+      const res = await fetch('/api/admin/hosts', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email }),
+      })
+      const data = await res.json()
+      if (!res.ok) {
+        setHostStatus('error')
+        setHostMessage(data.error || 'Échec de la création du host.')
+        return
+      }
+      setHostStatus(data.alreadyExists ? 'exists' : 'created')
+      setHostMessage(
+        data.alreadyExists
+          ? `Host déjà enregistré (${email}).`
+          : `Host "${email}" créé. Tu peux finaliser l'espace.`,
+      )
+    } catch {
+      setHostStatus('error')
+      setHostMessage('Erreur réseau. Réessaie.')
+    }
+  }
+
   const [form, setForm] = useState<SpaceData>(
     initialData ?? {
       title: '',
@@ -57,6 +94,11 @@ export default function SpaceForm({ initialData, mode, spaceId }: SpaceFormProps
 
   function handleChange(field: keyof SpaceData, value: string | boolean) {
     setForm((prev) => ({ ...prev, [field]: value }))
+    // Quand l'email du host change, on réinitialise le statut
+    if (field === 'host_email') {
+      setHostStatus('unknown')
+      setHostMessage('')
+    }
   }
 
   async function handleSubmit(e: React.FormEvent) {
@@ -135,7 +177,21 @@ export default function SpaceForm({ initialData, mode, spaceId }: SpaceFormProps
 
         {/* Host email */}
         <div className="flex flex-col gap-1">
-          <label className="text-xs font-medium text-text-secondary">Email du host * </label>
+          <div className="flex items-center justify-between">
+            <label className="text-xs font-medium text-text-secondary">Email du host * </label>
+            <button
+              type="button"
+              onClick={ensureHost}
+              disabled={hostStatus === 'creating' || !form.host_email}
+              className="rounded-full border border-primary px-3 py-1 text-xs font-medium text-primary transition-colors hover:bg-primary hover:text-white disabled:cursor-not-allowed disabled:opacity-50"
+            >
+              {hostStatus === 'creating'
+                ? 'Vérification…'
+                : hostStatus === 'created' || hostStatus === 'exists'
+                  ? '✓ Host OK'
+                  : '+ Créer ce host'}
+            </button>
+          </div>
           <input
             type="email"
             required
@@ -144,7 +200,19 @@ export default function SpaceForm({ initialData, mode, spaceId }: SpaceFormProps
             placeholder="sophie@phyxel.demo"
             className="rounded-xl border border-border-custom px-4 py-2.5 text-sm outline-none focus:border-primary focus:ring-2 focus:ring-primary/20"
           />
-          <p className="text-xs text-text-muted">Le host doit déjà exister dans la base.</p>
+          {hostMessage ? (
+            <p
+              className={`text-xs ${
+                hostStatus === 'error' ? 'text-match-low' : 'text-match-high'
+              }`}
+            >
+              {hostMessage}
+            </p>
+          ) : (
+            <p className="text-xs text-text-muted">
+              Si le host n&apos;existe pas encore, clique sur « + Créer ce host » pour l&apos;ajouter.
+            </p>
+          )}
         </div>
 
         {/* Type + Ville */}
