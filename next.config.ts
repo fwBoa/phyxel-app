@@ -2,10 +2,11 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   images: {
+    dangerouslyAllowSVG: true,
+    contentDispositionType: 'attachment',
+    contentSecurityPolicy: "default-src 'self'; script-src 'none'; sandbox;",
     remotePatterns: [
-      // Photos de test (Unsplash)
       { protocol: 'https', hostname: 'images.unsplash.com' },
-      // Photos uploadées sur Supabase Storage
       { protocol: 'https', hostname: '*.supabase.co' },
     ],
   },
