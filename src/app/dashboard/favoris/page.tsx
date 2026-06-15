@@ -20,7 +20,7 @@ export default async function FavorisPage() {
     <>
       <div className="mb-8 flex items-center gap-3">
         <span className="flex h-10 w-10 items-center justify-center rounded-full bg-brand-muted">
-          <Heart size={20} className="fill-[#7C3AED] stroke-[#7C3AED]" />
+          <Heart size={20} className="fill-primary stroke-primary" />
         </span>
         <div>
           <h1 className="text-2xl font-bold text-foreground">Mes favoris</h1>

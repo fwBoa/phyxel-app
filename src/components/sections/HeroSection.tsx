@@ -10,28 +10,7 @@ const STATS = [
 export default function HeroSection() {
   return (
     <section className="relative overflow-hidden bg-white py-20 sm:py-28">
-      <style>{`
-        @keyframes shimmerBlue {
-          from { background-position: 200% center; }
-          to   { background-position: -200% center; }
-        }
-        .shimmer-blue {
-          background: linear-gradient(
-            90deg,
-            #4338CA 0%,
-            #4361EE 25%,
-            #ffffff 50%,
-            #4361EE 75%,
-            #4338CA 100%
-          );
-          background-size: 200% 100%;
-          -webkit-background-clip: text;
-          background-clip: text;
-          -webkit-text-fill-color: transparent;
-          animation: shimmerBlue 5s linear infinite;
-        }
-      `}</style>
-      {/* Fond décoratif */}
+{/* Fond décoratif */}
       <div
         aria-hidden
         className="pointer-events-none absolute -top-40 right-0 h-[600px] w-[600px] rounded-full opacity-10 bg-[radial-gradient(circle,#0052CC_0%,transparent_70%)]"
