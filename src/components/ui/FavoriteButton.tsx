@@ -41,7 +41,7 @@ export default function FavoriteButton({
           size={iconSize}
           className={`transition-all duration-150 ${
             isFavorited
-              ? 'fill-[#7C3AED] stroke-[#7C3AED]'
+              ? 'fill-primary stroke-primary'
               : 'stroke-[#6B6B6B] fill-transparent'
           }`}
         />
@@ -62,7 +62,7 @@ export default function FavoriteButton({
       <Heart
         size={iconSize}
         className={`transition-all duration-150 ${
-          isFavorited ? 'fill-[#7C3AED] stroke-[#7C3AED]' : 'fill-transparent'
+          isFavorited ? 'fill-primary stroke-primary' : 'fill-transparent'
         }`}
       />
       {isFavorited ? 'Sauvegardé' : 'Sauvegarder'}
