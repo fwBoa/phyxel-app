@@ -30,6 +30,7 @@ import {
   AMBIANCE_OPTIONS,
 } from '@/types/onboarding'
 import { Check, ChevronLeft, ChevronRight, Loader2 } from 'lucide-react'
+import Image from 'next/image'
 
 const STORAGE_KEY = 'phyxel_onboarding_draft'
 
@@ -559,49 +560,66 @@ export default function OnboardingWizard({ mode = 'create', initialData, onSave 
   }
 
   return (
-    <div className="mx-auto max-w-2xl px-4 py-8">
-      <StepHeader step={step} total={5} />
-
-      <div className="min-h-[400px]">
-        {step === 1 && <StepBrandInfo data={data} onChange={update} />}
-        {step === 2 && <StepObjectives data={data} onChange={update} />}
-        {step === 3 && <StepSpaceNeeds data={data} onChange={update} />}
-        {step === 4 && <StepPreferences data={data} onChange={update} />}
-        {step === 5 && <StepSummary data={data} />}
+    <div className="flex min-h-screen">
+      {/* Panneau image gauche */}
+      <div className="relative hidden w-[38%] shrink-0 lg:block">
+        <Image
+          key={step}
+          src={`/assets/img/image-${step}.jpg`}
+          alt={`Étape ${step}`}
+          fill
+          sizes="38vw"
+          className="object-cover"
+          priority
+        />
+        {/* Logo overlay */}
+        <div className="absolute left-6 top-6">
+          <span className="text-xl font-bold text-white drop-shadow">phyxel<span className="text-blue-300">.</span></span>
+        </div>
       </div>
 
-      {error && (
-        <p className="mt-4 text-sm text-destructive">{error}</p>
-      )}
+      {/* Contenu formulaire droite */}
+      <div className="flex flex-1 flex-col justify-between px-8 py-10 lg:px-16">
+        <div>
+          <StepHeader step={step} total={5} />
+          <div className="min-h-[400px]">
+            {step === 1 && <StepBrandInfo data={data} onChange={update} />}
+            {step === 2 && <StepObjectives data={data} onChange={update} />}
+            {step === 3 && <StepSpaceNeeds data={data} onChange={update} />}
+            {step === 4 && <StepPreferences data={data} onChange={update} />}
+            {step === 5 && <StepSummary data={data} />}
+          </div>
+          {error && (
+            <p className="mt-4 text-sm text-destructive">{error}</p>
+          )}
+        </div>
 
-      <div className="mt-8 flex items-center justify-between">
-        <Button
-          variant="outline"
-          onClick={goBack}
-          disabled={step === 1 || isSubmitting}
-        >
-          <ChevronLeft className="mr-2 size-4" />
-          Précédent
-        </Button>
-
-        {step < 5 ? (
-          <Button onClick={goNext} disabled={!isStepValid(step)}>
-            Suivant
-            <ChevronRight className="ml-2 size-4" />
-          </Button>
-        ) : (
+        <div className="mt-8 flex items-center justify-between">
           <Button
-            onClick={handleSubmit}
-            disabled={isSubmitting}
+            variant="outline"
+            onClick={goBack}
+            disabled={step === 1 || isSubmitting}
           >
-            {isSubmitting ? (
-              <Loader2 className="mr-2 size-4 animate-spin" />
-            ) : (
-              <Check className="mr-2 size-4" />
-            )}
-            Voir mes recommandations
+            <ChevronLeft className="mr-2 size-4" />
+            Précédent
           </Button>
-        )}
+
+          {step < 5 ? (
+            <Button onClick={goNext} disabled={!isStepValid(step)}>
+              Suivant
+              <ChevronRight className="ml-2 size-4" />
+            </Button>
+          ) : (
+            <Button onClick={handleSubmit} disabled={isSubmitting}>
+              {isSubmitting ? (
+                <Loader2 className="mr-2 size-4 animate-spin" />
+              ) : (
+                <Check className="mr-2 size-4" />
+              )}
+              Voir mes recommandations
+            </Button>
+          )}
+        </div>
       </div>
     </div>
   )

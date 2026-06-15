@@ -2,7 +2,7 @@
 
 import { useRouter, usePathname } from 'next/navigation'
 import { useCallback } from 'react'
-import { SlidersHorizontal, X, MapPin, Euro, Sparkles } from 'lucide-react'
+import { SlidersHorizontal, X, MapPin, Euro, BadgeCheck } from 'lucide-react'
 import SpaceCard from '@/components/ui/SpaceCard'
 import { SPACE_TYPES, CITIES } from '@/constants/spaces'
 import type { SpaceWithPhotos } from '@/types/spaces'
@@ -139,12 +139,12 @@ export default function ExplorerClient({ initialSpaces, activeType, activeCity, 
 
         {/* Bandeau recommandations */}
         {hasPreferences && (
-          <div className="mb-6 flex items-center gap-2 rounded-xl bg-brand-muted px-4 py-3">
-            <Sparkles size={18} className="text-primary shrink-0" />
-            <p className="text-sm text-primary font-medium">
+          <div className="mb-6 w-[45%] flex items-center gap-3 rounded-xl bg-gray-100 border border-gray-200 px-5 py-4 animate-in fade-in duration-700 delay-300">
+            <div className="shrink-0 rounded-full bg-gradient-to-br from-indigo-700 to-blue-500 p-1.5 text-white">
+              <BadgeCheck size={20} />
+            </div>
+            <p className="text-base font-bold shimmer-blue">
               Ces espaces sont recommandés selon vos préférences
-              {activeCity && <span> pour <span className="font-semibold">{activeCity}</span></span>}
-              {activeType && <span> · <span className="font-semibold">{SPACE_TYPES.find((t) => t.value === activeType)?.label}</span></span>}
             </p>
           </div>
         )}
