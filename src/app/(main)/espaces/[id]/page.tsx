@@ -1,6 +1,6 @@
 import { notFound }        from 'next/navigation'
 import Image                from 'next/image'
-import { MapPin, Maximize2, Euro } from 'lucide-react'
+import { MapPin, Maximize2 } from 'lucide-react'
 import { getSpaceById }     from '@/lib/queries/spaces'
 import { isSpaceFavorited } from '@/lib/queries/favorites'
 import { getCurrentUser, getProfile }   from '@/lib/queries/users'
@@ -26,98 +26,101 @@ export default async function SpaceDetailPage({ params }: PageProps) {
   const cover   = photos.find((p) => p.is_cover) ?? photos[0]
   const gallery = photos.filter((p) => p !== cover)
 
-  const user            = await getCurrentUser()
-  const profile         = user ? await getProfile(user.id) : null
+  const user             = await getCurrentUser()
+  const profile          = user ? await getProfile(user.id) : null
   const initialFavorited = user ? await isSpaceFavorited(user.id, space.id) : false
 
-  // Calcul du match
   let matchData = null
   if (user && profile?.brand_name) {
     const prefs = await getBrandPreferences(user.id)
-    if (prefs) {
-      matchData = calculateMatchScore(space, prefs)
-    }
+    if (prefs) matchData = calculateMatchScore(space, prefs)
   }
 
   return (
-    <div className="mx-auto max-w-6xl px-4 py-12 sm:px-6 lg:px-8">
-      <div className="grid grid-cols-1 gap-12 lg:grid-cols-3">
+    <div className="mx-auto max-w-6xl px-4 py-10 sm:px-6 lg:px-8">
+      <div className="grid grid-cols-1 gap-10 lg:grid-cols-3">
 
-        {/* Colonne principale */}
-        <div className="lg:col-span-2 flex flex-col gap-8">
+        {/* ── Colonne principale ── */}
+        <div className="lg:col-span-2 flex flex-col gap-6">
 
-          {/* Photo principale */}
-          <div className="relative h-72 w-full overflow-hidden rounded-2xl bg-bg-secondary sm:h-96">
+          {/* Photo principale + bouton favori overlay */}
+          <div className="relative h-80 w-full overflow-hidden rounded-2xl bg-bg-secondary sm:h-[420px]">
             {cover ? (
-              <Image src={cover.url} alt={space.title} fill className="object-cover" />
+              <Image src={cover.url} alt={space.title} fill className="object-cover" sizes="(max-width: 1024px) 100vw, 66vw" />
             ) : (
               <div className="flex h-full items-center justify-center text-text-muted">
                 <Maximize2 size={48} />
               </div>
             )}
+            {user && (
+              <div className="absolute right-4 top-4">
+                <FavoriteButton spaceId={space.id} initialFavorited={initialFavorited} variant="overlay" size="md" />
+              </div>
+            )}
           </div>
 
-          {/* Galerie secondaire */}
+          {/* Galerie miniatures */}
           {gallery.length > 0 && (
             <div className="grid grid-cols-3 gap-3">
               {gallery.slice(0, 3).map((photo) => (
-                <div key={photo.id} className="relative h-28 overflow-hidden rounded-xl bg-bg-secondary">
-                  <Image src={photo.url} alt="" fill className="object-cover" />
+                <div key={photo.id} className="relative h-24 overflow-hidden rounded-xl bg-bg-secondary sm:h-28">
+                  <Image src={photo.url} alt="" fill className="object-cover" sizes="22vw" />
                 </div>
               ))}
             </div>
           )}
 
-          {/* Infos */}
-          <div>
-            <div className="flex flex-wrap items-center gap-3">
-              <span className="rounded-full bg-brand-muted px-3 py-1 text-sm font-medium text-primary">
-                {TYPE_LABELS[space.type] ?? space.type}
-              </span>
-              {!space.is_available && (
-                <span className="rounded-full bg-match-low/10 px-3 py-1 text-sm font-medium text-match-low">
-                  Indisponible
-                </span>
-              )}
-            </div>
+          {/* Badge dispo + prix */}
+          <div className="flex items-center justify-between">
+            <span className={`rounded-full px-3 py-1 text-xs font-semibold ${
+              space.is_available
+                ? 'bg-match-high/15 text-match-high'
+                : 'bg-match-low/10 text-match-low'
+            }`}>
+              {space.is_available ? 'DISPONIBLE À VOS DATES' : 'INDISPONIBLE'}
+            </span>
+            {space.price_day && (
+              <p className="text-xl font-bold text-foreground">
+                {space.price_day.toLocaleString('fr-FR')} €
+                <span className="ml-1 text-sm font-normal text-text-muted">/ jour</span>
+              </p>
+            )}
+          </div>
 
-            <div className="mt-4 flex flex-wrap items-start justify-between gap-3">
-              <h1 className="text-3xl font-bold text-foreground">{space.title}</h1>
-              <FavoriteButton spaceId={space.id} initialFavorited={initialFavorited} />
-            </div>
+          {/* Titre */}
+          <h1 className="text-3xl font-bold text-foreground">{space.title}</h1>
 
-            <div className="mt-3 flex flex-wrap gap-4 text-sm text-text-secondary">
-              <span className="flex items-center gap-1">
-                <MapPin size={14} />
-                {space.city}{space.district ? `, ${space.district}` : ''}
+          {/* Tags */}
+          <div className="flex flex-wrap gap-2">
+            <span className="rounded-full border border-border-custom px-3 py-1 text-sm text-foreground">
+              {TYPE_LABELS[space.type] ?? space.type}
+            </span>
+            {space.area_sqm && (
+              <span className="rounded-full border border-border-custom px-3 py-1 text-sm text-foreground">
+                {space.area_sqm} m²
               </span>
-              {space.area_sqm && (
-                <span className="flex items-center gap-1">
-                  <Maximize2 size={14} /> {space.area_sqm} m²
-                </span>
-              )}
-              {space.price_day && (
-                <span className="flex items-center gap-1 font-semibold text-foreground">
-                  <Euro size={14} /> {space.price_day.toLocaleString('fr-FR')} / jour
-                </span>
-              )}
-            </div>
+            )}
+            {(space.district || space.city) && (
+              <span className="flex items-center gap-1 rounded-full border border-border-custom px-3 py-1 text-sm text-foreground">
+                <MapPin size={12} />
+                {space.district ? `${space.district}, ${space.city}` : space.city}
+              </span>
+            )}
           </div>
 
           {/* Description */}
           {space.description && (
             <div>
-              <h2 className="text-lg font-semibold text-foreground">Description</h2>
-              <p className="mt-3 text-sm leading-relaxed text-text-secondary">{space.description}</p>
+              <p className="text-sm leading-relaxed text-text-secondary">{space.description}</p>
             </div>
           )}
         </div>
 
-        {/* Sidebar réservation */}
+        {/* ── Sidebar ── */}
         <div className="flex flex-col gap-6">
 
           {matchData && matchData.score > 0 && (
-            <MatchWidget 
+            <MatchWidget
               score={matchData.score}
               brandName={profile?.brand_name}
               pointsForts={matchData.pointsForts}
@@ -126,13 +129,11 @@ export default async function SpaceDetailPage({ params }: PageProps) {
           )}
 
           <div className="rounded-2xl border border-border-custom p-6 shadow-sm">
-            {space.price_day && (
-              <p className="text-2xl font-bold text-foreground">
-                {space.price_day.toLocaleString('fr-FR')} €
-                <span className="ml-1 text-base font-normal text-text-muted">/ jour</span>
-              </p>
-            )}
-            <BookingForm spaceId={space.id} isAvailable={space.is_available} />
+            <BookingForm
+              spaceId={space.id}
+              isAvailable={space.is_available}
+              priceDay={space.price_day}
+            />
           </div>
         </div>
 
