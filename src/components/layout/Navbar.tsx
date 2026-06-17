@@ -1,11 +1,13 @@
 'use client'
 
 import Link from 'next/link'
+import Image from 'next/image'
 import PhyxelLogo from '@/components/ui/PhyxelLogo'
 import { usePathname, useRouter } from 'next/navigation'
 import { useState } from 'react'
 import { Menu, X, User, LayoutDashboard, LogOut, ChevronDown, CalendarDays, Heart } from 'lucide-react'
 import { createClient } from '@/lib/supabase/client'
+import { useProfile } from '@/hooks/useProfile'
 import type { User as SupabaseUser } from '@supabase/supabase-js'
 
 const NAV_LINKS = [
@@ -23,6 +25,7 @@ export default function Navbar({ user }: NavbarProps) {
   const [dropdownOpen,  setDropdownOpen]  = useState(false)
   const pathname = usePathname()
   const router   = useRouter()
+  const { profile } = useProfile(user?.id)
 
   function isActive(href: string) {
     if (href.startsWith('/#')) return false
@@ -81,8 +84,12 @@ export default function Navbar({ user }: NavbarProps) {
                 aria-haspopup="menu"
                 className="flex items-center gap-2 rounded-full border border-border-custom px-6 py-3 text-sm font-medium text-foreground transition-colors hover:border-[#0A0A0A]"
               >
-                <span className="flex h-6 w-6 items-center justify-center rounded-full bg-brand-muted text-primary">
-                  <User size={13} strokeWidth={2} />
+                <span className="relative flex h-6 w-6 shrink-0 items-center justify-center overflow-hidden rounded-full bg-brand-muted text-primary">
+                  {profile?.avatar_url ? (
+                    <Image src={profile.avatar_url} alt="Avatar" fill className="object-cover" unoptimized />
+                  ) : (
+                    <User size={13} strokeWidth={2} />
+                  )}
                 </span>
                 {firstName}
                 <ChevronDown
