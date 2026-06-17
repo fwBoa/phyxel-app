@@ -3,7 +3,7 @@
 import Link from 'next/link'
 import Image from 'next/image'
 import { Phone, Mail, Send, MessageCircle } from 'lucide-react'
-import PhyxelLogo from '@/components/ui/PhyxelLogo'
+
 
 const NAV_LINKS = {
   left: [

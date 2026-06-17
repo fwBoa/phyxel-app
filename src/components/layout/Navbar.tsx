@@ -4,7 +4,7 @@ import Link from 'next/link'
 import PhyxelLogo from '@/components/ui/PhyxelLogo'
 import { usePathname, useRouter } from 'next/navigation'
 import { useState } from 'react'
-import { Menu, X, User, LayoutDashboard, LogOut, ChevronDown } from 'lucide-react'
+import { Menu, X, User, LayoutDashboard, LogOut, ChevronDown, CalendarDays, Heart } from 'lucide-react'
 import { createClient } from '@/lib/supabase/client'
 import type { User as SupabaseUser } from '@supabase/supabase-js'
 
@@ -121,6 +121,24 @@ export default function Navbar({ user }: NavbarProps) {
                       <LayoutDashboard size={15} className="text-text-secondary" />
                       Tableau de bord
                     </Link>
+                    <Link
+                      href="/dashboard/reservations"
+                      role="menuitem"
+                      onClick={() => setDropdownOpen(false)}
+                      className="flex items-center gap-3 px-4 py-3 text-sm text-foreground hover:bg-bg-secondary transition-colors"
+                    >
+                      <CalendarDays size={15} className="text-text-secondary" />
+                      Mes réservations
+                    </Link>
+                    <Link
+                      href="/dashboard/favoris"
+                      role="menuitem"
+                      onClick={() => setDropdownOpen(false)}
+                      className="flex items-center gap-3 px-4 py-3 text-sm text-foreground hover:bg-bg-secondary transition-colors"
+                    >
+                      <Heart size={15} className="text-text-secondary" />
+                      Favoris
+                    </Link>
                     <div className="mx-4 border-t border-border-custom" />
                     <button
                       role="menuitem"
@@ -198,6 +216,20 @@ export default function Navbar({ user }: NavbarProps) {
                   className="flex items-center gap-3 py-2 text-sm font-medium text-foreground hover:text-primary transition-colors"
                 >
                   <LayoutDashboard size={15} className="text-text-secondary" /> Tableau de bord
+                </Link>
+                <Link
+                  href="/dashboard/reservations"
+                  onClick={() => setMobileOpen(false)}
+                  className="flex items-center gap-3 py-2 text-sm font-medium text-foreground hover:text-primary transition-colors"
+                >
+                  <CalendarDays size={15} className="text-text-secondary" /> Mes réservations
+                </Link>
+                <Link
+                  href="/dashboard/favoris"
+                  onClick={() => setMobileOpen(false)}
+                  className="flex items-center gap-3 py-2 text-sm font-medium text-foreground hover:text-primary transition-colors"
+                >
+                  <Heart size={15} className="text-text-secondary" /> Favoris
                 </Link>
                 <button
                   onClick={() => { setMobileOpen(false); handleSignOut() }}
