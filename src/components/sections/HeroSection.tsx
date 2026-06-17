@@ -48,7 +48,7 @@ export default function HeroSection() {
       >
         {/* Titre */}
         <motion.h1
-          className="text-5xl font-bold leading-tight tracking-tight text-foreground sm:text-6xl"
+          className="text-[32px] font-bold leading-[1.1] tracking-tight text-foreground sm:text-5xl sm:leading-tight"
           variants={itemVariants}
         >
           Trouvez le lieu physique idéal pour{' '}
@@ -65,7 +65,7 @@ export default function HeroSection() {
 
         {/* Sous-titre */}
         <motion.p
-          className="mx-auto mt-6 max-w-2xl text-lg text-text-secondary"
+          className="mx-auto mt-4 max-w-2xl text-base text-text-secondary sm:text-lg"
           variants={itemVariants}
         >
           Phyxel vous recommande les espaces physiques les plus adaptés à votre marque —
@@ -73,7 +73,7 @@ export default function HeroSection() {
         </motion.p>
 
         {/* Boutons de navigation */}
-        <motion.div className="mt-10 flex justify-center gap-2" variants={itemVariants}>
+        <motion.div className="mt-8 flex flex-col justify-center gap-2 sm:flex-row" variants={itemVariants}>
           <button className="rounded-full bg-foreground px-6 py-3 text-sm font-semibold text-white transition-transform active:scale-[0.98]">
             Trouver mon lieu
           </button>
@@ -88,9 +88,9 @@ export default function HeroSection() {
         </motion.div>
 
         {/* Stats */}
-        <motion.div className="mt-5 flex flex-wrap justify-center gap-6" variants={itemVariants}>
+        <motion.div className="mt-5 flex flex-wrap justify-center gap-4 sm:gap-6" variants={itemVariants}>
           {STATS.map((stat) => (
-            <div key={stat} className="flex items-center gap-1.5 font-semibold uppercase tracking-wide" style={{ fontSize: '12px', color: COLORS.brand.periwinkle }}>
+            <div key={stat} className="flex items-center gap-1.5 font-semibold uppercase tracking-wide" style={{ fontSize: '11px', color: COLORS.brand.periwinkle }}>
               <span className="h-1.5 w-1.5 rounded-full flex-shrink-0" style={{ backgroundColor: COLORS.brand.periwinkle }} />
               {stat}
             </div>

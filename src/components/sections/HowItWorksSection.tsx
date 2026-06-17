@@ -83,14 +83,14 @@ export default function HowItWorksSection() {
         </div>
 
         {/* Cards */}
-        <div className="mt-12 grid grid-cols-1 gap-6 md:grid-cols-3">
+        <div className="mt-10 grid grid-cols-1 gap-4 sm:grid-cols-3 sm:gap-6">
           {STEPS.map(({ title, desc }, i) => (
             <CardReveal key={title} delay={i * 0.12}>
-              <span className="text-primary text-xl leading-none">✦</span>
-              <h3 className="mt-5 text-xl font-bold leading-snug text-foreground">
+              <span className="text-primary text-lg leading-none">✦</span>
+              <h3 className="mt-4 text-lg font-bold leading-snug text-foreground">
                 {title}
               </h3>
-              <p className="mt-3 text-sm leading-relaxed text-text-secondary">
+              <p className="mt-2 text-sm leading-relaxed text-text-secondary">
                 {desc}
               </p>
             </CardReveal>
@@ -106,7 +106,7 @@ export default function HowItWorksSection() {
 
             {/* Image avec badges flottants */}
             <ScrollReveal className="relative w-full shrink-0 lg:w-[520px]" y={40}>
-              <div className="relative overflow-hidden rounded-[32px] aspect-[4/3]">
+              <div className="relative overflow-hidden rounded-[24px] aspect-[4/3] sm:rounded-[32px]">
                 <Image
                   src="/assets/img/boutique-accompagnement.jpg"
                   alt="Accompagnement Phyxel"
@@ -118,22 +118,22 @@ export default function HowItWorksSection() {
               </div>
 
               {/* Badge 1 */}
-              <div className="absolute bottom-[38%] left-[8%] flex items-center gap-2.5 rounded-xl bg-white/40 px-4 py-2.5 shadow-sm backdrop-blur-md">
+              <div className="absolute bottom-[38%] left-[4%] flex items-center gap-2 rounded-xl bg-white/40 px-3 py-2 shadow-sm backdrop-blur-md sm:left-[8%] sm:px-4 sm:py-2.5">
                 <Plus size={16} className="text-[#0052CC] shrink-0" strokeWidth={2.5} />
-                <span className="text-sm font-medium text-[#0A0A0A]">500 marques accompagnées</span>
+                <span className="text-xs font-medium text-[#0A0A0A] sm:text-sm">500 marques accompagnées</span>
               </div>
 
               {/* Badge 2 */}
-              <div className="absolute bottom-[18%] left-[8%] flex items-center gap-2.5 rounded-xl bg-white/40 px-4 py-2.5 shadow-sm backdrop-blur-md">
+              <div className="absolute bottom-[18%] left-[4%] flex items-center gap-2 rounded-xl bg-white/40 px-3 py-2 shadow-sm backdrop-blur-md sm:left-[8%] sm:px-4 sm:py-2.5">
                 <Globe size={16} className="text-[#0052CC] shrink-0" strokeWidth={2.5} />
-                <span className="text-sm font-medium text-[#0A0A0A]">Un réseau qualifié de partenaires et de lieux</span>
+                <span className="text-xs font-medium text-[#0A0A0A] sm:text-sm">Un réseau qualifié de partenaires et de lieux</span>
               </div>
             </ScrollReveal>
 
             {/* Texte */}
             <StaggerContainer className="flex-1 max-w-lg" staggerDelay={0.12}>
               <StaggerItem>
-                <h2 className="text-3xl font-bold leading-tight text-[#0A0A0A] sm:text-[42px] sm:leading-[1.15]">
+              <h2 className="text-[28px] font-bold leading-tight text-[#0A0A0A] sm:text-[42px] sm:leading-[1.15]">
                   Choisissez l&apos;accompagnement{' '}
                   <span className="shimmer-blue">qui vous convient le mieux&nbsp;!</span>
                 </h2>
@@ -156,7 +156,7 @@ export default function HowItWorksSection() {
               <StaggerItem>
                 <Link
                   href="/contact"
-                  className="mt-8 inline-flex items-center rounded-full bg-[#0052CC] px-7 py-3.5 text-sm font-semibold text-white transition-colors hover:bg-[#003D99]"
+                  className="mt-6 inline-flex items-center rounded-full bg-[#0052CC] px-6 py-3 text-sm font-semibold text-white transition-colors hover:bg-[#003D99] sm:mt-8 sm:px-7 sm:py-3.5"
                 >
                   Demander un devis personnalisé
                 </Link>

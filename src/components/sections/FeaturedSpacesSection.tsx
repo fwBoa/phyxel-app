@@ -21,10 +21,10 @@ export default function FeaturedSpacesSection({ spaces }: FeaturedSpacesSectionP
     <section id="explorer" className="bg-white py-20">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <ScrollReveal>
-          <div className="flex items-end justify-between">
+          <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
             <div>
-              <h2 className="text-3xl font-bold text-foreground">Espaces à la une</h2>
-              <p className="mt-2 text-text-secondary">Sélection premium de lieux disponibles cette semaine.</p>
+              <h2 className="text-[28px] font-bold text-foreground sm:text-3xl">Espaces à la une</h2>
+              <p className="mt-2 text-sm text-text-secondary">Sélection premium de lieux disponibles cette semaine.</p>
             </div>
             <Link
               href="/explorer"
@@ -35,10 +35,10 @@ export default function FeaturedSpacesSection({ spaces }: FeaturedSpacesSectionP
           </div>
         </ScrollReveal>
 
-        <div className="mt-10">
+        <div className="mt-8 sm:mt-10">
           {spaces.length > 0 ? (
             <StaggerContainer
-              className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3"
+              className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 sm:gap-6"
               staggerDelay={0.1}
               amount={0.15}
             >
