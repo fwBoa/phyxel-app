@@ -29,10 +29,23 @@ import {
   DISTRICT_OPTIONS,
   AMBIANCE_OPTIONS,
 } from '@/types/onboarding'
-import { Check, ChevronLeft, ChevronRight, Loader2 } from 'lucide-react'
+import { Check, ArrowLeft, ArrowRight, Loader2, Sofa, Lightbulb, Monitor, Wifi, Shirt, Package, Accessibility, ChefHat, Car, Bus, type LucideIcon } from 'lucide-react'
 import Image from 'next/image'
 
 const STORAGE_KEY = 'phyxel_onboarding_draft'
+
+const SERVICE_ICONS: Record<string, LucideIcon> = {
+  'Mobilier':               Sofa,
+  'Éclairage':              Lightbulb,
+  'Système de caisse (POS)': Monitor,
+  'Wi-Fi':                  Wifi,
+  'Vestiaires':             Shirt,
+  'Stockage':               Package,
+  'Accès handicapé':        Accessibility,
+  'Cuisine / Bar':          ChefHat,
+  'Parking':                Car,
+  'Transports à proximité': Bus,
+}
 
 function TogglePill({
   label,
@@ -47,7 +60,7 @@ function TogglePill({
     <button
       type="button"
       onClick={onClick}
-      className={`inline-flex items-center rounded-full border px-4 py-2 text-sm font-medium transition-colors cursor-pointer ${
+      className={`inline-flex items-center rounded-full border px-6 py-3 text-sm font-medium transition-colors cursor-pointer ${
         selected
           ? 'border-primary bg-primary text-primary-foreground'
           : 'border-input bg-background text-foreground hover:bg-accent'
@@ -118,7 +131,7 @@ function StepBrandInfo({
 
         <div className="space-y-2">
           <Label>Type de produits</Label>
-          <Textarea
+          <Input
             placeholder="Ex : Vêtements, accessoires, chaussures…"
             value={data.productTypes.join(', ')}
             onChange={(e) =>
@@ -133,15 +146,6 @@ function StepBrandInfo({
           <p className="text-xs text-muted-foreground">
             Séparez par des virgules.
           </p>
-        </div>
-
-        <div className="space-y-2">
-          <Label>Ville principale</Label>
-          <Input
-            placeholder="Ex : Paris, Lyon, Bordeaux…"
-            value={data.mainCity}
-            onChange={(e) => onChange({ mainCity: e.target.value })}
-          />
         </div>
 
         <div className="space-y-2">
@@ -320,14 +324,25 @@ function StepSpaceNeeds({
         <div className="space-y-2">
           <Label>Services nécessaires</Label>
           <div className="flex flex-wrap gap-2">
-            {SERVICES_OPTIONS.map((opt) => (
-              <TogglePill
-                key={opt}
-                label={opt}
-                selected={data.neededServices.includes(opt)}
-                onClick={() => toggleService(opt)}
-              />
-            ))}
+            {SERVICES_OPTIONS.map((opt) => {
+              const Icon = SERVICE_ICONS[opt]
+              const selected = data.neededServices.includes(opt)
+              return (
+                <button
+                  key={opt}
+                  type="button"
+                  onClick={() => toggleService(opt)}
+                  className={`inline-flex items-center gap-2 rounded-full border px-6 py-3 text-sm font-medium transition-colors cursor-pointer ${
+                    selected
+                      ? 'border-primary bg-primary text-primary-foreground'
+                      : 'border-input bg-background text-foreground hover:bg-accent'
+                  }`}
+                >
+                  {Icon && <Icon size={15} className="shrink-0" />}
+                  {opt}
+                </button>
+              )
+            })}
           </div>
         </div>
       </div>
@@ -350,6 +365,13 @@ function StepPreferences({
     onChange({ preferredDistricts: Array.from(set) })
   }
 
+  const [startDate, endDate] = (data.idealDates ?? '').split(' → ')
+
+  function handleDateChange(start: string, end: string) {
+    const both = start && end ? `${start} → ${end}` : start || end || ''
+    onChange({ idealDates: both })
+  }
+
   const toggleAmbiance = (val: string) => {
     const set = new Set(data.desiredAmbiance)
     if (set.has(val)) set.delete(val)
@@ -367,25 +389,6 @@ function StepPreferences({
       </p>
 
       <div className="space-y-4">
-        <div className="space-y-2">
-          <Label>Budget maximum</Label>
-          <Select
-            value={data.maxBudget}
-            onValueChange={(v) => v && onChange({ maxBudget: v })}
-          >
-            <SelectTrigger className="w-full">
-              <SelectValue placeholder="Sélectionnez" />
-            </SelectTrigger>
-            <SelectContent>
-              {MAX_BUDGET_OPTIONS.map((opt) => (
-                <SelectItem key={opt} value={opt}>
-                  {opt}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
-        </div>
-
         <div className="space-y-2">
           <Label>Quartiers préférés</Label>
           <div className="flex flex-wrap gap-2">
@@ -416,11 +419,27 @@ function StepPreferences({
 
         <div className="space-y-2">
           <Label>Dates idéales</Label>
-          <Input
-            placeholder="Ex : Octobre 2025, ou 'ASAP'"
-            value={data.idealDates}
-            onChange={(e) => onChange({ idealDates: e.target.value })}
-          />
+          <div className="grid grid-cols-2 gap-3">
+            <div className="flex flex-col gap-1">
+              <span className="text-xs text-muted-foreground">Date de début</span>
+              <input
+                type="date"
+                value={startDate ?? ''}
+                onChange={(e) => handleDateChange(e.target.value, endDate ?? '')}
+                className="rounded-xl border border-input px-4 py-2.5 text-sm outline-none focus:border-primary focus:ring-2 focus:ring-primary/20"
+              />
+            </div>
+            <div className="flex flex-col gap-1">
+              <span className="text-xs text-muted-foreground">Date de fin</span>
+              <input
+                type="date"
+                value={endDate ?? ''}
+                min={startDate ?? ''}
+                onChange={(e) => handleDateChange(startDate ?? '', e.target.value)}
+                className="rounded-xl border border-input px-4 py-2.5 text-sm outline-none focus:border-primary focus:ring-2 focus:ring-primary/20"
+              />
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -433,7 +452,6 @@ function StepSummary({ data }: { data: OnboardingData }) {
     () => [
       { label: 'Secteur', value: data.sector },
       { label: 'Produits', value: data.productTypes.join(', ') || '—' },
-      { label: 'Ville principale', value: data.mainCity || '—' },
       { label: 'Taille', value: data.companySize || '—' },
       { label: 'Budget approx.', value: data.approxBudget || '—' },
       { label: 'Objectifs', value: data.physicalObjectives.join(', ') || '—' },
@@ -442,7 +460,6 @@ function StepSummary({ data }: { data: OnboardingData }) {
       { label: 'Types de lieu', value: data.spaceTypes.join(', ') || '—' },
       { label: 'Surface', value: data.desiredArea || '—' },
       { label: 'Services', value: data.neededServices.join(', ') || '—' },
-      { label: 'Budget max', value: data.maxBudget || '—' },
       { label: 'Quartiers', value: data.preferredDistricts.join(', ') || '—' },
       { label: 'Ambiance', value: data.desiredAmbiance.join(', ') || '—' },
       { label: 'Dates idéales', value: data.idealDates || '—' },
@@ -520,7 +537,7 @@ export default function OnboardingWizard({ mode = 'create', initialData, onSave 
   const isStepValid = useCallback((s: number) => {
     switch (s) {
       case 1:
-        return !!(data.sector && data.mainCity && data.companySize)
+        return !!(data.sector && data.companySize)
       case 2:
         return data.physicalObjectives.length > 0
       case 3:
@@ -553,6 +570,7 @@ export default function OnboardingWizard({ mode = 'create', initialData, onSave 
       }
       if (mode === 'create') localStorage.removeItem(STORAGE_KEY)
     } catch (err: unknown) {
+      if (err instanceof Error && err.message === 'NEXT_REDIRECT') throw err
       const msg = err instanceof Error ? err.message : 'Une erreur est survenue.'
       setError(msg)
       setIsSubmitting(false)
@@ -595,29 +613,37 @@ export default function OnboardingWizard({ mode = 'create', initialData, onSave 
         </div>
 
         <div className="mt-8 flex items-center justify-between">
-          <Button
-            variant="outline"
-            onClick={goBack}
-            disabled={step === 1 || isSubmitting}
-          >
-            <ChevronLeft className="mr-2 size-4" />
-            Précédent
-          </Button>
+          {step > 1 ? (
+            <button
+              onClick={goBack}
+              disabled={isSubmitting}
+              className="flex items-center gap-2 rounded-full border border-border px-6 py-3 text-sm font-medium text-foreground transition-colors hover:bg-accent disabled:opacity-40"
+            >
+              <ArrowLeft size={16} className="text-foreground" />
+              Précédent
+            </button>
+          ) : (
+            <div />
+          )}
 
           {step < 5 ? (
-            <Button onClick={goNext} disabled={!isStepValid(step)}>
+            <button
+              onClick={goNext}
+              disabled={!isStepValid(step)}
+              className="flex items-center gap-2 rounded-full bg-foreground px-6 py-3 text-sm font-medium text-white transition-opacity hover:opacity-90 disabled:opacity-50"
+            >
               Suivant
-              <ChevronRight className="ml-2 size-4" />
-            </Button>
+              <ArrowRight size={16} />
+            </button>
           ) : (
-            <Button onClick={handleSubmit} disabled={isSubmitting}>
-              {isSubmitting ? (
-                <Loader2 className="mr-2 size-4 animate-spin" />
-              ) : (
-                <Check className="mr-2 size-4" />
-              )}
+            <button
+              onClick={handleSubmit}
+              disabled={isSubmitting}
+              className="flex items-center gap-2 rounded-full bg-primary px-8 py-3 text-sm font-semibold text-white transition-opacity hover:opacity-90 disabled:opacity-50"
+            >
+              {isSubmitting && <Loader2 className="size-4 animate-spin" />}
               Voir mes recommandations
-            </Button>
+            </button>
           )}
         </div>
       </div>

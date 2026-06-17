@@ -15,6 +15,7 @@ export const COLORS = {
   // Accent bleu électrique royal — CTAs, badges, highlights (design.md)
   brand: {
     primary:    '#0052CC',
+    electric:   '#0D58C6',
     light:      '#BFDBFE',
     dark:       '#003D99',
     muted:      '#EFF6FF',
