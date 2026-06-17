@@ -168,7 +168,7 @@ export default function Footer() {
             <div className="mt-10 rounded-3xl bg-[#F5F5F5] p-6">
               <h4 className="text-lg font-semibold text-[#0A0A0A]">S&apos;abonner à la newsletter !</h4>
               <form
-                className="mt-4"
+                className="mt-4 flex items-center gap-3"
                 onSubmit={(e) => {
                   e.preventDefault()
                 }}
@@ -176,8 +176,15 @@ export default function Footer() {
                 <input
                   type="email"
                   placeholder="Entrez votre e-mail"
-                  className="w-full rounded-xl border border-[#E5E5E5] bg-white px-4 py-3 text-sm text-[#0A0A0A] outline-none transition-colors placeholder:text-[#9B9B9B] focus:border-[#0052CC]"
+                  className="flex-1 rounded-xl border border-[#E5E5E5] bg-white px-4 py-3 text-sm text-[#0A0A0A] outline-none transition-colors placeholder:text-[#9B9B9B] focus:border-[#0052CC]"
                 />
+                <button
+                  type="submit"
+                  aria-label="S&apos;abonner à la newsletter"
+                  className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-[#0A0A0A] text-white transition-colors hover:bg-[#0052CC]"
+                >
+                  <Send className="h-4 w-4" />
+                </button>
               </form>
             </div>
           </div>
