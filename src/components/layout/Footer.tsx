@@ -3,7 +3,7 @@
 import Link from 'next/link'
 import Image from 'next/image'
 import { Phone, Mail, Send, MessageCircle } from 'lucide-react'
-
+import PhyxelLogo from '@/components/ui/PhyxelLogo'
 
 const NAV_LINKS = {
   left: [
@@ -194,19 +194,29 @@ export default function Footer() {
             />
           </div>
         </div>
+      </div>
 
-        {/* Bottom bar */}
-        <div className="mt-16 flex flex-col items-start justify-between gap-4 border-t border-[#E5E5E5] pt-8 sm:flex-row sm:items-center">
-          <div className="flex flex-col gap-2 text-sm text-[#9B9B9B]">
-            <Link href="/mentions-legales" className="transition-colors hover:text-[#0A0A0A]">
-              Mentions légales
-            </Link>
-            <Link href="/cgu" className="transition-colors hover:text-[#0A0A0A]">
-              CGV
-            </Link>
-            <p>Tous les droits réservés</p>
+      {/* Bottom bar */}
+      <div className="border-t border-[#E5E5E5]">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-6">
+          <div className="flex flex-col items-center justify-between gap-4 sm:flex-row sm:items-center">
+            <PhyxelLogo height={24} className="text-[#9B9B9B]" />
+            <nav className="flex flex-wrap items-center justify-center gap-6 text-sm text-[#6B6B6B]">
+              <Link href="/mentions-legales" className="transition-colors hover:text-[#0A0A0A]">
+                Mentions légales
+              </Link>
+              <Link href="/cgu" className="transition-colors hover:text-[#0A0A0A]">
+                CGU
+              </Link>
+              <Link href="/contact" className="transition-colors hover:text-[#0A0A0A]">
+                Contact
+              </Link>
+              <Link href="/blog" className="transition-colors hover:text-[#0A0A0A]">
+                Blog
+              </Link>
+            </nav>
+            <p className="text-sm text-[#6B6B6B]">© 2025 Phyxel</p>
           </div>
-          <p className="text-sm text-[#9B9B9B]">© 2026 — Phyxel</p>
         </div>
       </div>
     </footer>
