@@ -1,31 +1,19 @@
-import Image from 'next/image'
 import Link  from 'next/link'
-
-const IMAGES = [
-  '/assets/img/image-1.jpg',
-  '/assets/img/image-2.jpg',
-  '/assets/img/image-3.jpg',
-  '/assets/img/image-4.jpg',
-  '/assets/img/image-5.jpg',
-]
 
 export default function ReservationConfirmeePage() {
   return (
     <div className="flex flex-col items-center py-16 px-4">
 
-      {/* Grille d'images */}
-      <div className="flex w-full max-w-3xl overflow-hidden rounded-2xl">
-        {IMAGES.map((src, i) => (
-          <div key={i} className="relative h-72 flex-1">
-            <Image
-              src={src}
-              alt=""
-              fill
-              className="object-cover"
-              sizes="20vw"
-            />
-          </div>
-        ))}
+      {/* Vidéo */}
+      <div className="w-full max-w-3xl overflow-hidden rounded-2xl">
+        <video
+          src="/assets/video/Phyxel.mp4"
+          autoPlay
+          loop
+          muted
+          playsInline
+          className="h-72 w-full object-cover"
+        />
       </div>
 
       {/* Message */}

@@ -1,28 +1,41 @@
 'use client'
 
 import { useEffect, useRef } from 'react'
+import { Check, Clock, PersonStanding, TrendingUp } from 'lucide-react'
 
 const PILLARS = [
   {
-    title: 'Recommandations personnalisées',
-    desc:  'Notre algorithme analyse votre profil marque pour ne proposer que les lieux qui matchent vraiment.',
+    title:   'Recommandations personnalisées',
+    desc:    'Notre algorithme analyse votre profil marque pour ne proposer que les lieux qui matchent vraiment.',
+    Icon:    Check,
+    iconBg:  '#6B7FD7',
+    iconColor: '#ffffff',
   },
   {
-    title: 'Gain de temps considérable',
-    desc:  'Fini les heures de prospection. Trouvez le lieu idéal en moins d\'une heure, réservation incluse.',
+    title:   'Gain de temps considérable',
+    desc:    'Fini les heures de prospection. Trouvez le lieu idéal en moins d\'une heure, réservation incluse.',
+    Icon:    Clock,
+    iconBg:  '#D6E4F7',
+    iconColor: '#1E3A8A',
   },
   {
-    title: 'Lieux adaptés à votre budget',
-    desc:  'Des espaces pour tous les budgets, filtrés selon vos capacités financières réelles.',
+    title:   'Lieux adaptés à votre budget',
+    desc:    'Des espaces pour tous les budgets, filtrés selon vos capacités financières réelles.',
+    Icon:    PersonStanding,
+    iconBg:  '#3B5BDB',
+    iconColor: '#93C5FD',
   },
   {
-    title: 'Expérience mesurable',
-    desc:  'Suivez vos performances physiques et mesurez l\'impact de chaque activation sur vos ventes.',
+    title:   'Expérience mesurable',
+    desc:    'Suivez vos performances physiques et mesurez l\'impact de chaque activation sur vos ventes.',
+    Icon:    TrendingUp,
+    iconBg:  'var(--color-brand-muted)',
+    iconColor: 'var(--color-brand-primary)',
   },
 ]
 
-const CARD_TOP    = 100  // px — position sticky de chaque card
-const SCALE_STEP  = 0.04 // réduction de scale par card enterrée
+const CARD_TOP   = 100
+const SCALE_STEP = 0.04
 
 export default function WhyPhyxelSection() {
   const cardRefs = useRef<(HTMLDivElement | null)[]>([])
@@ -31,9 +44,7 @@ export default function WhyPhyxelSection() {
     function onScroll() {
       cardRefs.current.forEach((card, i) => {
         if (!card) return
-        const rect = card.getBoundingClientRect()
-        // La card est "enterrée" quand une card suivante la recouvre
-        // On mesure combien la card est au-dessus du top sticky
+        const rect   = card.getBoundingClientRect()
         const buried = CARD_TOP - rect.top
         if (buried > 0) {
           const depth = Math.min(buried / card.offsetHeight, 1)
@@ -68,7 +79,7 @@ export default function WhyPhyxelSection() {
 
           {/* Cards empilées */}
           <div className="flex flex-1 flex-col">
-            {PILLARS.map(({ title, desc }, i) => (
+            {PILLARS.map(({ title, desc, Icon, iconBg, iconColor }, i) => (
               <div
                 key={title}
                 className="sticky"
@@ -78,6 +89,15 @@ export default function WhyPhyxelSection() {
                   ref={(el) => { cardRefs.current[i] = el }}
                   className="mb-4 origin-top rounded-2xl border border-border-custom bg-white p-8 shadow-sm transition-transform duration-75"
                 >
+                  <div
+                    className="mb-5 inline-flex size-12 items-center justify-center rounded-full"
+                    style={{
+                      backgroundColor: iconBg,
+                      animation: `iconLoop 2.5s cubic-bezier(0.4, 0, 0.6, 1) infinite`,
+                    }}
+                  >
+                    <Icon className="size-5" style={{ color: iconColor }} strokeWidth={1.75} />
+                  </div>
                   <h3 className="text-lg font-bold text-foreground">{title}</h3>
                   <p className="mt-2 leading-relaxed text-text-secondary">{desc}</p>
                 </div>
