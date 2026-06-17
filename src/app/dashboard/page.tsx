@@ -1,17 +1,25 @@
-import { redirect }         from 'next/navigation'
-import { getCurrentUser }    from '@/lib/queries/users'
-import { getProfile }        from '@/lib/queries/users'
-import { getBookingsByUser } from '@/lib/queries/users'
-import { BOOKING_STATUSES }  from '@/constants/spaces'
+import { redirect }          from 'next/navigation'
+import Image                  from 'next/image'
+import Link                   from 'next/link'
+import { getCurrentUser, getBookingsByUser } from '@/lib/queries/users'
+import { BOOKING_STATUSES, SPACE_TYPES }     from '@/constants/spaces'
+import type { BookingWithSpace }             from '@/types/spaces'
+
+const STATUS_STYLE: Record<string, { bg: string; color: string }> = {
+  pending:   { bg: '#E8610A', color: '#ffffff' },
+  confirmed: { bg: '#2E7D32', color: '#ffffff' },
+  cancelled: { bg: '#C62828', color: '#ffffff' },
+}
+
+function spaceTypeLabel(type: string) {
+  return SPACE_TYPES.find((t) => t.value === type)?.label.toUpperCase() ?? type.toUpperCase()
+}
 
 export default async function DashboardPage() {
   const user = await getCurrentUser()
   if (!user) redirect('/login')
 
-  const [profile, bookings] = await Promise.all([
-    getProfile(user.id),
-    getBookingsByUser(user.id),
-  ])
+  const bookings: BookingWithSpace[] = await getBookingsByUser(user.id).catch(() => [])
 
   const stats = {
     total:     bookings.length,
@@ -21,63 +29,126 @@ export default async function DashboardPage() {
 
   return (
     <>
-      <div className="mb-8">
-        <h1 className="text-2xl font-bold text-foreground">
-          Bonjour{profile?.full_name ? `, ${profile.full_name.split(' ')[0]}` : ''} 👋
+      {/* Header */}
+      <div className="mb-6 sm:mb-8">
+        <h1 className="text-2xl font-bold text-foreground sm:text-3xl" style={{ fontFamily: 'var(--font-bricolage)' }}>
+          Notifications &amp; messages
         </h1>
-        <p className="mt-1 text-sm text-text-secondary">Voici un résumé de votre activité.</p>
+        <p className="mt-1 text-sm text-text-secondary">Suivez l&apos;état de vos demandes de réservation.</p>
       </div>
 
-      {/* Stats */}
-      <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
+      {/* Stats — 2 cols sur mobile, 3 sur desktop */}
+      <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 sm:gap-4">
         {[
-          { label: 'Réservations totales', value: stats.total,     color: '#0A0A0A' },
-          { label: 'En attente',           value: stats.pending,   color: '#F59E0B' },
-          { label: 'Confirmées',           value: stats.confirmed, color: '#22C55E' },
-        ].map(({ label, value, color }) => (
-          <div key={label} className="rounded-2xl border border-border-custom bg-white p-5">
-            <p className="text-sm text-text-secondary">{label}</p>
-            <p className="mt-1 text-3xl font-bold" style={{ color }}>{value}</p>
+          { label: 'Réservations totales',    value: stats.total,     active: true  },
+          { label: 'En attente',              value: stats.pending,   active: false },
+          { label: 'Confirmées',              value: stats.confirmed, active: false },
+        ].map(({ label, value, active }) => (
+          <div
+            key={label}
+            className="rounded-2xl border p-4 sm:p-5"
+            style={{
+              background:  active ? '#D1E2FF' : '#ffffff',
+              borderColor: active ? '#C7D2FE' : '#E5E7EB',
+            }}
+          >
+            <div className="flex items-center gap-1.5 text-xs text-text-secondary sm:text-sm">
+              <span style={{ color: '#4361EE' }}>✦</span>
+              {label}
+            </div>
+            <p
+              className="mt-2 text-3xl font-bold sm:mt-3 sm:text-4xl"
+              style={{ color: active ? '#0D58C6' : '#0A0A0A', fontFamily: 'var(--font-bricolage)' }}
+            >
+              {value}
+            </p>
           </div>
         ))}
       </div>
 
-      {/* Dernières réservations */}
-      <div className="mt-8">
-        <h2 className="mb-4 text-lg font-semibold text-foreground">Dernières réservations</h2>
+      {/* Bookings list */}
+      <div className="mt-10 sm:mt-12">
+        <h2
+          className="mb-4 text-base font-semibold text-foreground sm:mb-5 sm:text-lg"
+          style={{ fontFamily: 'var(--font-bricolage)' }}
+        >
+          Vos dernières réservations
+        </h2>
+
         {bookings.length === 0 ? (
-          <div className="rounded-2xl border border-border-custom bg-white p-8 text-center">
+          <div className="rounded-2xl border border-gray-200 bg-white p-8 text-center">
             <p className="text-sm text-text-muted">Vous n&apos;avez pas encore de réservation.</p>
-            <a
-              href="/explorer"
-              className="mt-3 inline-block text-sm font-semibold text-primary hover:text-[#5B21B6]"
-            >
+            <Link href="/explorer" className="mt-3 inline-block text-sm font-semibold text-primary hover:underline">
               Explorer les espaces →
-            </a>
+            </Link>
           </div>
         ) : (
-          <div className="flex flex-col gap-3">
-            {bookings.slice(0, 5).map((booking) => (
-              <div key={booking.id} className="flex items-center justify-between rounded-2xl border border-border-custom bg-white px-5 py-4">
-                <div>
-                  <p className="text-sm font-semibold text-foreground">
-                    {(booking as { spaces?: { title: string } }).spaces?.title ?? 'Espace'}
-                  </p>
-                  <p className="mt-0.5 text-xs text-text-muted">
-                    {booking.start_date} → {booking.end_date}
-                  </p>
-                </div>
-                <span
-                  className="rounded-full px-3 py-1 text-xs font-medium"
-                  style={{
-                    background: booking.status === 'confirmed' ? '#22C55E18' : booking.status === 'cancelled' ? '#EF444418' : '#F59E0B18',
-                    color:      booking.status === 'confirmed' ? '#22C55E'   : booking.status === 'cancelled' ? '#EF4444'   : '#F59E0B',
-                  }}
+          <div className="flex flex-col gap-4">
+            {bookings.slice(0, 10).map((booking) => {
+              const space = booking.spaces
+              const photo = space?.space_photos?.[0]?.url
+              const style = STATUS_STYLE[booking.status] ?? STATUS_STYLE.pending
+
+              return (
+                <div
+                  key={booking.id}
+                  className="overflow-hidden rounded-2xl border border-gray-200 bg-white sm:flex"
                 >
-                  {BOOKING_STATUSES[booking.status]}
-                </span>
-              </div>
-            ))}
+                  {/* Photo — pleine largeur mobile, colonne gauche desktop */}
+                  <div className="relative w-full sm:w-60 sm:shrink-0 lg:w-80">
+                    <div className="relative aspect-[16/9] sm:aspect-auto sm:h-full" style={{ minHeight: '180px' }}>
+                      {photo ? (
+                        <Image
+                          src={photo}
+                          alt={space?.title ?? ''}
+                          fill
+                          className="object-cover"
+                          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 240px, 320px"
+                        />
+                      ) : (
+                        <div className="h-full bg-gray-100" />
+                      )}
+                      {space?.type && (
+                        <span className="absolute left-3 top-3 rounded-full bg-white px-3 py-1 text-xs font-semibold text-foreground shadow-sm">
+                          {spaceTypeLabel(space.type)}
+                        </span>
+                      )}
+                    </div>
+                  </div>
+
+                  {/* Content */}
+                  <div className="flex flex-1 flex-col justify-between gap-4 p-5 sm:p-7">
+                    <div className="flex items-start justify-between gap-3">
+                      <div>
+                        <p className="font-semibold text-foreground">{space?.title ?? 'Espace'}</p>
+                        <p className="mt-1 text-sm text-text-secondary">
+                          {booking.start_date} → {booking.end_date}
+                        </p>
+                      </div>
+                      <span
+                        className="shrink-0 rounded-full px-3 py-1 text-xs font-semibold"
+                        style={{ background: style.bg, color: style.color }}
+                      >
+                        {BOOKING_STATUSES[booking.status as keyof typeof BOOKING_STATUSES]}
+                      </span>
+                    </div>
+
+                    <div className="flex flex-wrap items-center gap-3 text-sm text-text-secondary">
+                      {space?.area_sqm && <span>{space.area_sqm} m²</span>}
+                      {space?.city && (
+                        <span>{space.city}{space.district ? `, ${space.district}` : ''}</span>
+                      )}
+                      {space?.price_day && (
+                        <span className="font-semibold text-foreground">
+                          {space.price_day.toLocaleString('fr-FR')} €{' '}
+                          <span className="text-xs font-normal text-text-secondary">/ JOUR</span>
+                        </span>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              )
+            })}
           </div>
         )}
       </div>
