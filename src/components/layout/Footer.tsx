@@ -10,13 +10,13 @@ const FOOTER_LINKS = [
 
 export default function Footer() {
   return (
-    <footer className="mt-auto border-t border-border-custom bg-foreground text-white">
+    <footer className="mt-auto border-t border-border-custom bg-white">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-10">
         <div className="flex flex-col sm:flex-row items-center justify-between gap-6">
 
           {/* Logo */}
           <Link href="/" aria-label="Phyxel — accueil">
-            <PhyxelLogo height={22} className="brightness-0 invert" />
+            <PhyxelLogo height={22} />
           </Link>
 
           {/* Liens */}
