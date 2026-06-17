@@ -124,12 +124,14 @@ export const AREA_OPTIONS = [
 export const SERVICES_OPTIONS = [
   'Mobilier',
   'Éclairage',
-  'Caisses / POS',
+  'Système de caisse (POS)',
   'Wi-Fi',
-  'Fitting room',
+  'Vestiaires',
   'Stockage',
   'Accès handicapé',
   'Cuisine / Bar',
+  'Parking',
+  'Transports à proximité',
 ]
 
 export const MAX_BUDGET_OPTIONS = [

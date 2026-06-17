@@ -53,7 +53,7 @@ export default function FeaturedSpacesSection({ spaces }: FeaturedSpacesSectionP
               <p className="text-sm text-text-muted">Les premiers espaces arrivent bientôt.</p>
               <Link
                 href="/explorer"
-                className="inline-flex items-center gap-2 rounded-full border border-border-custom px-5 py-2 text-sm font-medium text-foreground transition-colors hover:border-[#0A192F]"
+                className="inline-flex items-center gap-2 rounded-full border border-border-custom px-6 py-3 text-sm font-medium text-foreground transition-colors hover:border-[#0A192F]"
               >
                 Explorer les espaces <ArrowRight size={14} />
               </Link>

@@ -1,6 +1,7 @@
 import { notFound }        from 'next/navigation'
 import Image                from 'next/image'
-import { MapPin, Maximize2 } from 'lucide-react'
+import { MapPin, Maximize2, ArrowLeft } from 'lucide-react'
+import Link from 'next/link'
 import { getSpaceById }     from '@/lib/queries/spaces'
 import { isSpaceFavorited } from '@/lib/queries/favorites'
 import { getCurrentUser, getProfile }   from '@/lib/queries/users'
@@ -38,6 +39,11 @@ export default async function SpaceDetailPage({ params }: PageProps) {
 
   return (
     <div className="mx-auto max-w-6xl px-4 py-10 sm:px-6 lg:px-8">
+      <Link href="/explorer" className="mb-6 inline-flex items-center gap-2 text-sm font-medium hover:opacity-80 transition-opacity" style={{ color: '#65677A' }}>
+        <ArrowLeft size={16} />
+        Retour
+      </Link>
+
       <div className="grid grid-cols-1 gap-10 lg:grid-cols-3">
 
         {/* ── Colonne principale ── */}
