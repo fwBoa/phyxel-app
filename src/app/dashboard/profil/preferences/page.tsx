@@ -46,13 +46,11 @@ export default async function PreferencesPage() {
 
   return (
     <main className="min-h-screen bg-background">
-      <div className="mx-auto max-w-2xl px-4 py-8">
-        <OnboardingWizard
-          mode="edit"
-          initialData={initialData}
-          onSave={updatePreferences}
-        />
-      </div>
+      <OnboardingWizard
+        mode="edit"
+        initialData={initialData}
+        onSave={updatePreferences}
+      />
     </main>
   )
 }

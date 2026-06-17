@@ -1,0 +1,912 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>README.md</title>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+
+<style>
+/* https://github.com/microsoft/vscode/blob/master/extensions/markdown-language-features/media/markdown.css */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+body {
+	font-family: var(--vscode-markdown-font-family, -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif);
+	font-size: var(--vscode-markdown-font-size, 14px);
+	padding: 0 26px;
+	line-height: var(--vscode-markdown-line-height, 22px);
+	word-wrap: break-word;
+}
+
+#code-csp-warning {
+	position: fixed;
+	top: 0;
+	right: 0;
+	color: white;
+	margin: 16px;
+	text-align: center;
+	font-size: 12px;
+	font-family: sans-serif;
+	background-color:#444444;
+	cursor: pointer;
+	padding: 6px;
+	box-shadow: 1px 1px 1px rgba(0,0,0,.25);
+}
+
+#code-csp-warning:hover {
+	text-decoration: none;
+	background-color:#007acc;
+	box-shadow: 2px 2px 2px rgba(0,0,0,.25);
+}
+
+body.scrollBeyondLastLine {
+	margin-bottom: calc(100vh - 22px);
+}
+
+body.showEditorSelection .code-line {
+	position: relative;
+}
+
+body.showEditorSelection .code-active-line:before,
+body.showEditorSelection .code-line:hover:before {
+	content: "";
+	display: block;
+	position: absolute;
+	top: 0;
+	left: -12px;
+	height: 100%;
+}
+
+body.showEditorSelection li.code-active-line:before,
+body.showEditorSelection li.code-line:hover:before {
+	left: -30px;
+}
+
+.vscode-light.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.15);
+}
+
+.vscode-light.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.40);
+}
+
+.vscode-light.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-dark.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.4);
+}
+
+.vscode-dark.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.60);
+}
+
+.vscode-dark.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-high-contrast.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 160, 0, 0.7);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 160, 0, 1);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+img {
+	max-width: 100%;
+	max-height: 100%;
+}
+
+a {
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+a:focus,
+input:focus,
+select:focus,
+textarea:focus {
+	outline: 1px solid -webkit-focus-ring-color;
+	outline-offset: -1px;
+}
+
+hr {
+	border: 0;
+	height: 2px;
+	border-bottom: 2px solid;
+}
+
+h1 {
+	padding-bottom: 0.3em;
+	line-height: 1.2;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+}
+
+h1, h2, h3 {
+	font-weight: normal;
+}
+
+table {
+	border-collapse: collapse;
+}
+
+table > thead > tr > th {
+	text-align: left;
+	border-bottom: 1px solid;
+}
+
+table > thead > tr > th,
+table > thead > tr > td,
+table > tbody > tr > th,
+table > tbody > tr > td {
+	padding: 5px 10px;
+}
+
+table > tbody > tr + tr > td {
+	border-top: 1px solid;
+}
+
+blockquote {
+	margin: 0 7px 0 5px;
+	padding: 0 16px 0 10px;
+	border-left-width: 5px;
+	border-left-style: solid;
+}
+
+code {
+	font-family: Menlo, Monaco, Consolas, "Droid Sans Mono", "Courier New", monospace, "Droid Sans Fallback";
+	font-size: 1em;
+	line-height: 1.357em;
+}
+
+body.wordWrap pre {
+	white-space: pre-wrap;
+}
+
+pre:not(.hljs),
+pre.hljs code > div {
+	padding: 16px;
+	border-radius: 3px;
+	overflow: auto;
+}
+
+pre code {
+	color: var(--vscode-editor-foreground);
+	tab-size: 4;
+}
+
+/** Theming */
+
+.vscode-light pre {
+	background-color: rgba(220, 220, 220, 0.4);
+}
+
+.vscode-dark pre {
+	background-color: rgba(10, 10, 10, 0.4);
+}
+
+.vscode-high-contrast pre {
+	background-color: rgb(0, 0, 0);
+}
+
+.vscode-high-contrast h1 {
+	border-color: rgb(0, 0, 0);
+}
+
+.vscode-light table > thead > tr > th {
+	border-color: rgba(0, 0, 0, 0.69);
+}
+
+.vscode-dark table > thead > tr > th {
+	border-color: rgba(255, 255, 255, 0.69);
+}
+
+.vscode-light h1,
+.vscode-light hr,
+.vscode-light table > tbody > tr + tr > td {
+	border-color: rgba(0, 0, 0, 0.18);
+}
+
+.vscode-dark h1,
+.vscode-dark hr,
+.vscode-dark table > tbody > tr + tr > td {
+	border-color: rgba(255, 255, 255, 0.18);
+}
+
+</style>
+
+<style>
+/* Tomorrow Theme */
+/* http://jmblog.github.com/color-themes-for-google-code-highlightjs */
+/* Original theme - https://github.com/chriskempson/tomorrow-theme */
+
+/* Tomorrow Comment */
+.hljs-comment,
+.hljs-quote {
+	color: #8e908c;
+}
+
+/* Tomorrow Red */
+.hljs-variable,
+.hljs-template-variable,
+.hljs-tag,
+.hljs-name,
+.hljs-selector-id,
+.hljs-selector-class,
+.hljs-regexp,
+.hljs-deletion {
+	color: #c82829;
+}
+
+/* Tomorrow Orange */
+.hljs-number,
+.hljs-built_in,
+.hljs-builtin-name,
+.hljs-literal,
+.hljs-type,
+.hljs-params,
+.hljs-meta,
+.hljs-link {
+	color: #f5871f;
+}
+
+/* Tomorrow Yellow */
+.hljs-attribute {
+	color: #eab700;
+}
+
+/* Tomorrow Green */
+.hljs-string,
+.hljs-symbol,
+.hljs-bullet,
+.hljs-addition {
+	color: #718c00;
+}
+
+/* Tomorrow Blue */
+.hljs-title,
+.hljs-section {
+	color: #4271ae;
+}
+
+/* Tomorrow Purple */
+.hljs-keyword,
+.hljs-selector-tag {
+	color: #8959a8;
+}
+
+.hljs {
+	display: block;
+	overflow-x: auto;
+	color: #4d4d4c;
+	padding: 0.5em;
+}
+
+.hljs-emphasis {
+	font-style: italic;
+}
+
+.hljs-strong {
+	font-weight: bold;
+}
+</style>
+
+<style>
+/*
+ * Markdown PDF CSS
+ */
+
+ body {
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif, "Meiryo";
+	padding: 0 12px;
+}
+
+pre {
+	background-color: #f8f8f8;
+	border: 1px solid #cccccc;
+	border-radius: 3px;
+	overflow-x: auto;
+	white-space: pre-wrap;
+	overflow-wrap: break-word;
+}
+
+pre:not(.hljs) {
+	padding: 23px;
+	line-height: 19px;
+}
+
+blockquote {
+	background: rgba(127, 127, 127, 0.1);
+	border-color: rgba(0, 122, 204, 0.5);
+}
+
+.emoji {
+	height: 1.4em;
+}
+
+code {
+	font-size: 14px;
+	line-height: 19px;
+}
+
+/* for inline code */
+:not(pre):not(.hljs) > code {
+	color: #C9AE75; /* Change the old color so it seems less like an error */
+	font-size: inherit;
+}
+
+/* Page Break : use <div class="page"/> to insert page break
+-------------------------------------------------------- */
+.page {
+	page-break-after: always;
+}
+
+</style>
+
+<script src="https://unpkg.com/mermaid/dist/mermaid.min.js"></script>
+</head>
+<body>
+  <script>
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: document.body.classList.contains('vscode-dark') || document.body.classList.contains('vscode-high-contrast')
+          ? 'dark'
+          : 'default'
+    });
+  </script>
+<h1 id="phyxel">Phyxel</h1>
+<p><a href="https://nextjs.org"><img src="https://img.shields.io/badge/Next.js-15.5.18-black?logo=next.js" alt="Next.js"></a>
+<a href="https://react.dev"><img src="https://img.shields.io/badge/React-19-61DAFB?logo=react" alt="React"></a>
+<a href="https://tailwindcss.com"><img src="https://img.shields.io/badge/Tailwind_CSS-v4-38B2AC?logo=tailwind-css" alt="Tailwind CSS"></a>
+<a href="https://supabase.com"><img src="https://img.shields.io/badge/Supabase-PostgreSQL_+_Auth-3ECF8E?logo=supabase" alt="Supabase"></a>
+<a href="https://ui.shadcn.com"><img src="https://img.shields.io/badge/shadcn%2Fui-Components-000000" alt="shadcn/ui"></a></p>
+<blockquote>
+<p><em>donner du sens à vos ventes</em></p>
+</blockquote>
+<hr>
+<h2 id="table-des-mati%C3%A8res">Table des matières</h2>
+<ul>
+<li><a href="#quest-ce-que-phyxel-">Qu'est-ce que Phyxel ?</a></li>
+<li><a href="#stack-technique">Stack technique</a></li>
+<li><a href="#fonctionnalit%C3%A9s">Fonctionnalités</a></li>
+<li><a href="#diagramme-de-cas-dutilisation">Diagramme de cas d'utilisation</a></li>
+<li><a href="#architecture-du-projet">Architecture du projet</a></li>
+<li><a href="#sch%C3%A9ma-de-base-de-donn%C3%A9es">Schéma de base de données</a></li>
+<li><a href="#flux-dauthentification">Flux d'authentification</a></li>
+<li><a href="#algorithme-de-matching">Algorithme de matching</a></li>
+<li><a href="#routes-disponibles">Routes disponibles</a></li>
+<li><a href="#installation--d%C3%A9marrage">Installation &amp; démarrage</a></li>
+</ul>
+<hr>
+<h2 id="quest-ce-que-phyxel">Qu'est-ce que Phyxel ?</h2>
+<p><strong>Phyxel</strong> est une marketplace qui connecte les marques e-commerce avec des espaces physiques temporaires — pop-up stores, showrooms, corners et boutiques éphémères.</p>
+<p>Les marques digitales manquent d'un canal physique pour <strong>tester leurs produits</strong>, <strong>rassurer leurs clients</strong> et <strong>créer des événements mémorables</strong>. Phyxel leur permet de trouver, filtrer et réserver le lieu idéal en quelques clics.</p>
+<hr>
+<h2 id="stack-technique">Stack technique</h2>
+<table>
+<thead>
+<tr>
+<th>Technologie</th>
+<th>Version</th>
+<th>Usage</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Next.js</strong></td>
+<td>15.5.18</td>
+<td>Framework full-stack, App Router, Server Actions</td>
+</tr>
+<tr>
+<td><strong>React</strong></td>
+<td>19</td>
+<td>UI library, Server &amp; Client Components</td>
+</tr>
+<tr>
+<td><strong>TypeScript</strong></td>
+<td>5.x</td>
+<td>Typage statique</td>
+</tr>
+<tr>
+<td><strong>Tailwind CSS</strong></td>
+<td>v4</td>
+<td>Utility-first styling</td>
+</tr>
+<tr>
+<td><strong>shadcn/ui</strong></td>
+<td>—</td>
+<td>Composants UI accessibles</td>
+</tr>
+<tr>
+<td><strong>Supabase</strong></td>
+<td>—</td>
+<td>Auth, PostgreSQL, Storage, RLS</td>
+</tr>
+<tr>
+<td><strong>Lucide React</strong></td>
+<td>—</td>
+<td>Icônes</td>
+</tr>
+<tr>
+<td><strong>react-hook-form</strong></td>
+<td>7.x</td>
+<td>Gestion des formulaires</td>
+</tr>
+<tr>
+<td><strong>jose</strong></td>
+<td>6.x</td>
+<td>JWT pour l'authentification admin</td>
+</tr>
+<tr>
+<td><strong>bcryptjs</strong></td>
+<td>3.x</td>
+<td>Hashage des mots de passe admin</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="fonctionnalit%C3%A9s">Fonctionnalités</h2>
+<ul>
+<li><strong>Onboarding wizard 5 étapes</strong> — Parcours guidé post-inscription pour qualifier chaque marque (infos, objectifs, besoins, préférences, résumé).</li>
+<li><strong>Explorateur d'espaces</strong> — Catalogue filtrable avec cartes interactives, photos, prix/jour et score de matching.</li>
+<li><strong>Favoris</strong> — Sauvegarde d'espaces favoris avec persistance utilisateur (RLS).</li>
+<li><strong>Dashboard marque</strong> — Espace personnel : favoris, profil, réservations.</li>
+<li><strong>Réservation</strong> — Formulaire de réservation avec sélection de dates et calcul automatique du prix total.</li>
+<li><strong>Score de matching</strong> — Algorithme qui classe les espaces selon les préférences de la marque (ville, type, budget, quartier, surface).</li>
+<li><strong>Administration CRUD</strong> — Interface admin sécurisée pour gérer les espaces et leurs photos.</li>
+<li><strong>Middleware intelligent</strong> — Redirections automatiques selon auth, onboarding et rôle admin.</li>
+<li><strong>RLS &amp; Policies</strong> — Sécurité granulaire au niveau des lignes PostgreSQL.</li>
+<li><strong>Upload d'avatar</strong> — Les utilisateurs peuvent uploader leur photo de profil via Supabase Storage.</li>
+</ul>
+<hr>
+<h2 id="diagramme-de-cas-dutilisation">Diagramme de cas d'utilisation</h2>
+<pre><code class="language-mermaid"><div class="mermaid">flowchart LR
+    Marque(["👤 Marque"])
+    Admin(["🔑 Admin"])
+
+    subgraph public["Accès public"]
+        S1("S'inscrire / Se connecter")
+        S2("Explorer les espaces")
+        S3("Filtrer par ville, type, prix")
+        S4("Voir le détail d'un espace")
+    end
+
+    subgraph brand["Espace Marque (auth requise)"]
+        S5("Compléter l'onboarding")
+        S6("Consulter le score de matching")
+        S7("Ajouter / retirer des favoris")
+        S8("Réserver un espace")
+        S9("Gérer son profil & avatar")
+        S10("Modifier ses préférences")
+        S11("Voir ses réservations")
+    end
+
+    subgraph back["Administration"]
+        S12("Se connecter (JWT custom)")
+        S13("Lister tous les espaces")
+        S14("Créer / Modifier un espace")
+        S15("Supprimer un espace")
+        S16("Consulter les hôtes")
+    end
+
+    Marque --> S1
+    Marque --> S2
+    Marque --> S3
+    Marque --> S4
+    Marque --> S5
+    Marque --> S6
+    Marque --> S7
+    Marque --> S8
+    Marque --> S9
+    Marque --> S10
+    Marque --> S11
+
+    Admin --> S12
+    Admin --> S13
+    Admin --> S14
+    Admin --> S15
+    Admin --> S16
+</div></code></pre>
+<hr>
+<h2 id="architecture-du-projet">Architecture du projet</h2>
+<pre class="hljs"><code><div>src/
+├── app/                        # App Router — pages et layouts
+│   ├── (auth)/                 # Login &amp; Register (layout minimal)
+│   ├── (main)/                 # Pages publiques (Navbar + Footer)
+│   │   ├── page.tsx            # Page d'accueil
+│   │   ├── explorer/           # Explorateur d'espaces
+│   │   └── espaces/[id]/       # Détail d'un espace
+│   ├── dashboard/              # Espace marque (auth requise)
+│   │   ├── page.tsx            # Vue d'ensemble / réservations
+│   │   ├── favoris/            # Espaces sauvegardés
+│   │   └── profil/             # Profil &amp; préférences
+│   ├── onboarding/             # Wizard d'onboarding (5 étapes)
+│   ├── admin/                  # Backoffice (JWT admin requis)
+│   │   ├── login/
+│   │   └── espaces/            # CRUD espaces
+│   └── api/                    # API REST (Next.js Route Handlers)
+│       ├── auth/               # signIn, signUp, signOut
+│       ├── spaces/             # CRUD espaces + photos
+│       ├── bookings/           # CRUD réservations
+│       ├── profiles/           # Mise à jour profil
+│       └── admin/              # Endpoints admin (spaces, hosts)
+│
+├── components/
+│   ├── ui/                     # Primitives : Button, Card, Input…
+│   ├── layout/                 # Navbar, Footer
+│   ├── sections/               # Sections de la landing page
+│   └── features/               # Composants métier
+│       ├── OnboardingWizard    # Wizard multi-étapes
+│       ├── BookingForm         # Formulaire de réservation
+│       ├── SearchBar           # Filtres explorateur
+│       ├── SpaceGrid           # Grille d'espaces
+│       ├── PhotoGallery        # Galerie photos
+│       └── MatchWidget         # Affichage du score de matching
+│
+├── lib/
+│   ├── supabase/               # Clients Supabase (client, server, admin, middleware)
+│   ├── queries/                # Fonctions de requête BDD (spaces, users, favorites…)
+│   ├── admin/                  # Auth admin (JWT, session, bcrypt)
+│   └── matching/               # Algorithme de scoring (score.ts, scoreColors.ts)
+│
+├── hooks/                      # Hooks React (useAuth, useProfile, useFavorite…)
+├── types/                      # Types TypeScript (database, spaces, users, onboarding)
+├── constants/                  # Constantes app (types d'espaces, villes, statuts…)
+└── middleware.ts               # Refresh de session Supabase + redirections
+</div></code></pre>
+<hr>
+<h2 id="sch%C3%A9ma-de-base-de-donn%C3%A9es">Schéma de base de données</h2>
+<pre><code class="language-mermaid"><div class="mermaid">erDiagram
+    profiles {
+        uuid id PK
+        text full_name
+        text brand_name
+        text website
+        text avatar_url
+        boolean has_completed_onboarding
+        timestamptz created_at
+    }
+
+    brand_preferences {
+        uuid id PK
+        uuid profile_id FK
+        text sector
+        jsonb product_types
+        text main_city
+        text company_size
+        text approx_budget
+        jsonb physical_objectives
+        text target_city
+        text desired_duration
+        jsonb space_types
+        text desired_area
+        jsonb needed_services
+        integer max_budget
+        jsonb preferred_districts
+        jsonb desired_ambiance
+        text ideal_dates
+    }
+
+    hosts {
+        uuid id PK
+        text email
+        text full_name
+        text company_name
+        text phone
+        boolean is_active
+    }
+
+    spaces {
+        uuid id PK
+        uuid host_id FK
+        text title
+        text type
+        text city
+        text district
+        text address
+        integer area_sqm
+        integer price_day
+        text description
+        boolean is_available
+    }
+
+    space_photos {
+        uuid id PK
+        uuid space_id FK
+        text url
+        boolean is_cover
+        integer order_idx
+    }
+
+    favorites {
+        uuid id PK
+        uuid user_id FK
+        uuid space_id FK
+        timestamptz created_at
+    }
+
+    bookings {
+        uuid id PK
+        uuid space_id FK
+        uuid brand_id FK
+        date start_date
+        date end_date
+        text status
+        integer total_price
+        timestamptz created_at
+    }
+
+    admins {
+        uuid id PK
+        text email
+        text password_hash
+        text full_name
+        boolean is_active
+    }
+
+    profiles ||--o{ brand_preferences : "a"
+    profiles ||--o{ favorites : "sauvegarde"
+    profiles ||--o{ bookings : "effectue"
+    hosts ||--o{ spaces : "propose"
+    spaces ||--o{ space_photos : "possède"
+    spaces ||--o{ favorites : "est favori de"
+    spaces ||--o{ bookings : "est réservé via"
+</div></code></pre>
+<blockquote>
+<p><strong>RLS activée</strong> sur toutes les tables utilisateur. Les <code>admins</code> et <code>hosts</code> sont gérés exclusivement côté serveur (service role).</p>
+</blockquote>
+<hr>
+<h2 id="flux-dauthentification">Flux d'authentification</h2>
+<h3 id="marque-supabase-auth">Marque (Supabase Auth)</h3>
+<pre class="hljs"><code><div>Inscription (/register)
+  └─▶ Supabase Auth crée l'utilisateur
+        └─▶ Trigger handle_new_user() insère un profil dans `profiles`
+              └─▶ Middleware redirige vers /onboarding
+                    └─▶ Onboarding complété → has_completed_onboarding = true
+                          └─▶ Accès à /explorer et /dashboard
+</div></code></pre>
+<h3 id="admin-jwt-custom">Admin (JWT custom)</h3>
+<pre class="hljs"><code><div>/admin/login
+  └─▶ Vérification email + bcrypt(password, password_hash) sur table `admins`
+        └─▶ JWT signé (jose) stocké en cookie HttpOnly
+              └─▶ Middleware vérifie le JWT à chaque requête /admin/*
+                    └─▶ Accès au backoffice /admin/espaces
+</div></code></pre>
+<hr>
+<h2 id="algorithme-de-matching">Algorithme de matching</h2>
+<p>Le score de matching (0–100) est calculé dans <code>src/lib/matching/score.ts</code> en comparant les préférences de la marque avec les caractéristiques de chaque espace.</p>
+<table>
+<thead>
+<tr>
+<th>Critère</th>
+<th>Points max</th>
+<th>Détail</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Ville cible</td>
+<td>30 pts</td>
+<td>Correspondance exacte sur <code>target_city</code></td>
+</tr>
+<tr>
+<td>Type d'espace</td>
+<td>25 pts</td>
+<td>Correspondance sur <code>space_types</code> préférés</td>
+</tr>
+<tr>
+<td>Budget max</td>
+<td>20 pts</td>
+<td><code>price_day</code> ≤ <code>max_budget</code></td>
+</tr>
+<tr>
+<td>Quartier</td>
+<td>15 pts</td>
+<td>Correspondance sur <code>preferred_districts</code></td>
+</tr>
+<tr>
+<td>Surface</td>
+<td>10 pts</td>
+<td><code>area_sqm</code> dans la fourchette <code>desired_area</code></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Interprétation du score :</strong></p>
+<table>
+<thead>
+<tr>
+<th>Score</th>
+<th>Couleur</th>
+<th>Signification</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>≥ 70</td>
+<td>Vert</td>
+<td>Très bon match</td>
+</tr>
+<tr>
+<td>≥ 40</td>
+<td>Orange</td>
+<td>Match partiel</td>
+</tr>
+<tr>
+<td>&lt; 40</td>
+<td>Rouge</td>
+<td>Peu compatible</td>
+</tr>
+</tbody>
+</table>
+<p>Le <code>MatchWidget</code> affiche également les <strong>points forts</strong> et <strong>avertissements</strong> détaillés par critère.</p>
+<hr>
+<h2 id="routes-disponibles">Routes disponibles</h2>
+<h3 id="routes-publiques">Routes publiques</h3>
+<table>
+<thead>
+<tr>
+<th>Route</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>/</code></td>
+<td>Page d'accueil (hero, espaces en vedette, comment ça marche)</td>
+</tr>
+<tr>
+<td><code>/login</code></td>
+<td>Connexion marque</td>
+</tr>
+<tr>
+<td><code>/register</code></td>
+<td>Inscription marque</td>
+</tr>
+<tr>
+<td><code>/explorer</code></td>
+<td>Catalogue d'espaces avec filtres et matching</td>
+</tr>
+<tr>
+<td><code>/espaces/[id]</code></td>
+<td>Détail d'un espace (galerie, prix, réservation)</td>
+</tr>
+<tr>
+<td><code>/reservation-confirmee</code></td>
+<td>Confirmation de réservation</td>
+</tr>
+<tr>
+<td><code>/admin/login</code></td>
+<td>Connexion backoffice admin</td>
+</tr>
+</tbody>
+</table>
+<h3 id="routes-marque-auth-requise">Routes marque (auth requise)</h3>
+<table>
+<thead>
+<tr>
+<th>Route</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>/onboarding</code></td>
+<td>Wizard de qualification en 5 étapes</td>
+</tr>
+<tr>
+<td><code>/dashboard</code></td>
+<td>Vue d'ensemble des réservations et notifications</td>
+</tr>
+<tr>
+<td><code>/dashboard/favoris</code></td>
+<td>Espaces sauvegardés</td>
+</tr>
+<tr>
+<td><code>/dashboard/reservations</code></td>
+<td>Historique des réservations</td>
+</tr>
+<tr>
+<td><code>/dashboard/profil</code></td>
+<td>Édition du profil et avatar</td>
+</tr>
+<tr>
+<td><code>/dashboard/profil/preferences</code></td>
+<td>Modification des préférences de matching</td>
+</tr>
+</tbody>
+</table>
+<h3 id="routes-admin-jwt-requis">Routes admin (JWT requis)</h3>
+<table>
+<thead>
+<tr>
+<th>Route</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>/admin/espaces</code></td>
+<td>Liste de tous les espaces (édition, suppression)</td>
+</tr>
+<tr>
+<td><code>/admin/espaces/nouveau</code></td>
+<td>Création d'un nouvel espace</td>
+</tr>
+<tr>
+<td><code>/admin/espaces/[id]/modifier</code></td>
+<td>Modification d'un espace existant</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="installation--d%C3%A9marrage">Installation &amp; démarrage</h2>
+<h3 id="pr%C3%A9requis">Prérequis</h3>
+<ul>
+<li>Node.js ≥ 18</li>
+<li>Un projet <a href="https://supabase.com">Supabase</a> (gratuit)</li>
+<li>npm</li>
+</ul>
+<h3 id="1-cloner-le-d%C3%A9p%C3%B4t">1. Cloner le dépôt</h3>
+<pre class="hljs"><code><div>git <span class="hljs-built_in">clone</span> &lt;url-du-repo&gt;
+<span class="hljs-built_in">cd</span> phyxel-app
+npm install
+</div></code></pre>
+<h3 id="2-variables-denvironnement">2. Variables d'environnement</h3>
+<p>Créer un fichier <code>.env.local</code> à la racine :</p>
+<pre class="hljs"><code><div>NEXT_PUBLIC_SUPABASE_URL=https://&lt;votre-projet&gt;.supabase.co
+NEXT_PUBLIC_SUPABASE_ANON_KEY=&lt;votre-anon-key&gt;
+SUPABASE_SERVICE_ROLE_KEY=&lt;votre-service-role-key&gt;
+</div></code></pre>
+<p>Ces clés sont disponibles dans <strong>Settings → API</strong> de votre projet Supabase.</p>
+<h3 id="3-base-de-donn%C3%A9es">3. Base de données</h3>
+<pre class="hljs"><code><div><span class="hljs-comment"># Appliquer les migrations (tables, RLS, triggers)</span>
+npx supabase db push
+
+<span class="hljs-comment"># Charger les données de démonstration (52 espaces, hôtes)</span>
+npx supabase db seed
+</div></code></pre>
+<h3 id="4-lancer-le-serveur-de-d%C3%A9veloppement">4. Lancer le serveur de développement</h3>
+<pre class="hljs"><code><div>npm run dev
+</div></code></pre>
+<p>L'application est accessible sur <a href="http://localhost:3000">http://localhost:3000</a>.</p>
+<h3 id="scripts-disponibles">Scripts disponibles</h3>
+<table>
+<thead>
+<tr>
+<th>Commande</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>npm run dev</code></td>
+<td>Serveur de développement</td>
+</tr>
+<tr>
+<td><code>npm run build</code></td>
+<td>Build de production</td>
+</tr>
+<tr>
+<td><code>npm run start</code></td>
+<td>Serveur de production</td>
+</tr>
+<tr>
+<td><code>npm run lint</code></td>
+<td>Vérification ESLint</td>
+</tr>
+</tbody>
+</table>
+
+</body>
+</html>

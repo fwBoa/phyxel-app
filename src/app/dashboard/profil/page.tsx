@@ -1,10 +1,12 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import Link from 'next/link'
-import { Pencil, Plus } from 'lucide-react'
+import Image from 'next/image'
+import { Pencil, Plus, Loader2 } from 'lucide-react'
 import { useAuth }    from '@/hooks/useAuth'
 import { useProfile } from '@/hooks/useProfile'
+import { createClient } from '@/lib/supabase/client'
 import type { ProfileUpdate } from '@/types/users'
 import { getPreferences } from './actions'
 import type { BrandPreferenceRow } from '@/types/database'
@@ -19,6 +21,10 @@ export default function ProfilPage() {
   const [saving,    setSaving]    = useState(false)
   const [message,   setMessage]   = useState<{ type: 'success' | 'error'; text: string } | null>(null)
 
+  const [avatarUrl,      setAvatarUrl]      = useState<string | null>(null)
+  const [avatarUploading, setAvatarUploading] = useState(false)
+  const fileInputRef = useRef<HTMLInputElement>(null)
+
   const [prefs,        setPrefs]        = useState<BrandPreferenceRow | null>(null)
   const [prefsLoading, setPrefsLoading] = useState(true)
 
@@ -27,12 +33,56 @@ export default function ProfilPage() {
       setFullName(profile.full_name  ?? '')
       setBrandName(profile.brand_name ?? '')
       setWebsite(profile.website    ?? '')
+      setAvatarUrl(profile.avatar_url ?? null)
     }
   }, [profile])
 
   useEffect(() => {
     getPreferences().then((data) => { setPrefs(data); setPrefsLoading(false) })
   }, [])
+
+  async function handleAvatarChange(e: React.ChangeEvent<HTMLInputElement>) {
+    const file = e.target.files?.[0]
+    if (!file || !user) return
+
+    setAvatarUploading(true)
+    setMessage(null)
+
+    const supabase = createClient()
+    const ext = file.name.split('.').pop()
+    const path = `${user.id}/avatar.${ext}`
+
+    const { error: uploadError } = await supabase.storage
+      .from('avatars')
+      .upload(path, file, { upsert: true })
+
+    if (uploadError) {
+      setMessage({ type: 'error', text: 'Erreur lors de l\'upload de l\'avatar.' })
+      setAvatarUploading(false)
+      return
+    }
+
+    const { data: { publicUrl } } = supabase.storage.from('avatars').getPublicUrl(path)
+    // Ajoute un timestamp pour forcer le rechargement du cache navigateur
+    const urlWithBust = `${publicUrl}?t=${Date.now()}`
+
+    const res = await fetch(`/api/profiles/${user.id}`, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ avatar_url: publicUrl }),
+    })
+
+    setAvatarUploading(false)
+    if (res.ok) {
+      setAvatarUrl(urlWithBust)
+      setMessage({ type: 'success', text: 'Avatar mis à jour.' })
+    } else {
+      setMessage({ type: 'error', text: 'Avatar uploadé mais erreur lors de la sauvegarde.' })
+    }
+
+    // Reset input pour permettre de re-sélectionner le même fichier
+    if (fileInputRef.current) fileInputRef.current.value = ''
+  }
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
@@ -74,12 +124,41 @@ export default function ProfilPage() {
             <div className="flex flex-col items-start gap-4 lg:w-64 lg:shrink-0">
               <div className="flex items-center gap-4">
                 <div className="relative shrink-0">
-                  <span className="flex h-20 w-20 items-center justify-center rounded-full bg-[#EEF2FF] text-2xl font-bold text-primary">
-                    {initial}
-                  </span>
-                  <span className="absolute bottom-0 right-0 flex h-6 w-6 items-center justify-center rounded-full text-white shadow-sm" style={{ background: '#0D58C6' }}>
+                  <input
+                    ref={fileInputRef}
+                    type="file"
+                    accept="image/jpeg,image/png,image/webp,image/gif"
+                    className="hidden"
+                    onChange={handleAvatarChange}
+                  />
+                  <button
+                    type="button"
+                    onClick={() => fileInputRef.current?.click()}
+                    disabled={avatarUploading}
+                    className="relative flex h-20 w-20 cursor-pointer items-center justify-center rounded-full overflow-hidden bg-[#EEF2FF] text-2xl font-bold text-primary focus:outline-none"
+                    aria-label="Changer l'avatar"
+                  >
+                    {avatarUrl ? (
+                      <Image src={avatarUrl} alt="Avatar" fill className="object-cover" unoptimized />
+                    ) : (
+                      initial
+                    )}
+                    {avatarUploading && (
+                      <span className="absolute inset-0 flex items-center justify-center rounded-full bg-black/40">
+                        <Loader2 size={20} className="animate-spin text-white" />
+                      </span>
+                    )}
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => fileInputRef.current?.click()}
+                    disabled={avatarUploading}
+                    className="absolute bottom-0 right-0 flex h-6 w-6 items-center justify-center rounded-full text-white shadow-sm"
+                    style={{ background: '#0D58C6' }}
+                    aria-label="Changer l'avatar"
+                  >
                     <Plus size={12} />
-                  </span>
+                  </button>
                 </div>
                 <div>
                   <p className="font-bold text-foreground">{brandName || fullName || 'Votre marque'}</p>

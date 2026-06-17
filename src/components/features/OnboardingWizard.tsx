@@ -29,8 +29,9 @@ import {
   DISTRICT_OPTIONS,
   AMBIANCE_OPTIONS,
 } from '@/types/onboarding'
-import { Check, ArrowLeft, ArrowRight, Loader2, Sofa, Lightbulb, Monitor, Wifi, Shirt, Package, Accessibility, ChefHat, Car, Bus, type LucideIcon } from 'lucide-react'
+import { Check, ArrowLeft, ArrowRight, Loader2, Sofa, Lightbulb, Monitor, Wifi, Shirt, Package, Accessibility, ChefHat, Car, Bus, X, type LucideIcon } from 'lucide-react'
 import Image from 'next/image'
+import Link from 'next/link'
 
 const STORAGE_KEY = 'phyxel_onboarding_draft'
 
@@ -622,6 +623,14 @@ export default function OnboardingWizard({ mode = 'create', initialData, onSave 
               <ArrowLeft size={16} className="text-foreground" />
               Précédent
             </button>
+          ) : mode === 'edit' ? (
+            <Link
+              href="/dashboard/profil"
+              className="flex items-center gap-2 rounded-full border border-border px-6 py-3 text-sm font-medium text-foreground transition-colors hover:bg-accent"
+            >
+              <X size={16} className="text-foreground" />
+              Fermer
+            </Link>
           ) : (
             <div />
           )}
