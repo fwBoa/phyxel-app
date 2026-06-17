@@ -5,7 +5,8 @@ import Image        from 'next/image'
 import { useState }  from 'react'
 import { useRouter } from 'next/navigation'
 import { createClient } from '@/lib/supabase/client'
-
+import { COLORS } from '@/constants/colors'
+import { Globe, Plus, Eye, EyeOff } from 'lucide-react'
 export default function RegisterPage() {
   const router = useRouter()
   const [firstName, setFirstName] = useState('')
@@ -16,6 +17,7 @@ export default function RegisterPage() {
   const [password,  setPassword]  = useState('')
   const [error,     setError]     = useState<string | null>(null)
   const [loading,   setLoading]   = useState(false)
+  const [showPwd,   setShowPwd]   = useState(false)
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
@@ -102,19 +104,16 @@ export default function RegisterPage() {
             </div>
           </div>
 
-          {/* Stats */}
+          {/* Badges bas de l'image */}
           <div className="flex flex-wrap gap-3">
-            <div
-              className="flex items-center gap-2 rounded-full px-4 py-2 text-sm text-white"
-              style={{ background: 'rgba(255, 255, 255, 0)', backdropFilter: 'blur(8px)', border: '1px solid rgba(255,255,255,0.15)' }}
-            >
-              <span className="text-[#6F8BEF] font-semibold">+</span> 500 marques accompagnées
+            <div style={{ display: 'flex', padding: '17px', alignItems: 'center', gap: '8px' }}
+              className="rounded-2xl bg-white/10 backdrop-blur-sm border border-white/40 text-white text-sm font-medium">
+              <Plus size={20} style={{ color: COLORS.brand.electric }} className="shrink-0" />
+              500 marques accompagnées
             </div>
-            <div
-              className="flex items-center gap-2 rounded-full px-4 py-2 text-sm text-white"
-              style={{ background: 'rgba(255, 255, 255, 0)', backdropFilter: 'blur(8px)', border: '1px solid rgba(255,255,255,0.15)' }}
-            >
-              <svg className="h-4 w-4 shrink-0 text-[#6F8BEF]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+            <div style={{ display: 'flex', padding: '17px', alignItems: 'center', gap: '8px' }}
+              className="rounded-2xl bg-white/10 backdrop-blur-sm border border-white/40 text-white text-sm font-medium">
+              <Globe size={20} style={{ color: COLORS.brand.electric }} className="shrink-0" />
               Un réseau qualifié de partenaires et de lieux
             </div>
           </div>
@@ -199,12 +198,21 @@ export default function RegisterPage() {
 
           <label className="mt-4 block text-sm">
             <span className="font-medium text-gray-900">Mot de passe</span>
-            <input
-              type="password" required minLength={8} value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              placeholder="8 caractères minimum"
-              className="mt-1.5 w-full rounded-xl border border-gray-200 bg-white px-4 py-2.5 text-sm outline-none focus:border-primary focus:ring-2 focus:ring-primary/20"
-            />
+            <div className="relative mt-1.5">
+              <input
+                type={showPwd ? 'text' : 'password'} required minLength={8} value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                placeholder="8 caractères minimum"
+                className="w-full rounded-xl border border-gray-200 bg-white px-4 py-2.5 pr-10 text-sm outline-none focus:border-primary focus:ring-2 focus:ring-primary/20"
+              />
+              <button
+                type="button"
+                onClick={() => setShowPwd((v) => !v)}
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600"
+              >
+                {showPwd ? <EyeOff size={16} /> : <Eye size={16} />}
+              </button>
+            </div>
           </label>
 
           {error && (
@@ -215,7 +223,7 @@ export default function RegisterPage() {
 
           <button
             type="submit" disabled={loading}
-            className="mt-6 w-full rounded-full bg-gray-900 py-3 text-sm font-medium text-white transition-opacity hover:opacity-90 disabled:opacity-50"
+            className="mt-6 w-full rounded-full bg-gray-900 px-6 py-3 text-sm font-medium text-white transition-opacity hover:opacity-90 disabled:opacity-50"
           >
             {loading ? 'Création...' : 'Créer mon compte'}
           </button>
@@ -233,22 +241,6 @@ export default function RegisterPage() {
           </p>
         </form>
 
-        {/* Stats — mobile only, en bas */}
-        <div className="relative z-10 flex flex-wrap justify-center gap-3 pb-4 md:hidden">
-          <div
-            className="flex items-center gap-2 rounded-full px-4 py-2 text-sm text-white"
-            style={{ background: 'rgba(255, 255, 255, 0)', backdropFilter: 'blur(8px)', border: '1px solid rgba(255, 255, 255, 0)' }}
-          >
-            <span className="font-semibold" style={{ color: '#6F8BEF' }}>+</span> 500 marques accompagnées
-          </div>
-          <div
-            className="flex items-center gap-2 rounded-full px-4 py-2 text-sm text-white"
-            style={{ background: 'rgba(255, 255, 255, 0)', backdropFilter: 'blur(8px)', border: '1px solid rgba(255, 255, 255, 0)' }}
-          >
-            <svg className="h-4 w-4 shrink-0" style={{ color: '#6F8BEF' }} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
-            Un réseau qualifié de partenaires et de lieux
-          </div>
-        </div>
       </main>
     </div>
   )

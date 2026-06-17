@@ -48,7 +48,7 @@ export default function Navbar({ user }: NavbarProps) {
 
   return (
     <header className="sticky top-0 z-50 w-full border-b border-border-custom bg-white/95 backdrop-blur-sm">
-      <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
+      <div className="mx-auto flex h-[124px] max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
 
         {/* Logo */}
         <Link href="/" aria-label="Phyxel — accueil">
@@ -79,7 +79,7 @@ export default function Navbar({ user }: NavbarProps) {
                 onClick={() => setDropdownOpen((v) => !v)}
                 aria-expanded={dropdownOpen}
                 aria-haspopup="menu"
-                className="flex items-center gap-2 rounded-full border border-border-custom px-4 py-2 text-sm font-medium text-foreground transition-colors hover:border-[#0A0A0A]"
+                className="flex items-center gap-2 rounded-full border border-border-custom px-6 py-3 text-sm font-medium text-foreground transition-colors hover:border-[#0A0A0A]"
               >
                 <span className="flex h-6 w-6 items-center justify-center rounded-full bg-brand-muted text-primary">
                   <User size={13} strokeWidth={2} />
@@ -144,7 +144,7 @@ export default function Navbar({ user }: NavbarProps) {
               </Link>
               <Link
                 href="/register"
-                className="rounded-full bg-primary px-5 py-2 text-sm font-semibold text-white transition-colors hover:bg-brand-dark"
+                className="rounded-full bg-primary px-6 py-3 text-sm font-semibold text-white transition-colors hover:bg-brand-dark"
               >
                 Créer un compte
               </Link>

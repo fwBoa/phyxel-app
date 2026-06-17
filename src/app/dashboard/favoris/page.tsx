@@ -36,7 +36,7 @@ export default async function FavorisPage() {
           <p className="text-sm text-text-muted">Vous n&apos;avez pas encore sauvegardé d&apos;espace.</p>
           <Link
             href="/explorer"
-            className="inline-flex items-center gap-2 rounded-full border border-border-custom px-5 py-2 text-sm font-medium text-foreground transition-colors hover:border-[#0A0A0A]"
+            className="inline-flex items-center gap-2 rounded-full border border-border-custom px-6 py-3 text-sm font-medium text-foreground transition-colors hover:border-[#0A0A0A]"
           >
             Explorer les espaces →
           </Link>
