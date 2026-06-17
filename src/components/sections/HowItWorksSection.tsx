@@ -3,23 +3,23 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import { Plus, Globe } from 'lucide-react'
-import { useRevealOnScroll } from '@/hooks/useRevealOnScroll'
+import { motion, useReducedMotion } from 'motion/react'
+import ScrollReveal from '@/components/motion/ScrollReveal'
+import StaggerContainer, { StaggerItem } from '@/components/motion/StaggerContainer'
 import type { ReactNode } from 'react'
 
 function CardReveal({ children, delay = 0 }: { children: ReactNode; delay?: number }) {
-  const { ref, visible } = useRevealOnScroll<HTMLDivElement>({ threshold: 0.15 })
+  const reduce = useReducedMotion()
   return (
-    <div
-      ref={ref}
-      className="card-gradient-border rounded-2xl p-8 shadow-sm transition-all duration-700 ease-out"
-      style={{
-        opacity:         visible ? 1 : 0,
-        transform:       visible ? 'translateY(0)' : 'translateY(28px)',
-        transitionDelay: visible ? `${delay}ms` : '0ms',
-      }}
+    <motion.div
+      className="card-gradient-border rounded-2xl p-8 shadow-sm"
+      initial={reduce ? false : { opacity: 0, y: 28 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, amount: 0.3 }}
+      transition={{ duration: 0.7, delay, ease: [0.16, 1, 0.3, 1] }}
     >
       {children}
-    </div>
+    </motion.div>
   )
 }
 
@@ -39,9 +39,6 @@ const STEPS = [
 ]
 
 export default function HowItWorksSection() {
-  const { ref: titleRef, visible: titleVisible }       = useRevealOnScroll<HTMLHeadingElement>()
-  const { ref: subtitleRef, visible: subtitleVisible } = useRevealOnScroll<HTMLParagraphElement>({ threshold: 0.3 })
-
   return (
     <section id="comment-ca-marche" className="bg-white py-24">
       <style>{`
@@ -73,33 +70,22 @@ export default function HowItWorksSection() {
 
         {/* En-tête centré avec animation au scroll */}
         <div className="text-center">
-          <h2
-            ref={titleRef}
-            className="text-3xl font-bold text-foreground transition-all duration-700 ease-out"
-            style={{
-              opacity:   titleVisible ? 1 : 0,
-              transform: titleVisible ? 'translateY(0)' : 'translateY(28px)',
-            }}
-          >
-            Comment ça marche&nbsp;?
-          </h2>
-          <p
-            ref={subtitleRef}
-            className="mt-4 text-text-secondary transition-all duration-700 ease-out"
-            style={{
-              opacity:          subtitleVisible ? 1 : 0,
-              transform:        subtitleVisible ? 'translateY(0)' : 'translateY(20px)',
-              transitionDelay:  subtitleVisible ? '150ms' : '0ms',
-            }}
-          >
-            De votre profil marque à votre première expérience physique, en 3 étapes.
-          </p>
+          <ScrollReveal>
+            <h2 className="text-3xl font-bold text-foreground">
+              Comment ça marche&nbsp;?
+            </h2>
+          </ScrollReveal>
+          <ScrollReveal delay={0.15}>
+            <p className="mt-4 text-text-secondary">
+              De votre profil marque à votre première expérience physique, en 3 étapes.
+            </p>
+          </ScrollReveal>
         </div>
 
         {/* Cards */}
         <div className="mt-12 grid grid-cols-1 gap-6 md:grid-cols-3">
           {STEPS.map(({ title, desc }, i) => (
-            <CardReveal key={title} delay={i * 120}>
+            <CardReveal key={title} delay={i * 0.12}>
               <span className="text-primary text-xl leading-none">✦</span>
               <h3 className="mt-5 text-xl font-bold leading-snug text-foreground">
                 {title}
@@ -119,7 +105,7 @@ export default function HowItWorksSection() {
           <div className="flex flex-col items-center gap-12 lg:flex-row lg:items-start lg:gap-20">
 
             {/* Image avec badges flottants */}
-            <div className="relative w-full shrink-0 lg:w-[520px]">
+            <ScrollReveal className="relative w-full shrink-0 lg:w-[520px]" y={40}>
               <div className="relative overflow-hidden rounded-[32px] aspect-[4/3]">
                 <Image
                   src="/assets/img/boutique-accompagnement.jpg"
@@ -142,32 +128,40 @@ export default function HowItWorksSection() {
                 <Globe size={16} className="text-[#0052CC] shrink-0" strokeWidth={2.5} />
                 <span className="text-sm font-medium text-[#0A0A0A]">Un réseau qualifié de partenaires et de lieux</span>
               </div>
-            </div>
+            </ScrollReveal>
 
             {/* Texte */}
-            <div className="flex-1 max-w-lg">
-              <h2 className="text-3xl font-bold leading-tight text-[#0A0A0A] sm:text-[42px] sm:leading-[1.15]">
-                Choisissez l&apos;accompagnement{' '}
-                <span className="shimmer-blue">qui vous convient le mieux&nbsp;!</span>
-              </h2>
+            <StaggerContainer className="flex-1 max-w-lg" staggerDelay={0.12}>
+              <StaggerItem>
+                <h2 className="text-3xl font-bold leading-tight text-[#0A0A0A] sm:text-[42px] sm:leading-[1.15]">
+                  Choisissez l&apos;accompagnement{' '}
+                  <span className="shimmer-blue">qui vous convient le mieux&nbsp;!</span>
+                </h2>
+              </StaggerItem>
 
-              <p className="mt-6 text-lg leading-relaxed text-[#6B6B6B]">
-                Que vous souhaitiez gérer votre projet en autonomie ou être accompagné de A à Z,
-                Phyxel vous aide à transformer votre présence digitale en expérience réelle.
-              </p>
+              <StaggerItem>
+                <p className="mt-6 text-lg leading-relaxed text-[#6B6B6B]">
+                  Que vous souhaitiez gérer votre projet en autonomie ou être accompagné de A à Z,
+                  Phyxel vous aide à transformer votre présence digitale en expérience réelle.
+                </p>
+              </StaggerItem>
 
-              <p className="mt-4 text-lg leading-relaxed text-[#6B6B6B]">
-                Nous trouvons les lieux adaptés à votre marque et, si besoin, nous coordonnons
-                également l&apos;ensemble de votre projet avec notre réseau de partenaires spécialisés.
-              </p>
+              <StaggerItem>
+                <p className="mt-4 text-lg leading-relaxed text-[#6B6B6B]">
+                  Nous trouvons les lieux adaptés à votre marque et, si besoin, nous coordonnons
+                  également l&apos;ensemble de votre projet avec notre réseau de partenaires spécialisés.
+                </p>
+              </StaggerItem>
 
-              <Link
-                href="/contact"
-                className="mt-8 inline-flex items-center rounded-full bg-[#0052CC] px-7 py-3.5 text-sm font-semibold text-white transition-colors hover:bg-[#003D99]"
-              >
-                Demander un devis personnalisé
-              </Link>
-            </div>
+              <StaggerItem>
+                <Link
+                  href="/contact"
+                  className="mt-8 inline-flex items-center rounded-full bg-[#0052CC] px-7 py-3.5 text-sm font-semibold text-white transition-colors hover:bg-[#003D99]"
+                >
+                  Demander un devis personnalisé
+                </Link>
+              </StaggerItem>
+            </StaggerContainer>
 
           </div>
         </div>

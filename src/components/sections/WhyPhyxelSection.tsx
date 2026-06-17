@@ -2,6 +2,8 @@
 
 import { useEffect, useRef } from 'react'
 import { Check, Clock, PersonStanding, TrendingUp } from 'lucide-react'
+import { motion, useReducedMotion } from 'motion/react'
+import ScrollReveal from '@/components/motion/ScrollReveal'
 
 const PILLARS = [
   {
@@ -39,12 +41,14 @@ const SCALE_STEP = 0.04
 
 export default function WhyPhyxelSection() {
   const cardRefs = useRef<(HTMLDivElement | null)[]>([])
+  const reduce = useReducedMotion()
 
   useEffect(() => {
+    if (reduce) return
     function onScroll() {
       cardRefs.current.forEach((card, i) => {
         if (!card) return
-        const rect   = card.getBoundingClientRect()
+        const rect = card.getBoundingClientRect()
         const buried = CARD_TOP - rect.top
         if (buried > 0) {
           const depth = Math.min(buried / card.offsetHeight, 1)
@@ -58,7 +62,7 @@ export default function WhyPhyxelSection() {
 
     window.addEventListener('scroll', onScroll, { passive: true })
     return () => window.removeEventListener('scroll', onScroll)
-  }, [])
+  }, [reduce])
 
   return (
     <section id="pourquoi-phyxel" className="bg-white py-20">
@@ -68,26 +72,34 @@ export default function WhyPhyxelSection() {
           {/* Titre à gauche — sticky */}
           <div className="lg:w-80 lg:shrink-0">
             <div className="lg:sticky lg:top-24">
-              <h2 className="text-4xl font-bold leading-tight text-foreground">
-                Pourquoi choisir Phyxel&nbsp;?
-              </h2>
-              <p className="mt-4 text-text-secondary">
-                La marketplace qui comprend les marques e-commerce.
-              </p>
+              <ScrollReveal>
+                <h2 className="text-[28px] font-bold leading-tight text-foreground sm:text-4xl">
+                  Pourquoi choisir Phyxel&nbsp;?
+                </h2>
+              </ScrollReveal>
+              <ScrollReveal delay={0.15}>
+                <p className="mt-4 text-sm text-text-secondary sm:text-base">
+                  La marketplace qui comprend les marques e-commerce.
+                </p>
+              </ScrollReveal>
             </div>
           </div>
 
           {/* Cards empilées */}
           <div className="flex flex-1 flex-col">
             {PILLARS.map(({ title, desc, Icon, iconBg, iconColor }, i) => (
-              <div
+              <motion.div
                 key={title}
                 className="sticky"
                 style={{ top: `${CARD_TOP}px`, zIndex: i + 1 }}
+                initial={reduce ? false : { opacity: 0, y: 40 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, amount: 0.2 }}
+                transition={{ duration: 0.7, delay: i * 0.1, ease: [0.16, 1, 0.3, 1] }}
               >
                 <div
                   ref={(el) => { cardRefs.current[i] = el }}
-                  className="mb-4 origin-top rounded-2xl border border-border-custom bg-white p-8 shadow-sm transition-transform duration-75"
+                  className="mb-4 origin-top rounded-2xl border border-border-custom bg-white p-5 shadow-sm transition-transform duration-75 sm:p-8"
                 >
                   <div
                     className="mb-5 inline-flex size-12 items-center justify-center rounded-full"
@@ -98,10 +110,10 @@ export default function WhyPhyxelSection() {
                   >
                     <Icon className="size-5" style={{ color: iconColor }} strokeWidth={1.75} />
                   </div>
-                  <h3 className="text-lg font-bold text-foreground">{title}</h3>
-                  <p className="mt-2 leading-relaxed text-text-secondary">{desc}</p>
+                  <h3 className="text-base font-bold text-foreground sm:text-lg">{title}</h3>
+                  <p className="mt-2 text-sm leading-relaxed text-text-secondary">{desc}</p>
                 </div>
-              </div>
+              </motion.div>
             ))}
           </div>
 
