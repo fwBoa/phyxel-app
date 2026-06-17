@@ -116,53 +116,54 @@ export default function HowItWorksSection() {
       {/* Bloc accompagnement */}
       <div className="mt-24 py-20">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="flex flex-col items-center gap-16 lg:flex-row">
+          <div className="flex flex-col items-center gap-12 lg:flex-row lg:items-start lg:gap-20">
 
             {/* Image avec badges flottants */}
-            <div className="relative w-full shrink-0 lg:w-[480px]">
-              <div className="relative overflow-hidden rounded-3xl aspect-[4/3]">
+            <div className="relative w-full shrink-0 lg:w-[520px]">
+              <div className="relative overflow-hidden rounded-[32px] aspect-[4/3]">
                 <Image
-                  src="https://images.unsplash.com/photo-1567401893414-76b7b1e5a7a5?w=960&q=80"
+                  src="/assets/img/boutique-accompagnement.jpg"
                   alt="Accompagnement Phyxel"
                   fill
                   className="object-cover"
-                  sizes="(max-width: 1024px) 100vw, 480px"
+                  sizes="(max-width: 1024px) 100vw, 520px"
+                  priority
                 />
               </div>
 
               {/* Badge 1 */}
-              <div className="absolute bottom-20 left-6 flex items-center gap-2 rounded-xl bg-white/80 px-4 py-2.5 shadow-md backdrop-blur-sm">
-                <Plus size={16} className="text-primary shrink-0" />
-                <span className="text-sm font-medium text-foreground">500 marques accompagnées</span>
+              <div className="absolute bottom-[38%] left-[8%] flex items-center gap-2.5 rounded-xl bg-white/40 px-4 py-2.5 shadow-sm backdrop-blur-md">
+                <Plus size={16} className="text-[#0052CC] shrink-0" strokeWidth={2.5} />
+                <span className="text-sm font-medium text-[#0A0A0A]">500 marques accompagnées</span>
               </div>
 
               {/* Badge 2 */}
-              <div className="absolute bottom-6 left-10 flex items-center gap-2 rounded-xl bg-white/80 px-4 py-2.5 shadow-md backdrop-blur-sm">
-                <Globe size={16} className="text-primary shrink-0" />
-                <span className="text-sm font-medium text-foreground">Un réseau qualifié de partenaires et de lieux</span>
+              <div className="absolute bottom-[18%] left-[8%] flex items-center gap-2.5 rounded-xl bg-white/40 px-4 py-2.5 shadow-sm backdrop-blur-md">
+                <Globe size={16} className="text-[#0052CC] shrink-0" strokeWidth={2.5} />
+                <span className="text-sm font-medium text-[#0A0A0A]">Un réseau qualifié de partenaires et de lieux</span>
               </div>
             </div>
 
             {/* Texte */}
-            <div className="flex-1">
-              <h2 className="text-4xl font-bold leading-tight text-foreground">
+            <div className="flex-1 max-w-lg">
+              <h2 className="text-3xl font-bold leading-tight text-[#0A0A0A] sm:text-[42px] sm:leading-[1.15]">
                 Choisissez l&apos;accompagnement{' '}
                 <span className="shimmer-blue">qui vous convient le mieux&nbsp;!</span>
               </h2>
 
-              <p className="mt-6 leading-relaxed text-text-secondary">
+              <p className="mt-6 text-lg leading-relaxed text-[#6B6B6B]">
                 Que vous souhaitiez gérer votre projet en autonomie ou être accompagné de A à Z,
                 Phyxel vous aide à transformer votre présence digitale en expérience réelle.
               </p>
 
-              <p className="mt-4 leading-relaxed text-text-secondary">
+              <p className="mt-4 text-lg leading-relaxed text-[#6B6B6B]">
                 Nous trouvons les lieux adaptés à votre marque et, si besoin, nous coordonnons
                 également l&apos;ensemble de votre projet avec notre réseau de partenaires spécialisés.
               </p>
 
               <Link
                 href="/contact"
-                className="mt-8 inline-block rounded-full bg-primary px-8 py-3.5 text-sm font-semibold text-white transition-colors hover:bg-[#003D99]"
+                className="mt-8 inline-flex items-center rounded-full bg-[#0052CC] px-7 py-3.5 text-sm font-semibold text-white transition-colors hover:bg-[#003D99]"
               >
                 Demander un devis personnalisé
               </Link>
