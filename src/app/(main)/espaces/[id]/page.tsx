@@ -1,6 +1,7 @@
 import { notFound }        from 'next/navigation'
 import Image                from 'next/image'
-import { MapPin, Maximize2 } from 'lucide-react'
+import { MapPin, Maximize2, ArrowLeft } from 'lucide-react'
+import Link from 'next/link'
 import { getSpaceById }     from '@/lib/queries/spaces'
 import { isSpaceFavorited } from '@/lib/queries/favorites'
 import { getCurrentUser, getProfile }   from '@/lib/queries/users'
@@ -9,6 +10,7 @@ import { calculateMatchScore } from '@/lib/matching/score'
 import BookingForm          from '@/components/features/BookingForm'
 import FavoriteButton       from '@/components/ui/FavoriteButton'
 import MatchWidget          from '@/components/features/MatchWidget'
+import PhotoGallery         from '@/components/features/PhotoGallery'
 
 type PageProps = { params: Promise<{ id: string }> }
 
@@ -23,8 +25,6 @@ export default async function SpaceDetailPage({ params }: PageProps) {
   if (!space) notFound()
 
   const photos  = space.space_photos ?? []
-  const cover   = photos.find((p) => p.is_cover) ?? photos[0]
-  const gallery = photos.filter((p) => p !== cover)
 
   const user             = await getCurrentUser()
   const profile          = user ? await getProfile(user.id) : null
@@ -38,37 +38,25 @@ export default async function SpaceDetailPage({ params }: PageProps) {
 
   return (
     <div className="mx-auto max-w-6xl px-4 py-10 sm:px-6 lg:px-8">
+      <Link href="/explorer" className="mb-6 inline-flex items-center gap-2 text-sm font-medium hover:opacity-80 transition-opacity" style={{ color: '#65677A' }}>
+        <ArrowLeft size={16} />
+        Retour
+      </Link>
+
       <div className="grid grid-cols-1 gap-10 lg:grid-cols-3">
 
         {/* ── Colonne principale ── */}
         <div className="lg:col-span-2 flex flex-col gap-6">
 
-          {/* Photo principale + bouton favori overlay */}
-          <div className="relative h-80 w-full overflow-hidden rounded-2xl bg-bg-secondary sm:h-[420px]">
-            {cover ? (
-              <Image src={cover.url} alt={space.title} fill className="object-cover" sizes="(max-width: 1024px) 100vw, 66vw" />
-            ) : (
-              <div className="flex h-full items-center justify-center text-text-muted">
-                <Maximize2 size={48} />
-              </div>
-            )}
+          {/* Galerie photos */}
+          <div className="relative">
+            <PhotoGallery photos={photos} />
             {user && (
-              <div className="absolute right-4 top-4">
+              <div className="absolute right-4 top-4 z-10">
                 <FavoriteButton spaceId={space.id} initialFavorited={initialFavorited} variant="overlay" size="md" />
               </div>
             )}
           </div>
-
-          {/* Galerie miniatures */}
-          {gallery.length > 0 && (
-            <div className="grid grid-cols-3 gap-3">
-              {gallery.slice(0, 3).map((photo) => (
-                <div key={photo.id} className="relative h-24 overflow-hidden rounded-xl bg-bg-secondary sm:h-28">
-                  <Image src={photo.url} alt="" fill className="object-cover" sizes="22vw" />
-                </div>
-              ))}
-            </div>
-          )}
 
           {/* Badge dispo + prix */}
           <div className="flex items-center justify-between">

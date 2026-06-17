@@ -2,6 +2,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { MapPin, Maximize2, Euro } from 'lucide-react'
 import FavoriteButton from './FavoriteButton'
+import { getMatchColor } from '@/lib/matching/scoreColors'
 
 type SpaceCardProps = {
   id:          string
@@ -57,7 +58,7 @@ export default function SpaceCard({
         {matchScore != null && matchScore > 0 && (
           <span
             className="absolute left-3 top-10 rounded-full px-2 py-0.5 text-xs font-bold text-white backdrop-blur-sm"
-            style={{ backgroundColor: matchScore >= 85 ? '#15803d' : matchScore >= 70 ? '#c2410c' : '#b91c1c' }}
+            style={{ backgroundColor: getMatchColor(matchScore) }}
           >
             {matchScore}% match
           </span>

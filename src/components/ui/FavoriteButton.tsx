@@ -53,7 +53,7 @@ export default function FavoriteButton({
     <button
       onClick={handleClick}
       aria-label={isFavorited ? 'Retirer des favoris' : 'Ajouter aux favoris'}
-      className={`flex items-center gap-2 rounded-full border px-4 py-2 text-sm font-medium transition-all active:scale-95 ${
+      className={`flex items-center gap-2 rounded-full border px-6 py-3 text-sm font-medium transition-all active:scale-95 ${
         isFavorited
           ? 'border-primary bg-brand-muted text-primary'
           : 'border-border-custom bg-white text-text-secondary hover:border-primary hover:text-primary'

@@ -34,10 +34,10 @@ export default function HeroSection() {
 
         {/* Boutons de navigation */}
         <div className="mt-10 flex justify-center gap-2">
-          <button className="rounded-full bg-foreground px-6 py-2.5 text-sm font-semibold text-white">
+          <button className="rounded-full bg-foreground px-6 py-3 text-sm font-semibold text-white">
             Trouver mon lieu
           </button>
-          <button className="rounded-full border border-gray-200 bg-white px-6 py-2.5 text-sm font-semibold text-foreground hover:bg-gray-50 transition-colors">
+          <button className="rounded-full border border-gray-200 bg-white px-6 py-3 text-sm font-semibold text-foreground hover:bg-gray-50 transition-colors">
             Explorer les espaces
           </button>
         </div>
