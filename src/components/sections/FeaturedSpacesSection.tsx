@@ -2,9 +2,11 @@
 
 import Link from 'next/link'
 import { ArrowRight, Search } from 'lucide-react'
+import { motion, useReducedMotion } from 'motion/react'
+import type { ReactNode } from 'react'
 import SpaceCard from '@/components/ui/SpaceCard'
 import ScrollReveal from '@/components/motion/ScrollReveal'
-import StaggerContainer, { StaggerItem } from '@/components/motion/StaggerContainer'
+import { useScrollDirection } from '@/hooks/useScrollDirection'
 import type { SpaceWithPhotos } from '@/types/spaces'
 
 type FeaturedSpacesSectionProps = {
@@ -14,6 +16,22 @@ type FeaturedSpacesSectionProps = {
 function getCoverUrl(space: SpaceWithPhotos): string | null {
   const cover = space.space_photos?.find((p) => p.is_cover) ?? space.space_photos?.[0]
   return cover?.url ?? null
+}
+
+function CardReveal({ children, delay = 0 }: { children: ReactNode; delay?: number }) {
+  const reduce = useReducedMotion()
+  const direction = useScrollDirection()
+  const effectiveDelay = direction === 'up' ? delay * 2.5 : delay
+  return (
+    <motion.div
+      initial={reduce ? false : { opacity: 0, y: 40 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: false, amount: 0.1 }}
+      transition={{ duration: 1.1, delay: effectiveDelay, ease: [0.16, 1, 0.3, 1] }}
+    >
+      {children}
+    </motion.div>
+  )
 }
 
 export default function FeaturedSpacesSection({ spaces }: FeaturedSpacesSectionProps) {
@@ -37,13 +55,9 @@ export default function FeaturedSpacesSection({ spaces }: FeaturedSpacesSectionP
 
         <div className="mt-8 sm:mt-10">
           {spaces.length > 0 ? (
-            <StaggerContainer
-              className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 sm:gap-6"
-              staggerDelay={0.1}
-              amount={0.15}
-            >
-              {spaces.map((space) => (
-                <StaggerItem key={space.id}>
+            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 sm:gap-6">
+              {spaces.map((space, i) => (
+                <CardReveal key={space.id} delay={i * 0.18}>
                   <SpaceCard
                     id={space.id}
                     title={space.title}
@@ -55,9 +69,9 @@ export default function FeaturedSpacesSection({ spaces }: FeaturedSpacesSectionP
                     isAvailable={space.is_available}
                     coverUrl={getCoverUrl(space)}
                   />
-                </StaggerItem>
+                </CardReveal>
               ))}
-            </StaggerContainer>
+            </div>
           ) : (
             <ScrollReveal>
               <div className="flex flex-col items-center gap-4 py-16 text-center">
