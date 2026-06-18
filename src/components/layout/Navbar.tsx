@@ -4,7 +4,7 @@ import Link from 'next/link'
 import Image from 'next/image'
 import PhyxelLogo from '@/components/ui/PhyxelLogo'
 import { usePathname, useRouter } from 'next/navigation'
-import { useState } from 'react'
+import { useState, useRef } from 'react'
 import { Menu, X, User, LayoutDashboard, LogOut, ChevronDown, CalendarDays, Heart } from 'lucide-react'
 import { createClient } from '@/lib/supabase/client'
 import { useProfile } from '@/hooks/useProfile'
@@ -26,6 +26,49 @@ export default function Navbar({ user }: NavbarProps) {
   const pathname = usePathname()
   const router   = useRouter()
   const { profile } = useProfile(user?.id)
+  const triggerRef = useRef<HTMLButtonElement>(null)
+  const menuRef    = useRef<HTMLDivElement>(null)
+
+  function handleTriggerKeyDown(e: React.KeyboardEvent) {
+    if (e.key === 'ArrowDown') {
+      e.preventDefault()
+      setDropdownOpen(true)
+      setTimeout(() => menuRef.current?.querySelector<HTMLElement>('[role="menuitem"]')?.focus(), 0)
+    } else if (e.key === 'ArrowUp') {
+      e.preventDefault()
+      setDropdownOpen(true)
+      setTimeout(() => {
+        const items = menuRef.current?.querySelectorAll<HTMLElement>('[role="menuitem"]')
+        items?.[items.length - 1]?.focus()
+      }, 0)
+    } else if (e.key === 'Escape') {
+      setDropdownOpen(false)
+    }
+  }
+
+  function handleMenuKeyDown(e: React.KeyboardEvent) {
+    const items = Array.from(menuRef.current?.querySelectorAll<HTMLElement>('[role="menuitem"]') ?? [])
+    const index = items.indexOf(document.activeElement as HTMLElement)
+    if (e.key === 'Escape') {
+      e.preventDefault()
+      setDropdownOpen(false)
+      triggerRef.current?.focus()
+    } else if (e.key === 'ArrowDown') {
+      e.preventDefault()
+      items[(index + 1) % items.length]?.focus()
+    } else if (e.key === 'ArrowUp') {
+      e.preventDefault()
+      items[(index - 1 + items.length) % items.length]?.focus()
+    } else if (e.key === 'Home') {
+      e.preventDefault()
+      items[0]?.focus()
+    } else if (e.key === 'End') {
+      e.preventDefault()
+      items[items.length - 1]?.focus()
+    } else if (e.key === 'Tab') {
+      setDropdownOpen(false)
+    }
+  }
 
   function isActive(href: string) {
     if (href.startsWith('/#')) return false
@@ -79,9 +122,12 @@ export default function Navbar({ user }: NavbarProps) {
           {user ? (
             <div className="relative">
               <button
+                ref={triggerRef}
                 onClick={() => setDropdownOpen((v) => !v)}
+                onKeyDown={handleTriggerKeyDown}
                 aria-expanded={dropdownOpen}
                 aria-haspopup="menu"
+                aria-controls="user-menu"
                 className="flex items-center gap-2 rounded-full border border-border-custom px-6 py-3 text-sm font-medium text-foreground transition-colors hover:border-[#0A0A0A]"
               >
                 <span className="relative flex h-6 w-6 shrink-0 items-center justify-center overflow-hidden rounded-full bg-brand-muted text-primary">
@@ -107,7 +153,10 @@ export default function Navbar({ user }: NavbarProps) {
                     onClick={() => setDropdownOpen(false)}
                   />
                   <div
+                    id="user-menu"
+                    ref={menuRef}
                     role="menu"
+                    onKeyDown={handleMenuKeyDown}
                     className="absolute right-0 z-50 mt-2 w-48 overflow-hidden rounded-2xl border border-border-custom bg-white shadow-lg"
                   >
                     <Link

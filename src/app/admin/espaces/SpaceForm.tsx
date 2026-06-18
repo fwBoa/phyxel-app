@@ -164,8 +164,9 @@ export default function SpaceForm({ initialData, mode, spaceId }: SpaceFormProps
       <div className="rounded-2xl border border-border-custom bg-white p-6 space-y-5">
         {/* Titre */}
         <div className="flex flex-col gap-1">
-          <label className="text-xs font-medium text-text-secondary">Titre * </label>
+          <label htmlFor="sf-title" className="text-xs font-medium text-text-secondary">Titre * </label>
           <input
+            id="sf-title"
             type="text"
             required
             value={form.title}
@@ -178,7 +179,7 @@ export default function SpaceForm({ initialData, mode, spaceId }: SpaceFormProps
         {/* Host email */}
         <div className="flex flex-col gap-1">
           <div className="flex items-center justify-between">
-            <label className="text-xs font-medium text-text-secondary">Email du host * </label>
+            <label htmlFor="sf-host-email" className="text-xs font-medium text-text-secondary">Email du host * </label>
             <button
               type="button"
               onClick={ensureHost}
@@ -193,6 +194,7 @@ export default function SpaceForm({ initialData, mode, spaceId }: SpaceFormProps
             </button>
           </div>
           <input
+            id="sf-host-email"
             type="email"
             required
             value={form.host_email}
@@ -218,8 +220,9 @@ export default function SpaceForm({ initialData, mode, spaceId }: SpaceFormProps
         {/* Type + Ville */}
         <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
           <div className="flex flex-col gap-1">
-            <label className="text-xs font-medium text-text-secondary">Type * </label>
+            <label htmlFor="sf-type" className="text-xs font-medium text-text-secondary">Type * </label>
             <select
+              id="sf-type"
               required
               value={form.type}
               onChange={(e) => handleChange('type', e.target.value)}
@@ -232,8 +235,9 @@ export default function SpaceForm({ initialData, mode, spaceId }: SpaceFormProps
           </div>
 
           <div className="flex flex-col gap-1">
-            <label className="text-xs font-medium text-text-secondary">Ville * </label>
+            <label htmlFor="sf-city" className="text-xs font-medium text-text-secondary">Ville * </label>
             <input
+              id="sf-city"
               type="text"
               required
               value={form.city}
@@ -247,8 +251,9 @@ export default function SpaceForm({ initialData, mode, spaceId }: SpaceFormProps
         {/* Quartier + Adresse */}
         <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
           <div className="flex flex-col gap-1">
-            <label className="text-xs font-medium text-text-secondary">Quartier</label>
+            <label htmlFor="sf-district" className="text-xs font-medium text-text-secondary">Quartier</label>
             <input
+              id="sf-district"
               type="text"
               value={form.district}
               onChange={(e) => handleChange('district', e.target.value)}
@@ -258,8 +263,9 @@ export default function SpaceForm({ initialData, mode, spaceId }: SpaceFormProps
           </div>
 
           <div className="flex flex-col gap-1">
-            <label className="text-xs font-medium text-text-secondary">Adresse</label>
+            <label htmlFor="sf-address" className="text-xs font-medium text-text-secondary">Adresse</label>
             <input
+              id="sf-address"
               type="text"
               value={form.address}
               onChange={(e) => handleChange('address', e.target.value)}
@@ -272,8 +278,9 @@ export default function SpaceForm({ initialData, mode, spaceId }: SpaceFormProps
         {/* Superficie + Prix */}
         <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
           <div className="flex flex-col gap-1">
-            <label className="text-xs font-medium text-text-secondary">Superficie (m²)</label>
+            <label htmlFor="sf-area" className="text-xs font-medium text-text-secondary">Superficie (m²)</label>
             <input
+              id="sf-area"
               type="number"
               min={0}
               value={form.area_sqm}
@@ -284,8 +291,9 @@ export default function SpaceForm({ initialData, mode, spaceId }: SpaceFormProps
           </div>
 
           <div className="flex flex-col gap-1">
-            <label className="text-xs font-medium text-text-secondary">Prix / jour (€) * </label>
+            <label htmlFor="sf-price" className="text-xs font-medium text-text-secondary">Prix / jour (€) * </label>
             <input
+              id="sf-price"
               type="number"
               required
               min={0}
@@ -299,8 +307,9 @@ export default function SpaceForm({ initialData, mode, spaceId }: SpaceFormProps
 
         {/* Description */}
         <div className="flex flex-col gap-1">
-          <label className="text-xs font-medium text-text-secondary">Description</label>
+          <label htmlFor="sf-description" className="text-xs font-medium text-text-secondary">Description</label>
           <textarea
+            id="sf-description"
             rows={4}
             value={form.description}
             onChange={(e) => handleChange('description', e.target.value)}
@@ -325,8 +334,9 @@ export default function SpaceForm({ initialData, mode, spaceId }: SpaceFormProps
 
         {/* Photos */}
         <div className="flex flex-col gap-1">
-          <label className="text-xs font-medium text-text-secondary">Photos (une URL par ligne)</label>
+          <label htmlFor="sf-photos" className="text-xs font-medium text-text-secondary">Photos (une URL par ligne)</label>
           <textarea
+            id="sf-photos"
             rows={4}
             value={form.photos}
             onChange={(e) => handleChange('photos', e.target.value)}
@@ -338,10 +348,10 @@ export default function SpaceForm({ initialData, mode, spaceId }: SpaceFormProps
 
         {/* Messages */}
         {error && (
-          <p className="rounded-xl bg-match-low/10 p-3 text-sm text-match-low">{error}</p>
+          <p role="alert" className="rounded-xl bg-match-low/10 p-3 text-sm text-match-low">{error}</p>
         )}
         {success && (
-          <p className="rounded-xl bg-match-high/10 p-3 text-sm text-match-high">{success}</p>
+          <p role="status" className="rounded-xl bg-match-high/10 p-3 text-sm text-match-high">{success}</p>
         )}
 
         {/* Actions */}

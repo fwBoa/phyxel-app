@@ -50,7 +50,7 @@ export default async function SpaceDetailPage({ params }: PageProps) {
 
           {/* Galerie photos */}
           <div className="relative">
-            <PhotoGallery photos={photos} />
+            <PhotoGallery photos={photos} spaceName={space.title} />
             {user && (
               <div className="absolute right-4 top-4 z-10">
                 <FavoriteButton spaceId={space.id} initialFavorited={initialFavorited} variant="overlay" size="md" />

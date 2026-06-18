@@ -21,7 +21,7 @@ export default function MainLayout({ children }: { children: React.ReactNode }) 
   return (
     <>
       <Navbar user={user} />
-      <main className="flex-1">{children}</main>
+      <main id="main-content" className="flex-1">{children}</main>
       {isHome ? <Footer /> : <SimpleFooter />}
     </>
   )
