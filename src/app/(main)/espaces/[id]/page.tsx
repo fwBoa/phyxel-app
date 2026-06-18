@@ -2,7 +2,7 @@ import { notFound }        from 'next/navigation'
 import Image                from 'next/image'
 import { MapPin, Maximize2, ArrowLeft } from 'lucide-react'
 import Link from 'next/link'
-import { getSpaceById }     from '@/lib/queries/spaces'
+import { getSpaceById, hasBookingForSpace } from '@/lib/queries/spaces'
 import { isSpaceFavorited } from '@/lib/queries/favorites'
 import { getCurrentUser, getProfile }   from '@/lib/queries/users'
 import { getBrandPreferences } from '@/lib/queries/preferences'
@@ -29,13 +29,13 @@ export default async function SpaceDetailPage({ params }: PageProps) {
 
   const user             = await getCurrentUser()
   const profile          = user ? await getProfile(user.id) : null
-  const initialFavorited = user ? await isSpaceFavorited(user.id, space.id) : false
+  const initialFavorited    = user ? await isSpaceFavorited(user.id, space.id) : false
+  const hasExistingBooking  = user ? await hasBookingForSpace(user.id, space.id) : false
 
+  const prefs     = user ? await getBrandPreferences(user.id) : null
+  const idealDates = prefs?.ideal_dates ?? null
   let matchData = null
-  if (user && profile?.brand_name) {
-    const prefs = await getBrandPreferences(user.id)
-    if (prefs) matchData = calculateMatchScore(space, prefs)
-  }
+  if (prefs && profile?.brand_name) matchData = calculateMatchScore(space, prefs)
 
   return (
     <div className="mx-auto max-w-6xl px-4 py-10 sm:px-6 lg:px-8">
@@ -146,6 +146,8 @@ export default async function SpaceDetailPage({ params }: PageProps) {
               spaceId={space.id}
               isAvailable={space.is_available}
               priceDay={space.price_day}
+              hasExistingBooking={hasExistingBooking}
+              idealDates={idealDates}
             />
           </div>
         </div>

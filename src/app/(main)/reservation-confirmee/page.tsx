@@ -7,13 +7,16 @@ export default function ReservationConfirmeePage() {
       {/* Vidéo */}
       <div className="w-full max-w-3xl overflow-hidden rounded-2xl">
         <video
-          src="/assets/video/Phyxel.mp4"
           autoPlay
           loop
           muted
           playsInline
+          preload="metadata"
           className="h-72 w-full object-cover"
-        />
+        >
+          <source src="/assets/video/Phyxel-opt.webm" type="video/webm" />
+          <source src="/assets/video/Phyxel-opt.mp4" type="video/mp4" />
+        </video>
       </div>
 
       {/* Message */}

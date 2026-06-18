@@ -12,15 +12,25 @@ export default function MainLayout({ children }: { children: React.ReactNode }) 
   const pathname = usePathname()
   const isHome = pathname === '/' || pathname === ''
   const [user, setUser] = useState<User | null>(null)
+  const [ready, setReady] = useState(false)
 
   useEffect(() => {
     const supabase = createClient()
-    supabase.auth.getUser().then(({ data }) => setUser(data.user))
+    supabase.auth.getUser().then(({ data }) => {
+      setUser(data.user)
+      setReady(true)
+    })
+
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+      setUser(session?.user ?? null)
+    })
+
+    return () => subscription.unsubscribe()
   }, [])
 
   return (
     <>
-      <Navbar user={user} />
+      <Navbar user={user} ready={ready} />
       <main id="main-content" className="flex-1">{children}</main>
       {isHome ? <Footer /> : <SimpleFooter />}
     </>

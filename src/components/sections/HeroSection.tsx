@@ -93,10 +93,6 @@ export default function HeroSection() {
         </motion.h1>
 
         <style>{`
-          @keyframes heroGradientFadeIn {
-            from { opacity: 0; }
-            to   { opacity: 1; }
-          }
           .hero-gradient-sweep {
             position: absolute;
             inset: 0;
