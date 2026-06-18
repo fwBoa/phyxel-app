@@ -52,16 +52,45 @@ export default function HeroSection() {
           variants={itemVariants}
         >
           Trouvez le lieu physique idéal pour{' '}
-          <motion.span
-            className="inline-block shimmer-blue"
-            initial={reduce ? false : { backgroundSize: '0% 100%' }}
-            animate={{ backgroundSize: '200% 100%' }}
-            transition={{ duration: 1.4, ease: [0.16, 1, 0.3, 1], delay: 0.3 }}
-          >
-            faire vivre votre marque
-          </motion.span>{' '}
+          <span className="hero-gradient-text inline-block relative">
+            <span className="sr-only">faire vivre votre marque</span>
+            <motion.span
+              className="hero-gradient-sweep inline-block"
+              aria-hidden
+              initial={reduce ? false : { backgroundPosition: '200% center' }}
+              animate={{ backgroundPosition: '0% center' }}
+              transition={{ duration: 2.2, ease: [0.16, 1, 0.3, 1] }}
+              style={{
+                backgroundImage: 'linear-gradient(to right, #0D58C6, #ffffff 50%, #0D58C6)',
+                backgroundSize: '200% auto',
+                backgroundClip: 'text',
+                WebkitBackgroundClip: 'text',
+                color: 'transparent',
+              }}
+            >
+              faire vivre votre marque
+            </motion.span>
+            <span
+              aria-hidden
+              className="hero-gradient-final inline-block text-[#0D58C6]"
+              style={{ opacity: 0, animation: 'heroGradientFadeIn 0.15s ease-out 1.3s forwards' }}
+            >
+              faire vivre votre marque
+            </span>
+          </span>{' '}
           e-commerce
         </motion.h1>
+
+        <style>{`
+          @keyframes heroGradientFadeIn {
+            from { opacity: 0; }
+            to   { opacity: 1; }
+          }
+          .hero-gradient-sweep {
+            position: absolute;
+            inset: 0;
+          }
+        `}</style>
 
         {/* Sous-titre */}
         <motion.p
