@@ -46,17 +46,22 @@ export default function BookingForm({ spaceId, isAvailable, priceDay }: BookingF
     e.preventDefault()
     setLoading(true)
     setError(null)
-    const res = await fetch('/api/bookings', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ space_id: spaceId, start_date: startDate, end_date: endDate }),
-    })
-    setLoading(false)
-    if (res.ok) {
-      router.push('/reservation-confirmee')
-    } else {
-      const { error: msg } = await res.json()
-      setError(msg ?? 'Une erreur est survenue.')
+    try {
+      const res = await fetch('/api/bookings', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ space_id: spaceId, start_date: startDate, end_date: endDate }),
+      })
+      if (res.ok) {
+        router.push('/reservation-confirmee')
+      } else {
+        const { error: msg } = await res.json()
+        setError(msg ?? 'Une erreur est survenue.')
+      }
+    } catch {
+      setError('Impossible de contacter le serveur. Vérifiez votre connexion.')
+    } finally {
+      setLoading(false)
     }
   }
 

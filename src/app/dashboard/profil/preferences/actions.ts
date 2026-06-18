@@ -37,7 +37,6 @@ export async function updatePreferences(data: OnboardingData) {
     .eq('profile_id', profileId)
 
   if (prefsError) {
-    console.error('Erreur lors de la mise à jour des préférences:', prefsError)
     throw new Error('Impossible de mettre à jour vos préférences.')
   }
 

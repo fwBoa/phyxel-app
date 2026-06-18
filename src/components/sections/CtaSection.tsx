@@ -10,24 +10,6 @@ export default function CtaSection() {
 
   return (
     <section className="bg-white py-10 px-4 sm:py-16 sm:px-6 lg:px-8">
-      <style>{`
-        @keyframes shimmerBg {
-          from { background-position: 200% center; }
-          to   { background-position: -200% center; }
-        }
-        .cta-shimmer {
-          background: linear-gradient(
-            90deg,
-            #0A192F 0%,
-            #3B4FD8 25%,
-            #A5B4FC 50%,
-            #3B4FD8 75%,
-            #0A192F 100%
-          );
-          background-size: 200% 100%;
-          animation: shimmerBg 12s linear infinite;
-        }
-      `}</style>
       <div className="mx-auto max-w-7xl">
         <ScrollReveal>
           <motion.div

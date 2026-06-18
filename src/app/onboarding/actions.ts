@@ -38,7 +38,6 @@ export async function saveOnboarding(data: OnboardingData) {
     }, { onConflict: 'profile_id' })
 
   if (prefsError) {
-    console.error('Erreur lors de la sauvegarde des préférences:', prefsError)
     throw new Error('Impossible de sauvegarder vos préférences.')
   }
 
@@ -49,7 +48,6 @@ export async function saveOnboarding(data: OnboardingData) {
     .eq('id', profileId)
 
   if (profileError) {
-    console.error('Erreur lors de la mise à jour du profil:', profileError)
     throw new Error('Impossible de finaliser l\'onboarding.')
   }
 

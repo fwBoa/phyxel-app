@@ -41,31 +41,6 @@ const STEPS = [
 export default function HowItWorksSection() {
   return (
     <section id="comment-ca-marche" className="bg-white py-12 sm:py-24">
-      <style>{`
-        @property --ba {
-          syntax: '<angle>';
-          initial-value: 0deg;
-          inherits: false;
-        }
-        @keyframes spin-border {
-          to { --ba: 360deg; }
-        }
-        .card-gradient-border {
-          border: 1.5px solid transparent;
-          background:
-            linear-gradient(white, white) padding-box,
-            conic-gradient(
-              from var(--ba),
-              #e2e8f0 0%,
-              #818CF8 20%,
-              #4361EE 40%,
-              #A5B4FC 60%,
-              #4361EE 80%,
-              #e2e8f0 100%
-            ) border-box;
-          animation: spin-border 6s linear infinite;
-        }
-      `}</style>
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
 
         {/* En-tête centré avec animation au scroll */}
@@ -224,22 +199,6 @@ export default function HowItWorksSection() {
         </div>
       </div>
 
-      <style jsx>{`
-        @keyframes marquee {
-          from { transform: translateX(0); }
-          to { transform: translateX(-100%); }
-        }
-        @keyframes marquee-reverse {
-          from { transform: translateX(-100%); }
-          to { transform: translateX(0); }
-        }
-        .animate-marquee {
-          animation: marquee 60s linear infinite;
-        }
-        .animate-marquee-reverse {
-          animation: marquee-reverse 60s linear infinite;
-        }
-      `}</style>
     </section>
   )
 }
