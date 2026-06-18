@@ -197,7 +197,7 @@ export default function HowItWorksSection() {
         </div>
 
         <div className="relative flex overflow-hidden">
-          <div className="animate-marquee flex min-w-full shrink-0 items-center gap-8 py-3">
+          <div className="animate-marquee-reverse flex min-w-full shrink-0 items-center gap-8 py-3">
             {Array.from({ length: 4 }).flatMap((_, i) =>
               TAGS_REVERSE.map((tag) => (
                 <span
@@ -209,7 +209,7 @@ export default function HowItWorksSection() {
               ))
             )}
           </div>
-          <div className="animate-marquee flex min-w-full shrink-0 items-center gap-8 py-3" aria-hidden>
+          <div className="animate-marquee-reverse flex min-w-full shrink-0 items-center gap-8 py-3" aria-hidden>
             {Array.from({ length: 4 }).flatMap((_, i) =>
               TAGS_REVERSE.map((tag) => (
                 <span
@@ -229,8 +229,15 @@ export default function HowItWorksSection() {
           from { transform: translateX(0); }
           to { transform: translateX(-100%); }
         }
+        @keyframes marquee-reverse {
+          from { transform: translateX(-100%); }
+          to { transform: translateX(0); }
+        }
         .animate-marquee {
-          animation: marquee 40s linear infinite;
+          animation: marquee 60s linear infinite;
+        }
+        .animate-marquee-reverse {
+          animation: marquee-reverse 60s linear infinite;
         }
       `}</style>
     </section>
