@@ -11,6 +11,7 @@ import BookingForm          from '@/components/features/BookingForm'
 import FavoriteButton       from '@/components/ui/FavoriteButton'
 import MatchWidget          from '@/components/features/MatchWidget'
 import PhotoGallery         from '@/components/features/PhotoGallery'
+import FeatureBadgeList     from '@/components/features/FeatureBadgeList'
 
 type PageProps = { params: Promise<{ id: string }> }
 
@@ -100,6 +101,30 @@ export default async function SpaceDetailPage({ params }: PageProps) {
           {space.description && (
             <div>
               <p className="text-sm leading-relaxed text-text-secondary">{space.description}</p>
+            </div>
+          )}
+
+          {/* Services inclus */}
+          {Array.isArray(space.included_services) && space.included_services.length > 0 && (
+            <div className="mt-2">
+              <h2 className="mb-4 text-base font-bold text-foreground">Services inclus</h2>
+              <FeatureBadgeList items={space.included_services as { label: string; icon?: string }[]} />
+            </div>
+          )}
+
+          {/* Équipements */}
+          {Array.isArray(space.equipment) && space.equipment.length > 0 && (
+            <div className="mt-2">
+              <h2 className="mb-4 text-base font-bold text-foreground">Équipements</h2>
+              <FeatureBadgeList items={space.equipment as { label: string; icon?: string }[]} />
+            </div>
+          )}
+
+          {/* Conditions de location */}
+          {space.rental_conditions && (
+            <div className="mt-2">
+              <h2 className="mb-3 text-base font-bold text-foreground">Conditions de location</h2>
+              <p className="text-sm leading-relaxed text-text-secondary">{space.rental_conditions}</p>
             </div>
           )}
         </div>
