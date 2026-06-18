@@ -25,7 +25,7 @@ export default function CtaSection() {
             #0A192F 100%
           );
           background-size: 200% 100%;
-          animation: shimmerBg 5s linear infinite;
+          animation: shimmerBg 12s linear infinite;
         }
       `}</style>
       <div className="mx-auto max-w-7xl">

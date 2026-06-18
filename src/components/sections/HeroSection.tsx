@@ -1,5 +1,6 @@
 'use client'
 
+import Link from 'next/link'
 import SearchSheet from '@/components/features/SearchSheet'
 import { COLORS } from '@/constants/colors'
 import { motion, useReducedMotion } from 'motion/react'
@@ -111,12 +112,21 @@ export default function HeroSection() {
           événementiels adaptés à votre budget, votre cible et vos objectifs.
         </motion.p>
 
-        {/* Bouton principal */}
-        <motion.div className="mt-6 sm:mt-8" variants={itemVariants}>
-          <button className="inline-flex items-center gap-2 rounded-full bg-foreground px-6 py-3 text-sm font-semibold text-white transition-transform active:scale-[0.98]">
+        {/* Boutons de navigation */}
+        <motion.div className="mt-6 flex flex-col justify-center gap-2 sm:mt-8 sm:flex-row sm:gap-3" variants={itemVariants}>
+          <Link
+            href="/register"
+            className="inline-flex items-center justify-center gap-2 rounded-full bg-foreground px-6 py-3 text-sm font-semibold text-white transition-transform active:scale-[0.98]"
+          >
             Trouver mon lieu
             <span aria-hidden>→</span>
-          </button>
+          </Link>
+          <Link
+            href="/explorer"
+            className="inline-flex items-center justify-center gap-2 rounded-full border border-gray-200 bg-white px-6 py-3 text-sm font-semibold text-foreground transition-colors hover:bg-gray-50 active:scale-[0.98]"
+          >
+            Explorer les espaces
+          </Link>
         </motion.div>
 
         {/* SearchBar (desktop) / SearchSheet trigger (mobile) */}
