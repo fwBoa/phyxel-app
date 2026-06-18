@@ -65,7 +65,7 @@ export default function WhyPhyxelSection() {
   }, [reduce])
 
   return (
-    <section id="pourquoi-phyxel" className="bg-white py-12 sm:py-20">
+    <section id="pourquoi-phyxel" className="bg-white py-12 sm:py-20 xl:py-28">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="flex flex-col gap-6 sm:gap-10 lg:flex-row lg:gap-16">
 

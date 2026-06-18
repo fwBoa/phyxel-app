@@ -36,7 +36,7 @@ function CardReveal({ children, delay = 0 }: { children: ReactNode; delay?: numb
 
 export default function FeaturedSpacesSection({ spaces }: FeaturedSpacesSectionProps) {
   return (
-    <section id="explorer" className="bg-white py-12 sm:py-20">
+    <section id="explorer" className="bg-white py-12 sm:py-20 xl:py-28">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <ScrollReveal>
           <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">

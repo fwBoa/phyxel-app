@@ -19,9 +19,6 @@ export default function SimpleFooter() {
             <Link href="/contact" className="transition-colors hover:text-[#0A0A0A]">
               Contact
             </Link>
-            <Link href="/blog" className="transition-colors hover:text-[#0A0A0A]">
-              Blog
-            </Link>
           </nav>
           <p className="text-sm text-[#6B6B6B]">© 2025 Phyxel</p>
         </div>

@@ -34,7 +34,7 @@ export default function HeroSection() {
   const reduce = useReducedMotion()
 
   return (
-    <section className="relative overflow-hidden bg-white pt-12 pb-16 sm:py-28">
+    <section className="relative overflow-hidden bg-white pt-12 pb-16 sm:py-28 xl:py-32">
       {/* Fond décoratif */}
       <div
         aria-hidden

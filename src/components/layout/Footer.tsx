@@ -15,7 +15,6 @@ const NAV_LINKS = {
     { href: '/login', label: 'Connexion' },
   ],
   right: [
-    { href: '/blog', label: 'Blog' },
     { href: '/contact', label: 'Nous contacter' },
   ],
 }
@@ -196,7 +195,7 @@ export default function Footer() {
               alt=""
               width={103}
               height={99}
-              className="opacity-100"
+              className="opacity-100 xl:scale-150 xl:origin-right"
               aria-hidden
             />
           </div>
@@ -217,9 +216,6 @@ export default function Footer() {
               </Link>
               <Link href="/contact" className="transition-colors hover:text-[#0A0A0A]">
                 Contact
-              </Link>
-              <Link href="/blog" className="transition-colors hover:text-[#0A0A0A]">
-                Blog
               </Link>
             </nav>
             <p className="text-sm text-[#6B6B6B]">© 2025 Phyxel</p>

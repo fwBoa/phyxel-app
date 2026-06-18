@@ -40,7 +40,7 @@ const STEPS = [
 
 export default function HowItWorksSection() {
   return (
-    <section id="comment-ca-marche" className="bg-white py-12 sm:py-24">
+    <section id="comment-ca-marche" className="bg-white py-12 sm:py-24 xl:py-32">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
 
         {/* En-tête centré avec animation au scroll */}

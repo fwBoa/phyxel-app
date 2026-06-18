@@ -8,7 +8,6 @@ const FOOTER_LINKS = [
   { href: '/mentions-legales', label: 'Mentions légales' },
   { href: '/cgu',              label: 'CGU' },
   { href: '/contact',          label: 'Contact' },
-  { href: '/blog',             label: 'Blog' },
 ]
 
 export default async function DashboardLayout({

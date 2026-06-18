@@ -9,7 +9,7 @@ export default function CtaSection() {
   const reduce = useReducedMotion()
 
   return (
-    <section className="bg-white py-10 px-4 sm:py-16 sm:px-6 lg:px-8">
+    <section className="bg-white py-10 px-4 sm:py-16 sm:px-6 lg:px-8 xl:py-20">
       <div className="mx-auto max-w-7xl">
         <ScrollReveal>
           <motion.div
