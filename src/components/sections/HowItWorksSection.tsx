@@ -170,48 +170,56 @@ export default function HowItWorksSection() {
       {/* Carrousel de tags animé */}
       <div className="mt-24 overflow-hidden">
         <div className="relative flex overflow-hidden">
-          <div className="animate-marquee flex min-w-full shrink-0 items-center justify-around gap-8 py-3">
-            {TAGS.map((tag) => (
-              <span
-                key={`a-${tag}`}
-                className="inline-flex shrink-0 items-center rounded-full border border-[#D1D5DB] px-8 py-3 text-lg font-medium text-[#9CA3AF]"
-              >
-                {tag}
-              </span>
-            ))}
+          <div className="animate-marquee flex min-w-full shrink-0 items-center gap-8 py-3">
+            {Array.from({ length: 4 }).flatMap((_, i) =>
+              TAGS.map((tag) => (
+                <span
+                  key={`a-${i}-${tag}`}
+                  className="inline-flex shrink-0 items-center rounded-full border border-[#D1D5DB] px-8 py-3 text-lg font-medium text-[#9CA3AF]"
+                >
+                  {tag}
+                </span>
+              ))
+            )}
           </div>
-          <div className="animate-marquee flex min-w-full shrink-0 items-center justify-around gap-8 py-3" aria-hidden>
-            {TAGS.map((tag) => (
-              <span
-                key={`b-${tag}`}
-                className="inline-flex shrink-0 items-center rounded-full border border-[#D1D5DB] px-8 py-3 text-lg font-medium text-[#9CA3AF]"
-              >
-                {tag}
-              </span>
-            ))}
+          <div className="animate-marquee flex min-w-full shrink-0 items-center gap-8 py-3" aria-hidden>
+            {Array.from({ length: 4 }).flatMap((_, i) =>
+              TAGS.map((tag) => (
+                <span
+                  key={`b-${i}-${tag}`}
+                  className="inline-flex shrink-0 items-center rounded-full border border-[#D1D5DB] px-8 py-3 text-lg font-medium text-[#9CA3AF]"
+                >
+                  {tag}
+                </span>
+              ))
+            )}
           </div>
         </div>
 
-        <div className="relative flex overflow-hidden [direction:rtl]">
-          <div className="animate-marquee-reverse flex min-w-full shrink-0 items-center justify-around gap-8 py-3 [direction:ltr]">
-            {TAGS_REVERSE.map((tag) => (
-              <span
-                key={`c-${tag}`}
-                className="inline-flex shrink-0 items-center rounded-full border border-[#D1D5DB] px-8 py-3 text-lg font-medium text-[#9CA3AF]"
-              >
-                {tag}
-              </span>
-            ))}
+        <div className="relative flex overflow-hidden">
+          <div className="animate-marquee flex min-w-full shrink-0 items-center gap-8 py-3">
+            {Array.from({ length: 4 }).flatMap((_, i) =>
+              TAGS_REVERSE.map((tag) => (
+                <span
+                  key={`c-${i}-${tag}`}
+                  className="inline-flex shrink-0 items-center rounded-full border border-[#D1D5DB] px-8 py-3 text-lg font-medium text-[#9CA3AF]"
+                >
+                  {tag}
+                </span>
+              ))
+            )}
           </div>
-          <div className="animate-marquee-reverse flex min-w-full shrink-0 items-center justify-around gap-8 py-3 [direction:ltr]" aria-hidden>
-            {TAGS_REVERSE.map((tag) => (
-              <span
-                key={`d-${tag}`}
-                className="inline-flex shrink-0 items-center rounded-full border border-[#D1D5DB] px-8 py-3 text-lg font-medium text-[#9CA3AF]"
-              >
-                {tag}
-              </span>
-            ))}
+          <div className="animate-marquee flex min-w-full shrink-0 items-center gap-8 py-3" aria-hidden>
+            {Array.from({ length: 4 }).flatMap((_, i) =>
+              TAGS_REVERSE.map((tag) => (
+                <span
+                  key={`d-${i}-${tag}`}
+                  className="inline-flex shrink-0 items-center rounded-full border border-[#D1D5DB] px-8 py-3 text-lg font-medium text-[#9CA3AF]"
+                >
+                  {tag}
+                </span>
+              ))
+            )}
           </div>
         </div>
       </div>
@@ -221,15 +229,8 @@ export default function HowItWorksSection() {
           from { transform: translateX(0); }
           to { transform: translateX(-100%); }
         }
-        @keyframes marquee-reverse {
-          from { transform: translateX(-100%); }
-          to { transform: translateX(0); }
-        }
         .animate-marquee {
           animation: marquee 40s linear infinite;
-        }
-        .animate-marquee-reverse {
-          animation: marquee-reverse 40s linear infinite;
         }
       `}</style>
     </section>
