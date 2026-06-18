@@ -16,7 +16,7 @@ export default function GradientReveal({ children, className }: GradientRevealPr
       className={className}
       initial={reduce ? false : { backgroundSize: '0% 100%' }}
       whileInView={{ backgroundSize: '200% 100%' }}
-      viewport={{ once: true, amount: 0.5 }}
+      viewport={{ once: false, amount: 0.5 }}
       transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
     >
       {children}

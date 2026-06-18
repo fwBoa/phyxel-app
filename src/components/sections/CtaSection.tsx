@@ -34,7 +34,7 @@ export default function CtaSection() {
             className="cta-shimmer rounded-2xl px-6 py-12 text-center text-white sm:rounded-3xl sm:px-8 sm:py-16"
             initial={reduce ? false : { scale: 0.98, opacity: 0 }}
             whileInView={{ scale: 1, opacity: 1 }}
-            viewport={{ once: true, amount: 0.3 }}
+            viewport={{ once: false, amount: 0.1 }}
             transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
           >
             <h2 className="text-[28px] font-bold sm:text-4xl">

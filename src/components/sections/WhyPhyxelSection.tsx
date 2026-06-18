@@ -94,7 +94,7 @@ export default function WhyPhyxelSection() {
                 style={{ top: `${CARD_TOP}px`, zIndex: i + 1 }}
                 initial={reduce ? false : { opacity: 0, y: 40 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, amount: 0.2 }}
+                viewport={{ once: false, amount: 0.1 }}
                 transition={{ duration: 0.7, delay: i * 0.1, ease: [0.16, 1, 0.3, 1] }}
               >
                 <div
