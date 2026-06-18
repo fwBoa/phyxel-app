@@ -36,12 +36,12 @@ function CardReveal({ children, delay = 0 }: { children: ReactNode; delay?: numb
 
 export default function FeaturedSpacesSection({ spaces }: FeaturedSpacesSectionProps) {
   return (
-    <section id="explorer" className="bg-white py-20">
+    <section id="explorer" className="bg-white py-12 sm:py-20">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <ScrollReveal>
           <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
             <div>
-              <h2 className="text-[28px] font-bold text-foreground sm:text-3xl">Espaces à la une</h2>
+              <h2 className="text-[22px] font-bold text-foreground sm:text-3xl">Espaces à la une</h2>
               <p className="mt-2 text-sm text-text-secondary">Sélection premium de lieux disponibles cette semaine.</p>
             </div>
             <Link
@@ -53,7 +53,7 @@ export default function FeaturedSpacesSection({ spaces }: FeaturedSpacesSectionP
           </div>
         </ScrollReveal>
 
-        <div className="mt-8 sm:mt-10">
+        <div className="mt-6 sm:mt-10">
           {spaces.length > 0 ? (
             <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 sm:gap-6">
               {spaces.map((space, i) => (

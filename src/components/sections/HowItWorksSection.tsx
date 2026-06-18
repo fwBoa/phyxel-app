@@ -40,7 +40,7 @@ const STEPS = [
 
 export default function HowItWorksSection() {
   return (
-    <section id="comment-ca-marche" className="bg-white py-24">
+    <section id="comment-ca-marche" className="bg-white py-12 sm:py-24">
       <style>{`
         @property --ba {
           syntax: '<angle>';
@@ -71,23 +71,23 @@ export default function HowItWorksSection() {
         {/* En-tête centré avec animation au scroll */}
         <div className="text-center">
           <ScrollReveal>
-            <h2 className="text-3xl font-bold text-foreground">
+            <h2 className="text-[22px] font-bold text-foreground sm:text-3xl">
               Comment ça marche&nbsp;?
             </h2>
           </ScrollReveal>
           <ScrollReveal delay={0.15}>
-            <p className="mt-4 text-text-secondary">
+            <p className="mt-3 text-sm text-text-secondary sm:mt-4 sm:text-base">
               De votre profil marque à votre première expérience physique, en 3 étapes.
             </p>
           </ScrollReveal>
         </div>
 
         {/* Cards */}
-        <div className="mt-10 grid grid-cols-1 gap-4 sm:grid-cols-3 sm:gap-6">
+        <div className="mt-6 grid grid-cols-1 gap-3 sm:mt-10 sm:grid-cols-3 sm:gap-6">
           {STEPS.map(({ title, desc }, i) => (
             <CardReveal key={title} delay={i * 0.12}>
-              <span className="text-primary text-lg leading-none">✦</span>
-              <h3 className="mt-4 text-lg font-bold leading-snug text-foreground">
+              <span className="text-primary text-base leading-none sm:text-lg">✦</span>
+              <h3 className="mt-3 text-base font-bold leading-snug text-foreground sm:mt-4 sm:text-lg">
                 {title}
               </h3>
               <p className="mt-2 text-sm leading-relaxed text-text-secondary">
@@ -100,7 +100,7 @@ export default function HowItWorksSection() {
       </div>
 
       {/* Bloc accompagnement */}
-      <div className="mt-24 py-20">
+      <div className="mt-16 py-10 sm:mt-24 sm:py-20">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col items-center gap-12 lg:flex-row lg:items-start lg:gap-20">
 
@@ -133,21 +133,21 @@ export default function HowItWorksSection() {
             {/* Texte */}
             <StaggerContainer className="flex-1 max-w-lg" staggerDelay={0.12}>
               <StaggerItem>
-              <h2 className="text-[28px] font-bold leading-tight text-[#0A0A0A] sm:text-[42px] sm:leading-[1.15]">
+              <h2 className="text-[22px] font-bold leading-tight text-[#0A0A0A] sm:text-[42px] sm:leading-[1.15]">
                   Choisissez l&apos;accompagnement{' '}
                   <span className="shimmer-blue">qui vous convient le mieux&nbsp;!</span>
                 </h2>
               </StaggerItem>
 
               <StaggerItem>
-                <p className="mt-6 text-lg leading-relaxed text-[#6B6B6B]">
+                <p className="mt-4 text-sm leading-relaxed text-[#6B6B6B] sm:mt-6 sm:text-base sm:text-lg">
                   Que vous souhaitiez gérer votre projet en autonomie ou être accompagné de A à Z,
                   Phyxel vous aide à transformer votre présence digitale en expérience réelle.
                 </p>
               </StaggerItem>
 
               <StaggerItem>
-                <p className="mt-4 text-lg leading-relaxed text-[#6B6B6B]">
+                <p className="mt-3 text-sm leading-relaxed text-[#6B6B6B] sm:mt-4 sm:text-base sm:text-lg">
                   Nous trouvons les lieux adaptés à votre marque et, si besoin, nous coordonnons
                   également l&apos;ensemble de votre projet avec notre réseau de partenaires spécialisés.
                 </p>
@@ -156,7 +156,7 @@ export default function HowItWorksSection() {
               <StaggerItem>
                 <Link
                   href="/contact"
-                  className="mt-6 inline-flex items-center rounded-full bg-[#0052CC] px-6 py-3 text-sm font-semibold text-white transition-colors hover:bg-[#003D99] sm:mt-8 sm:px-7 sm:py-3.5"
+                  className="mt-5 inline-flex items-center rounded-full bg-[#0052CC] px-6 py-3 text-sm font-semibold text-white transition-colors hover:bg-[#003D99] sm:mt-8 sm:px-7 sm:py-3.5"
                 >
                   Demander un devis personnalisé
                 </Link>
@@ -168,7 +168,7 @@ export default function HowItWorksSection() {
       </div>
 
       {/* Carrousel de tags animé */}
-      <div className="mt-24 overflow-hidden">
+      <div className="mt-12 overflow-hidden sm:mt-24">
         <div className="relative flex overflow-hidden">
           <div className="animate-marquee flex min-w-full shrink-0 items-center gap-8 py-3">
             {Array.from({ length: 4 }).flatMap((_, i) =>
