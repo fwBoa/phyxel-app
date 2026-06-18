@@ -5,14 +5,15 @@ export default function ReservationConfirmeePage() {
     <div className="flex flex-col items-center py-16 px-4">
 
       {/* Vidéo */}
-      <div className="w-full max-w-3xl overflow-hidden rounded-2xl">
+      <div className="w-full max-w-3xl overflow-hidden" style={{ maxHeight: '90%' }}>
         <video
           autoPlay
           loop
           muted
           playsInline
           preload="metadata"
-          className="h-72 w-full object-cover"
+          className="w-full"
+          style={{ marginBottom: '-48px' }}
         >
           <source src="/assets/video/Phyxel-opt.webm" type="video/webm" />
           <source src="/assets/video/Phyxel-opt.mp4" type="video/mp4" />
