@@ -1,7 +1,6 @@
 'use client'
 
 import Link from 'next/link'
-import Image from 'next/image'
 import { Phone, Mail, Send, MessageCircle } from 'lucide-react'
 import PhyxelLogo from '@/components/ui/PhyxelLogo'
 
@@ -83,7 +82,8 @@ export default function Footer() {
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16">
         {/* Logo décoratif mobile */}
         <div className="mb-10 lg:hidden">
-          <Image
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
             src="/Vector2.svg"
             alt=""
             width={80}
@@ -190,7 +190,8 @@ export default function Footer() {
 
           {/* Logo décoratif desktop */}
           <div className="hidden lg:col-span-4 lg:flex lg:justify-end lg:items-start">
-            <Image
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
               src="/Vector2.svg"
               alt=""
               width={103}
