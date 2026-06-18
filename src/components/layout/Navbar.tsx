@@ -18,9 +18,10 @@ const NAV_LINKS = [
 
 type NavbarProps = {
   user: SupabaseUser | null
+  ready?: boolean
 }
 
-export default function Navbar({ user }: NavbarProps) {
+export default function Navbar({ user, ready = true }: NavbarProps) {
   const [mobileOpen,    setMobileOpen]    = useState(false)
   const [dropdownOpen,  setDropdownOpen]  = useState(false)
   const pathname = usePathname()
@@ -119,7 +120,9 @@ export default function Navbar({ user }: NavbarProps) {
 
         {/* Actions desktop */}
         <div className="hidden md:flex items-center gap-3">
-          {user ? (
+          {!ready ? (
+            <div className="h-10 w-32 rounded-full bg-gray-100 animate-pulse" />
+          ) : user ? (
             <div className="relative">
               <button
                 ref={triggerRef}
@@ -257,7 +260,9 @@ export default function Navbar({ user }: NavbarProps) {
             ))}
           </nav>
           <div className="mt-4 flex flex-col gap-2">
-            {user ? (
+            {!ready ? (
+              <div className="h-10 w-full rounded-full bg-gray-100 animate-pulse" />
+            ) : user ? (
               <>
                 <Link
                   href="/dashboard/profil"

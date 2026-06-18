@@ -29,6 +29,18 @@ export async function getSpaces(filters?: SpaceFilters): Promise<SpaceWithPhotos
   return (data ?? []) as SpaceWithPhotos[]
 }
 
+export async function hasBookingForSpace(userId: string, spaceId: string): Promise<boolean> {
+  const supabase = await createClient()
+  const { data } = await supabase
+    .from('bookings')
+    .select('id')
+    .eq('brand_id', userId)
+    .eq('space_id', spaceId)
+    .limit(1)
+    .single()
+  return !!data
+}
+
 export async function getSpaceById(id: string): Promise<SpaceWithPhotos | null> {
   const supabase = await createClient()
   const { data, error } = await supabase

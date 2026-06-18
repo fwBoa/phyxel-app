@@ -2,6 +2,7 @@
 
 import { useRouter, usePathname } from 'next/navigation'
 import { useCallback } from 'react'
+import { motion, useReducedMotion } from 'motion/react'
 import { SlidersHorizontal, X, MapPin, Euro } from 'lucide-react'
 import SpaceCard from '@/components/ui/SpaceCard'
 import { SPACE_TYPES, CITIES } from '@/constants/spaces'
@@ -32,6 +33,7 @@ type Props = {
 export default function ExplorerClient({ initialSpaces, activeType, activeCity, activeMaxPrice, matchScores = {}, hasPreferences = false }: Props) {
   const router   = useRouter()
   const pathname = usePathname()
+  const reduce   = useReducedMotion()
 
   const navigate = useCallback((overrides: Record<string, string | null>) => {
     const params = new URLSearchParams()
@@ -152,8 +154,29 @@ export default function ExplorerClient({ initialSpaces, activeType, activeCity, 
                 </linearGradient>
               </defs>
             </svg>
-            <p className="text-base font-bold shimmer-blue">
-              Ces espaces sont recommandés selon vos préférences
+            <p className="text-base font-bold relative inline-block">
+              <motion.span
+                aria-hidden
+                className="inline-block"
+                initial={reduce ? false : { backgroundPosition: '200% center' }}
+                animate={{ backgroundPosition: '0% center' }}
+                transition={{ duration: 2.2, ease: [0.16, 1, 0.3, 1] }}
+                style={{
+                  backgroundImage: 'linear-gradient(to right, #0D58C6, #ffffff 50%, #0D58C6)',
+                  backgroundSize: '200% auto',
+                  backgroundClip: 'text',
+                  WebkitBackgroundClip: 'text',
+                  color: 'transparent',
+                }}
+              >
+                Ces espaces sont recommandés selon vos préférences
+              </motion.span>
+              <span
+                className="absolute inset-0 inline-block text-[#0D58C6]"
+                style={{ opacity: 0, animation: 'heroGradientFadeIn 0.15s ease-out 1.3s forwards' }}
+              >
+                Ces espaces sont recommandés selon vos préférences
+              </span>
             </p>
           </div>
         )}

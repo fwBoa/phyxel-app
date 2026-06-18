@@ -2,14 +2,23 @@
 
 import { useState, useMemo } from 'react'
 import { useRouter } from 'next/navigation'
-import { ArrowRight, RotateCcw } from 'lucide-react'
+import { ArrowRight, RotateCcw, CheckCircle } from 'lucide-react'
 
 const SERVICE_FEE_RATE = 0.15
 
 type BookingFormProps = {
-  spaceId:     string
-  isAvailable: boolean
-  priceDay?:   number | null
+  spaceId:             string
+  isAvailable:         boolean
+  priceDay?:           number | null
+  hasExistingBooking?: boolean
+  idealDates?:         string | null
+}
+
+function parseIdealDates(raw: string | null | undefined): [string, string] {
+  if (!raw) return ['', '']
+  const parts = raw.split(' → ')
+  if (parts.length !== 2) return ['', '']
+  return [parts[0].trim(), parts[1].trim()]
 }
 
 function diffDays(start: string, end: string): number {
@@ -26,9 +35,11 @@ function fmtDate(d: string) {
   return new Date(d).toLocaleDateString('fr-FR', { day: '2-digit', month: '2-digit', year: 'numeric' })
 }
 
-export default function BookingForm({ spaceId, isAvailable, priceDay }: BookingFormProps) {
-  const [startDate, setStartDate] = useState('')
-  const [endDate,   setEndDate]   = useState('')
+export default function BookingForm({ spaceId, isAvailable, priceDay, hasExistingBooking, idealDates }: BookingFormProps) {
+  const [initialStart, initialEnd] = parseIdealDates(idealDates)
+  const [startDate, setStartDate] = useState(initialStart)
+  const [endDate,   setEndDate]   = useState(initialEnd)
+  const fromOnboarding = !!(initialStart && initialEnd)
   const [loading,   setLoading]   = useState(false)
   const [error,     setError]     = useState<string | null>(null)
   const router = useRouter()
@@ -63,6 +74,18 @@ export default function BookingForm({ spaceId, isAvailable, priceDay }: BookingF
     } finally {
       setLoading(false)
     }
+  }
+
+  if (hasExistingBooking) {
+    return (
+      <div className="flex flex-col items-center gap-3 py-2 text-center">
+        <CheckCircle size={32} className="text-match-high" />
+        <p className="text-sm font-semibold text-foreground">Réservation déjà effectuée</p>
+        <p className="text-xs text-text-secondary">
+          Vous avez déjà effectué une réservation pour cet espace. Rendez-vous dans votre tableau de bord pour la consulter.
+        </p>
+      </div>
+    )
   }
 
   if (!isAvailable) {
@@ -109,7 +132,12 @@ export default function BookingForm({ spaceId, isAvailable, priceDay }: BookingF
       {/* Récapitulatif */}
       {recap && (
         <div className="flex flex-col gap-2 border-t border-border-custom pt-4">
-          <h4 className="text-sm font-semibold text-foreground">Récapitulatif</h4>
+          <div className="flex items-center justify-between">
+            <h4 className="text-sm font-semibold text-foreground">Récapitulatif</h4>
+            {fromOnboarding && startDate === initialStart && endDate === initialEnd && (
+              <span className="text-[11px] text-text-secondary">Dates issues de votre profil</span>
+            )}
+          </div>
           <div className="flex justify-between text-sm text-text-secondary">
             <span>Dates</span>
             <span>{fmtDate(startDate)} au {fmtDate(endDate)}</span>
