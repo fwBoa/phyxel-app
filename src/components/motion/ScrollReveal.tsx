@@ -18,9 +18,9 @@ export default function ScrollReveal({
   className,
   delay = 0,
   duration = 0.7,
-  y = 28,
-  once = true,
-  amount = 0.3,
+  y = 40,
+  once = false,
+  amount = 0.1,
 }: ScrollRevealProps) {
   const reduce = useReducedMotion()
 

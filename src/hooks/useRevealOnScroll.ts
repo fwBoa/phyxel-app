@@ -7,7 +7,7 @@ type Options = {
   once?: boolean
 }
 
-export function useRevealOnScroll<T extends HTMLElement = HTMLElement>({ threshold = 0.2, once = true }: Options = {}) {
+export function useRevealOnScroll<T extends HTMLElement = HTMLElement>({ threshold = 0.2, once = false }: Options = {}) {
   const ref = useRef<T>(null)
   const [visible, setVisible] = useState(false)
 

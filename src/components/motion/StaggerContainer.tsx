@@ -15,8 +15,8 @@ export default function StaggerContainer({
   children,
   className,
   staggerDelay = 0.1,
-  once = true,
-  amount = 0.2,
+  once = false,
+  amount = 0.1,
 }: StaggerContainerProps) {
   const reduce = useReducedMotion()
 
@@ -43,7 +43,7 @@ export default function StaggerContainer({
 export function StaggerItem({
   children,
   className,
-  y = 28,
+  y = 40,
   duration = 0.7,
 }: {
   children: ReactNode
