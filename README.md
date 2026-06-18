@@ -44,10 +44,14 @@ Les marques digitales manquent d'un canal physique pour **tester leurs produits*
 | **Tailwind CSS** | v4 | Utility-first styling |
 | **shadcn/ui** | — | Composants UI accessibles |
 | **Supabase** | — | Auth, PostgreSQL, Storage, RLS |
+| **Motion** | 12.40 | Animations (slide-up, scroll reveals, fade-in) |
+| **GSAP** | 3.15 | Animations complexes (carousels, scroll pinning) |
 | **Lucide React** | — | Icônes |
 | **react-hook-form** | 7.x | Gestion des formulaires |
 | **jose** | 6.x | JWT pour l'authentification admin |
 | **bcryptjs** | 3.x | Hashage des mots de passe admin |
+| **Jest** | 30 | Tests unitaires (jsdom) |
+| **Testing Library** | 16 | Tests React (jest-dom, user-event) |
 
 ---
 
@@ -325,6 +329,8 @@ Le `MatchWidget` affiche également les **points forts** et **avertissements** d
 | `/register` | Inscription marque |
 | `/explorer` | Catalogue d'espaces avec filtres et matching |
 | `/espaces/[id]` | Détail d'un espace (galerie, prix, réservation) |
+| `/contact` | Formulaire de demande de devis/accompagnement personnalisé |
+| `/devis/confirmation` | Confirmation d'envoi d'une demande de devis |
 | `/reservation-confirmee` | Confirmation de réservation |
 | `/admin/login` | Connexion backoffice admin |
 
