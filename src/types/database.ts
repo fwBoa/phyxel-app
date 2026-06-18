@@ -113,46 +113,55 @@ export type Database = {
       }
       spaces: {
         Row: {
-          id:           string
-          host_id:      string
-          title:        string
-          type:         'showroom' | 'popup' | 'corner' | 'gallery' | 'boutique'
-          city:         string
-          district:     string | null
-          address:      string | null
-          area_sqm:     number | null
-          price_day:    number | null
-          description:  string | null
-          is_available: boolean
-          created_at:   string
+          id:                 string
+          host_id:            string
+          title:              string
+          type:               'showroom' | 'popup' | 'corner' | 'gallery' | 'boutique'
+          city:               string
+          district:           string | null
+          address:            string | null
+          area_sqm:           number | null
+          price_day:          number | null
+          description:        string | null
+          is_available:       boolean
+          created_at:         string
+          included_services:  Json
+          equipment:          Json
+          rental_conditions:  string | null
         }
         Insert: {
-          id?:          string
-          host_id:      string
-          title:        string
-          type:         'showroom' | 'popup' | 'corner' | 'gallery' | 'boutique'
-          city:         string
-          district?:    string | null
-          address?:     string | null
-          area_sqm?:    number | null
-          price_day?:   number | null
-          description?: string | null
-          is_available?: boolean
-          created_at?:  string
+          id?:                string
+          host_id:            string
+          title:              string
+          type:               'showroom' | 'popup' | 'corner' | 'gallery' | 'boutique'
+          city:               string
+          district?:          string | null
+          address?:           string | null
+          area_sqm?:          number | null
+          price_day?:         number | null
+          description?:       string | null
+          is_available?:      boolean
+          created_at?:        string
+          included_services?: Json
+          equipment?:         Json
+          rental_conditions?: string | null
         }
         Update: {
-          id?:           string
-          host_id?:      string
-          title?:        string
-          type?:         'showroom' | 'popup' | 'corner' | 'gallery' | 'boutique'
-          city?:         string
-          district?:     string | null
-          address?:      string | null
-          area_sqm?:     number | null
-          price_day?:    number | null
-          description?:  string | null
-          is_available?: boolean
-          created_at?:   string
+          id?:                 string
+          host_id?:            string
+          title?:              string
+          type?:               'showroom' | 'popup' | 'corner' | 'gallery' | 'boutique'
+          city?:               string
+          district?:           string | null
+          address?:            string | null
+          area_sqm?:           number | null
+          price_day?:          number | null
+          description?:        string | null
+          is_available?:       boolean
+          created_at?:         string
+          included_services?:  Json
+          equipment?:          Json
+          rental_conditions?:  string | null
         }
         Relationships: []
       }
