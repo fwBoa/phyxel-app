@@ -6,7 +6,7 @@ import { useState }  from 'react'
 import { useRouter } from 'next/navigation'
 import { createClient } from '@/lib/supabase/client'
 import { COLORS } from '@/constants/colors'
-import { Globe, Plus, Eye, EyeOff } from 'lucide-react'
+import { Globe, Plus, Eye, EyeOff, ArrowRight } from 'lucide-react'
 export default function RegisterPage() {
   const router = useRouter()
   const [firstName, setFirstName] = useState('')
@@ -121,94 +121,88 @@ export default function RegisterPage() {
       </aside>
 
       {/* ── Right panel — form (desktop) + full mobile layout ── */}
-      <main className="relative flex min-h-screen flex-col items-center justify-between gap-6 px-5 py-8 md:min-h-0 md:gap-0 md:justify-center md:p-6 md:bg-gradient-to-b md:from-white md:to-[#fafafa] overflow-y-auto">
+      <main className="relative flex min-h-screen flex-col items-center justify-center gap-6 px-5 py-8 md:min-h-0 md:gap-0 md:justify-center md:p-6 md:bg-gradient-to-b md:from-white md:to-[#fafafa] overflow-y-auto bg-[#BFDBFE]">
 
-        {/* Mobile background image + blur overlay */}
-        <div className="absolute inset-0 md:hidden" aria-hidden>
-          <Image src="/register-hero.jpg" alt="" fill className="object-cover" />
-          <div className="absolute inset-0" style={{ backdropFilter: 'blur(2px)', background: 'rgba(10,5,30,0.45)' }} />
-        </div>
-
-        {/* Mobile logo — blanc */}
-        <div className="relative z-10 w-full pt-4 md:hidden">
+        {/* Mobile logo — bleu, en haut à gauche */}
+        <div className="absolute left-5 top-6 z-10 md:hidden">
           <Link href="/">
-            <Image src="/logo-white.png" alt="Phyxel" width={110} height={30} className="object-contain" />
+            <Image src="/logo-phyxel.svg" alt="Phyxel" width={110} height={30} className="object-contain" priority />
           </Link>
         </div>
 
         {/* Form card */}
         <form
           onSubmit={handleSubmit}
-          className="relative z-10 w-full max-w-md rounded-3xl border border-gray-200 bg-white p-8"
+          className="relative z-10 w-full max-w-md rounded-[32px] bg-white p-6 sm:p-8 md:rounded-3xl md:border md:border-gray-200"
           style={{ boxShadow: '0 1px 2px rgba(0,0,0,0.04), 0 8px 24px -8px rgba(124,58,237,0.12)' }}
         >
-          <h1 className="text-2xl font-semibold tracking-tight text-gray-900" style={{ fontFamily: 'var(--font-bricolage)' }}>Créer mon compte</h1>
-          <p className="mt-1 text-sm text-gray-500 font-sans">Votre première expérience physique commence ici.</p>
+          <h1 className="text-2xl font-semibold tracking-tight text-[#10111A]" style={{ fontFamily: 'var(--font-bricolage)' }}>Créer mon compte</h1>
+          <p className="mt-1 text-sm text-[#65677A] font-sans">Votre première expérience physique commence ici.</p>
 
           <div className="mt-6 grid grid-cols-2 gap-3">
             <label className="block text-sm">
-              <span className="font-medium text-gray-900">Prénom</span>
+              <span className="font-medium text-[#10111A]">Prénom</span>
               <input
                 type="text" required value={firstName}
                 onChange={(e) => setFirstName(e.target.value)}
                 placeholder="Sophie"
-                className="mt-1.5 w-full rounded-xl border border-gray-200 bg-white px-4 py-2.5 text-sm outline-none focus:border-primary focus:ring-2 focus:ring-primary/20"
+                className="mt-1.5 w-full rounded-xl border border-[#E4E4EB] bg-white px-4 py-2.5 text-sm outline-none focus:border-[#0D58C6] focus:ring-2 focus:ring-[#0D58C6]/20"
               />
             </label>
             <label className="block text-sm">
-              <span className="font-medium text-gray-900">Nom</span>
+              <span className="font-medium text-[#10111A]">Nom</span>
               <input
                 type="text" required value={lastName}
                 onChange={(e) => setLastName(e.target.value)}
                 placeholder="Martin"
-                className="mt-1.5 w-full rounded-xl border border-gray-200 bg-white px-4 py-2.5 text-sm outline-none focus:border-primary focus:ring-2 focus:ring-primary/20"
+                className="mt-1.5 w-full rounded-xl border border-[#E4E4EB] bg-white px-4 py-2.5 text-sm outline-none focus:border-[#0D58C6] focus:ring-2 focus:ring-[#0D58C6]/20"
               />
             </label>
           </div>
 
           <label className="mt-4 block text-sm">
-            <span className="font-medium text-gray-900">Email professionnel</span>
+            <span className="font-medium text-[#10111A]">Email professionnel</span>
             <input
               type="email" required value={email}
               onChange={(e) => setEmail(e.target.value)}
-              placeholder="vous@entreprise.fr"
-              className="mt-1.5 w-full rounded-xl border border-gray-200 bg-white px-4 py-2.5 text-sm outline-none focus:border-primary focus:ring-2 focus:ring-primary/20"
+              placeholder="sophie@lumio.fr"
+              className="mt-1.5 w-full rounded-xl border border-[#E4E4EB] bg-white px-4 py-2.5 text-sm outline-none focus:border-[#0D58C6] focus:ring-2 focus:ring-[#0D58C6]/20"
             />
           </label>
 
           <label className="mt-4 block text-sm">
-            <span className="font-medium text-gray-900">Nom de votre marque</span>
+            <span className="font-medium text-[#10111A]">Nom de votre marque</span>
             <input
               type="text" required value={brandName}
               onChange={(e) => setBrandName(e.target.value)}
               placeholder="Lumio Studio"
-              className="mt-1.5 w-full rounded-xl border border-gray-200 bg-white px-4 py-2.5 text-sm outline-none focus:border-primary focus:ring-2 focus:ring-primary/20"
+              className="mt-1.5 w-full rounded-xl border border-[#E4E4EB] bg-white px-4 py-2.5 text-sm outline-none focus:border-[#0D58C6] focus:ring-2 focus:ring-[#0D58C6]/20"
             />
           </label>
 
           <label className="mt-4 block text-sm">
-            <span className="font-medium text-gray-900">Site e-commerce</span>
+            <span className="font-medium text-[#10111A]">Site e-commerce</span>
             <input
               type="url" value={website}
               onChange={(e) => setWebsite(e.target.value)}
               placeholder="https://lumiostudio.fr"
-              className="mt-1.5 w-full rounded-xl border border-gray-200 bg-white px-4 py-2.5 text-sm outline-none focus:border-primary focus:ring-2 focus:ring-primary/20"
+              className="mt-1.5 w-full rounded-xl border border-[#E4E4EB] bg-white px-4 py-2.5 text-sm outline-none focus:border-[#0D58C6] focus:ring-2 focus:ring-[#0D58C6]/20"
             />
           </label>
 
           <label className="mt-4 block text-sm">
-            <span className="font-medium text-gray-900">Mot de passe</span>
+            <span className="font-medium text-[#10111A]">Mot de passe</span>
             <div className="relative mt-1.5">
               <input
                 type={showPwd ? 'text' : 'password'} required minLength={8} value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder="8 caractères minimum"
-                className="w-full rounded-xl border border-gray-200 bg-white px-4 py-2.5 pr-10 text-sm outline-none focus:border-primary focus:ring-2 focus:ring-primary/20"
+                className="w-full rounded-xl border border-[#E4E4EB] bg-white px-4 py-2.5 pr-10 text-sm outline-none focus:border-[#0D58C6] focus:ring-2 focus:ring-[#0D58C6]/20"
               />
               <button
                 type="button"
                 onClick={() => setShowPwd((v) => !v)}
-                className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600"
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-[#9B9B9B] hover:text-[#65677A]"
               >
                 {showPwd ? <EyeOff size={16} /> : <Eye size={16} />}
               </button>
@@ -223,19 +217,20 @@ export default function RegisterPage() {
 
           <button
             type="submit" disabled={loading}
-            className="mt-6 w-full rounded-full bg-gray-900 px-6 py-3 text-sm font-medium text-white transition-opacity hover:opacity-90 disabled:opacity-50"
+            className="mt-6 w-full rounded-full bg-[#10111A] px-6 py-3.5 text-sm font-medium text-white transition-opacity hover:opacity-90 disabled:opacity-50 inline-flex items-center justify-center gap-2"
           >
             {loading ? 'Création...' : 'Créer mon compte'}
+            {!loading && <ArrowRight size={16} />}
           </button>
 
-          <p className="mt-3 text-center text-xs text-gray-400">
+          <p className="mt-3 text-center text-xs text-[#9B9B9B]">
             En créant un compte, vous acceptez nos{' '}
-            <Link href="/cgu" className="underline hover:text-gray-600">CGU</Link>.
+            <Link href="/cgu" className="underline hover:text-[#65677A]">CGU</Link>.
           </p>
 
-          <p className="mt-4 text-center text-sm text-gray-500">
+          <p className="mt-4 text-center text-sm text-[#65677A]">
             Déjà inscrit ?{' '}
-            <Link href="/login" className="font-medium hover:underline" style={{ color: '#6F8BEF' }}>
+            <Link href="/login" className="font-medium hover:underline" style={{ color: '#0D58C6' }}>
               Se connecter
             </Link>
           </p>
