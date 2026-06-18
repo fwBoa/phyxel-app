@@ -8,9 +8,10 @@ type Photo = { id: string; url: string; is_cover: boolean }
 
 type Props = {
   photos: Photo[]
+  spaceName?: string
 }
 
-export default function PhotoGallery({ photos }: Props) {
+export default function PhotoGallery({ photos, spaceName }: Props) {
   const cover = photos.find((p) => p.is_cover) ?? photos[0]
   const thumbnails = photos.filter((p) => p !== cover)
 
@@ -38,7 +39,7 @@ export default function PhotoGallery({ photos }: Props) {
       <div className="relative h-80 sm:h-[420px] w-full overflow-hidden rounded-2xl bg-bg-secondary">
         <Image
           src={activeUrl ?? cover.url}
-          alt=""
+          alt={spaceName ?? ''}
           fill
           className="object-cover"
           sizes="(max-width: 1024px) 100vw, 66vw"
@@ -72,10 +73,12 @@ export default function PhotoGallery({ photos }: Props) {
             ref={scrollRef}
             className={`flex gap-3 ${isCarousel ? 'overflow-x-auto scrollbar-hide scroll-smooth' : 'grid grid-cols-3'}`}
           >
-            {thumbnails.map((photo) => (
+            {thumbnails.map((photo, index) => (
               <button
                 key={photo.id}
                 onClick={() => setActiveUrl(photo.url)}
+                aria-label={`Voir la photo ${index + 2}${spaceName ? ` de ${spaceName}` : ''}`}
+                aria-pressed={activeUrl === photo.url}
                 className={`relative shrink-0 overflow-hidden rounded-xl bg-bg-secondary transition-all ${
                   isCarousel ? 'h-24 w-[calc(33.333%-8px)] sm:h-28' : 'h-24 sm:h-28 w-full'
                 } ${activeUrl === photo.url ? 'ring-2 ring-primary ring-offset-1' : 'opacity-80 hover:opacity-100'}`}

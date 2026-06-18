@@ -135,7 +135,7 @@ export default function ProfilPage() {
                     type="button"
                     onClick={() => fileInputRef.current?.click()}
                     disabled={avatarUploading}
-                    className="relative flex h-20 w-20 cursor-pointer items-center justify-center rounded-full overflow-hidden bg-[#EEF2FF] text-2xl font-bold text-primary focus:outline-none"
+                    className="relative flex h-20 w-20 cursor-pointer items-center justify-center rounded-full overflow-hidden bg-[#EEF2FF] text-2xl font-bold text-primary focus:outline-none focus-visible:ring-2 focus-visible:ring-primary/50 focus-visible:ring-offset-2"
                     aria-label="Changer l'avatar"
                   >
                     {avatarUrl ? (
@@ -153,7 +153,7 @@ export default function ProfilPage() {
                     type="button"
                     onClick={() => fileInputRef.current?.click()}
                     disabled={avatarUploading}
-                    className="absolute bottom-0 right-0 flex h-6 w-6 items-center justify-center rounded-full text-white shadow-sm"
+                    className="absolute bottom-0 right-0 flex h-6 w-6 items-center justify-center rounded-full text-white shadow-sm focus:outline-none focus-visible:ring-2 focus-visible:ring-primary/50 focus-visible:ring-offset-1"
                     style={{ background: '#0D58C6' }}
                     aria-label="Changer l'avatar"
                   >
@@ -167,9 +167,12 @@ export default function ProfilPage() {
               </div>
 
               {message && (
-                <p className={`rounded-xl px-3 py-2 text-xs ${
-                  message.type === 'success' ? 'bg-green-50 text-green-700' : 'bg-red-50 text-red-500'
-                }`}>
+                <p
+                  role="alert"
+                  className={`rounded-xl px-3 py-2 text-xs ${
+                    message.type === 'success' ? 'bg-green-50 text-green-700' : 'bg-red-50 text-red-500'
+                  }`}
+                >
                   {message.text}
                 </p>
               )}
