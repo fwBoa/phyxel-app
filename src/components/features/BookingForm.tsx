@@ -74,8 +74,9 @@ export default function BookingForm({ spaceId, isAvailable, priceDay }: BookingF
       {!recap && (
         <>
           <div className="flex flex-col gap-1">
-            <label className="text-xs font-medium text-text-secondary">Date d&apos;arrivée</label>
+            <label htmlFor="bf-start" className="text-xs font-medium text-text-secondary">Date d&apos;arrivée</label>
             <input
+              id="bf-start"
               type="date"
               required
               value={startDate}
@@ -86,8 +87,9 @@ export default function BookingForm({ spaceId, isAvailable, priceDay }: BookingF
           </div>
 
           <div className="flex flex-col gap-1">
-            <label className="text-xs font-medium text-text-secondary">Date de départ</label>
+            <label htmlFor="bf-end" className="text-xs font-medium text-text-secondary">Date de départ</label>
             <input
+              id="bf-end"
               type="date"
               required
               value={endDate}
@@ -123,13 +125,13 @@ export default function BookingForm({ spaceId, isAvailable, priceDay }: BookingF
       )}
 
       {error && (
-        <p className="rounded-xl bg-match-low/10 p-3 text-sm text-match-low">{error}</p>
+        <p role="alert" className="rounded-xl bg-match-low/10 p-3 text-sm text-match-low">{error}</p>
       )}
 
       <button
         type="submit"
         disabled={loading}
-        className="flex items-center justify-center gap-2 rounded-xl bg-foreground py-3 text-sm font-semibold text-white transition-colors hover:opacity-90 disabled:opacity-50"
+        className="flex items-center justify-center gap-2 rounded-xl bg-foreground py-3 text-sm font-semibold text-white transition-colors hover:opacity-90 disabled:opacity-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-foreground/50 focus-visible:ring-offset-2"
       >
         {loading ? 'Envoi...' : 'Demander une réservation'}
         {!loading && <ArrowRight size={16} />}
