@@ -1,6 +1,7 @@
 'use client'
 
-import SearchBar from '@/components/features/SearchBar'
+import Link from 'next/link'
+import SearchSheet from '@/components/features/SearchSheet'
 import { COLORS } from '@/constants/colors'
 import { motion, useReducedMotion } from 'motion/react'
 
@@ -33,7 +34,7 @@ export default function HeroSection() {
   const reduce = useReducedMotion()
 
   return (
-    <section className="relative overflow-hidden bg-white py-20 sm:py-28">
+    <section className="relative overflow-hidden bg-white pt-12 pb-16 sm:py-28">
       {/* Fond décoratif */}
       <div
         aria-hidden
@@ -46,9 +47,19 @@ export default function HeroSection() {
         animate="visible"
         variants={containerVariants}
       >
+        {/* Badge au-dessus du titre */}
+        <motion.div
+          className="mx-auto inline-flex items-center rounded-full border border-border-custom bg-white px-4 py-1.5"
+          variants={itemVariants}
+        >
+          <span className="text-[10px] font-semibold uppercase tracking-[0.18em] text-text-secondary sm:text-xs">
+            Marketplace phygitale
+          </span>
+        </motion.div>
+
         {/* Titre */}
         <motion.h1
-          className="text-[32px] font-bold leading-[1.1] tracking-tight text-foreground sm:text-5xl sm:leading-tight"
+          className="mt-4 text-[28px] font-bold leading-[1.15] tracking-tight text-foreground sm:mt-6 sm:text-5xl sm:leading-tight"
           variants={itemVariants}
         >
           Trouvez le lieu physique idéal pour{' '}
@@ -94,32 +105,39 @@ export default function HeroSection() {
 
         {/* Sous-titre */}
         <motion.p
-          className="mx-auto mt-4 max-w-2xl text-base text-text-secondary sm:text-lg"
+          className="mx-auto mt-4 max-w-2xl text-sm text-text-secondary sm:text-base sm:text-lg"
           variants={itemVariants}
         >
-          Phyxel vous recommande les espaces physiques les plus adaptés à votre marque —
-          showrooms, pop-ups, corners — et vous permet de réserver en quelques clics.
+          Phyxel recommande des pop-up stores, showrooms, corners et espaces
+          événementiels adaptés à votre budget, votre cible et vos objectifs.
         </motion.p>
 
         {/* Boutons de navigation */}
-        <motion.div className="mt-8 flex flex-col justify-center gap-2 sm:flex-row" variants={itemVariants}>
-          <button className="rounded-full bg-foreground px-6 py-3 text-sm font-semibold text-white transition-transform active:scale-[0.98]">
+        <motion.div className="mt-6 flex flex-col justify-center gap-2 sm:mt-8 sm:flex-row sm:gap-3" variants={itemVariants}>
+          <Link
+            href="/register"
+            className="inline-flex items-center justify-center gap-2 rounded-full bg-foreground px-6 py-3 text-sm font-semibold text-white transition-transform active:scale-[0.98]"
+          >
             Trouver mon lieu
-          </button>
-          <button className="rounded-full border border-gray-200 bg-white px-6 py-3 text-sm font-semibold text-foreground hover:bg-gray-50 transition-colors active:scale-[0.98]">
+            <span aria-hidden>→</span>
+          </Link>
+          <Link
+            href="/explorer"
+            className="inline-flex items-center justify-center gap-2 rounded-full border border-gray-200 bg-white px-6 py-3 text-sm font-semibold text-foreground transition-colors hover:bg-gray-50 active:scale-[0.98]"
+          >
             Explorer les espaces
-          </button>
+          </Link>
         </motion.div>
 
-        {/* Barre de recherche */}
-        <motion.div className="mt-4" variants={itemVariants}>
-          <SearchBar variant="hero" />
+        {/* SearchBar (desktop) / SearchSheet trigger (mobile) */}
+        <motion.div className="mt-4 sm:mt-6" variants={itemVariants}>
+          <SearchSheet />
         </motion.div>
 
         {/* Stats */}
-        <motion.div className="mt-5 flex flex-wrap justify-center gap-4 sm:gap-6" variants={itemVariants}>
+        <motion.div className="mt-4 flex flex-wrap justify-center gap-3 sm:mt-6 sm:gap-6" variants={itemVariants}>
           {STATS.map((stat) => (
-            <div key={stat} className="flex items-center gap-1.5 font-semibold uppercase tracking-wide" style={{ fontSize: '11px', color: COLORS.brand.periwinkle }}>
+            <div key={stat} className="flex items-center gap-1.5 font-semibold uppercase tracking-wide" style={{ fontSize: '10px', color: COLORS.brand.periwinkle }}>
               <span className="h-1.5 w-1.5 rounded-full flex-shrink-0" style={{ backgroundColor: COLORS.brand.periwinkle }} />
               {stat}
             </div>

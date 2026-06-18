@@ -9,7 +9,7 @@ export default function CtaSection() {
   const reduce = useReducedMotion()
 
   return (
-    <section className="bg-white py-16 px-4 sm:px-6 lg:px-8">
+    <section className="bg-white py-10 px-4 sm:py-16 sm:px-6 lg:px-8">
       <style>{`
         @keyframes shimmerBg {
           from { background-position: 200% center; }
@@ -25,27 +25,27 @@ export default function CtaSection() {
             #0A192F 100%
           );
           background-size: 200% 100%;
-          animation: shimmerBg 5s linear infinite;
+          animation: shimmerBg 12s linear infinite;
         }
       `}</style>
       <div className="mx-auto max-w-7xl">
         <ScrollReveal>
           <motion.div
-            className="cta-shimmer rounded-2xl px-6 py-12 text-center text-white sm:rounded-3xl sm:px-8 sm:py-16"
+            className="cta-shimmer rounded-2xl px-5 py-10 text-center text-white sm:rounded-3xl sm:px-8 sm:py-16"
             initial={reduce ? false : { scale: 0.98, opacity: 0 }}
             whileInView={{ scale: 1, opacity: 1 }}
             viewport={{ once: false, amount: 0.1 }}
             transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
           >
-            <h2 className="text-[28px] font-bold sm:text-4xl">
+            <h2 className="text-[22px] font-bold sm:text-4xl">
               Prêt à passer du digital au réel&nbsp;?
             </h2>
-            <p className="mx-auto mt-4 max-w-lg text-sm text-white/85 sm:text-base">
+            <p className="mx-auto mt-3 max-w-lg text-sm text-white/85 sm:mt-4 sm:text-base">
               Créez votre compte gratuitement et recevez vos premières recommandations en 5 minutes.
             </p>
             <Link
               href="/register"
-              className="mt-6 inline-flex items-center gap-2 rounded-full bg-white px-6 py-3 text-sm font-semibold text-foreground transition-opacity hover:opacity-90 sm:mt-8 sm:px-8"
+              className="mt-5 inline-flex items-center gap-2 rounded-full bg-white px-6 py-3 text-sm font-semibold text-foreground transition-opacity hover:opacity-90 sm:mt-8 sm:px-8"
             >
               Commencer gratuitement
               <ArrowRight size={16} />

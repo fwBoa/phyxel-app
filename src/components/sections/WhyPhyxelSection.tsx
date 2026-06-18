@@ -65,20 +65,20 @@ export default function WhyPhyxelSection() {
   }, [reduce])
 
   return (
-    <section id="pourquoi-phyxel" className="bg-white py-20">
+    <section id="pourquoi-phyxel" className="bg-white py-12 sm:py-20">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="flex flex-col gap-10 lg:flex-row lg:gap-16">
+        <div className="flex flex-col gap-6 sm:gap-10 lg:flex-row lg:gap-16">
 
           {/* Titre à gauche — sticky */}
           <div className="lg:w-80 lg:shrink-0">
             <div className="lg:sticky lg:top-24">
               <ScrollReveal>
-                <h2 className="text-[28px] font-bold leading-tight text-foreground sm:text-4xl">
+                <h2 className="text-[22px] font-bold leading-tight text-foreground sm:text-4xl">
                   Pourquoi choisir Phyxel&nbsp;?
                 </h2>
               </ScrollReveal>
               <ScrollReveal delay={0.15}>
-                <p className="mt-4 text-sm text-text-secondary sm:text-base">
+                <p className="mt-3 text-sm text-text-secondary sm:mt-4 sm:text-base">
                   La marketplace qui comprend les marques e-commerce.
                 </p>
               </ScrollReveal>
@@ -99,19 +99,19 @@ export default function WhyPhyxelSection() {
               >
                 <div
                   ref={(el) => { cardRefs.current[i] = el }}
-                  className="mb-4 origin-top rounded-2xl border border-border-custom bg-white p-5 shadow-sm transition-transform duration-75 sm:p-8"
+                  className="mb-3 origin-top rounded-2xl border border-border-custom bg-white p-4 shadow-sm transition-transform duration-75 sm:mb-4 sm:p-8"
                 >
                   <div
-                    className="mb-5 inline-flex size-12 items-center justify-center rounded-full"
+                    className="mb-3 inline-flex size-10 items-center justify-center rounded-full sm:mb-5 sm:size-12"
                     style={{
                       backgroundColor: iconBg,
                       animation: `iconLoop 2.5s cubic-bezier(0.4, 0, 0.6, 1) infinite`,
                     }}
                   >
-                    <Icon className="size-5" style={{ color: iconColor }} strokeWidth={1.75} />
+                    <Icon className="size-4 sm:size-5" style={{ color: iconColor }} strokeWidth={1.75} />
                   </div>
-                  <h3 className="text-base font-bold text-foreground sm:text-lg">{title}</h3>
-                  <p className="mt-2 text-sm leading-relaxed text-text-secondary">{desc}</p>
+                  <h3 className="text-[15px] font-bold text-foreground sm:text-lg">{title}</h3>
+                  <p className="mt-1.5 text-sm leading-relaxed text-text-secondary sm:mt-2">{desc}</p>
                 </div>
               </motion.div>
             ))}

@@ -39,7 +39,7 @@ export default function SearchBar({ initialFilters, onSearch, variant = 'hero' }
     <form
       onSubmit={handleSubmit}
       className={`flex flex-col gap-2 rounded-2xl bg-white p-3 shadow-lg sm:flex-row sm:items-center ${
-        isHero ? 'sm:rounded-full' : 'border border-border-custom'
+        isHero ? 'rounded-2xl sm:rounded-full' : 'rounded-2xl border border-border-custom'
       }`}
     >
       {/* Ville */}

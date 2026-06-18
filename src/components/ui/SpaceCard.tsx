@@ -37,7 +37,7 @@ export default function SpaceCard({
       }`}
     >
       {/* Photo */}
-      <div className="relative h-40 w-full overflow-hidden bg-bg-secondary sm:h-48">
+      <div className="relative h-44 w-full overflow-hidden bg-bg-secondary sm:h-48">
         {coverUrl ? (
           <Image
             src={coverUrl}
